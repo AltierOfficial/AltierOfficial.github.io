@@ -3,179 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Altier | Premium Trans-Pacific Travel</title>
+    <title>Altier | Private Travel Asset Management</title>
     <style>
-        /* 核心变量：高端黑金配色 */
         :root {
-            --bg-dark: #070707;
-            --bg-panel: #111111;
-            --accent-gold: #D4AF37;
-            --accent-gold-dim: #A88A2D;
-            --text-main: #F5F5F5;
-            --text-muted: #999999;
-            --font-heading: 'Optima', 'Didot', 'Cinzel', serif; /* 经典高端衬线字体 */
-            --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg-dark: #050505;
+            --bg-panel: #0f0f0f;
+            --accent-gold: #d4af37;
+            --gold-gradient: linear-gradient(135deg, #d4af37 0%, #f1d592 50%, #d4af37 100%);
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --font-heading: 'Cinzel', serif;
+            --font-body: 'Inter', -apple-system, sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
             font-family: var(--font-body);
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
-        /* 导航栏 */
+        /* 灵动滚动动画基础 */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* 导航 */
         header {
-            position: fixed;
-            top: 0; width: 100%;
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(7, 7, 7, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            position: fixed; top: 0; width: 100%; padding: 25px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(15px);
+            z-index: 1000; border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
 
-        .logo {
-            font-family: var(--font-heading);
-            font-size: 28px;
-            color: var(--accent-gold);
-            letter-spacing: 4px;
-            font-weight: bold;
+        .logo { font-family: var(--font-heading); font-size: 26px; color: var(--accent-gold); letter-spacing: 5px; font-weight: 700; }
+        .lang-btn { 
+            background: transparent; border: 1px solid var(--accent-gold); 
+            color: var(--accent-gold); padding: 8px 20px; border-radius: 1px; 
+            font-size: 11px; letter-spacing: 2px; transition: 0.4s;
         }
+        .lang-btn:hover { background: var(--accent-gold); color: #000; }
 
-        .lang-toggle {
-            background: transparent;
-            border: 1px solid var(--accent-gold);
-            color: var(--accent-gold);
-            padding: 6px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .lang-toggle:hover {
-            background: var(--accent-gold);
-            color: var(--bg-dark);
-        }
-
-        /* 沉浸式首屏 Hero */
+        /* Hero Section */
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            background: radial-gradient(circle at center, #1a1a1a 0%, var(--bg-dark) 100%);
-            position: relative;
+            height: 100vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center;
+            background: radial-gradient(circle at 50% 50%, #151515 0%, #050505 100%);
         }
 
-        .hero::after {
-            content: ''; position: absolute; bottom: 0; width: 1px; height: 100px;
-            background: linear-gradient(to bottom, transparent, var(--accent-gold));
+        h1 { font-family: var(--font-heading); font-size: 4rem; font-weight: 400; margin-bottom: 1rem; }
+        .gold-text { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* 价格对比模块 (The Paradox) */
+        .paradox-section { padding: 100px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .price-card { background: var(--bg-panel); padding: 40px; border: 1px solid rgba(212, 175, 55, 0.2); }
+        .price-tag { font-size: 48px; font-weight: 700; color: var(--accent-gold); margin: 20px 0; }
+
+        /* 服务矩阵 */
+        .services { padding: 100px 10%; background: #000; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .service-card { 
+            padding: 50px 35px; background: var(--bg-panel); 
+            border-left: 1px solid var(--accent-gold); transition: 0.5s; 
         }
+        .service-card:hover { background: #151515; border-left-width: 5px; }
 
-        h1 {
-            font-family: var(--font-heading);
-            font-size: clamp(40px, 5vw, 70px);
-            font-weight: 300;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            color: #fff;
+        /* 会员制度 (The Altiora Society) */
+        .society { padding: 100px 10%; }
+        .tier-item { 
+            display: flex; padding: 40px 0; border-bottom: 1px solid #222; 
+            transition: 0.3s; align-items: center;
         }
+        .tier-item:hover { background: rgba(212, 175, 55, 0.05); padding-left: 20px; }
+        .tier-meta { width: 30%; font-family: var(--font-heading); font-size: 22px; color: var(--accent-gold); }
+        .tier-details { width: 70%; font-size: 14px; color: var(--text-muted); }
 
-        h1 span { color: var(--accent-gold); }
+        /* 团队展示 */
+        .team { padding: 100px 10%; text-align: center; }
+        .founder-grid { display: flex; justify-content: center; gap: 60px; margin-top: 50px; }
+        .founder h4 { font-family: var(--font-heading); color: var(--accent-gold); margin-bottom: 10px; }
 
-        .subtitle {
-            font-size: 18px;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin-bottom: 40px;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
+        /* 底部 */
+        footer { padding: 60px; text-align: center; border-top: 1px solid #111; font-size: 11px; color: #444; letter-spacing: 2px; }
 
-        /* 内容区块通用 */
-        section { padding: 120px 10%; }
-        
-        .section-title {
-            font-family: var(--font-heading);
-            font-size: 36px;
-            color: var(--accent-gold);
-            text-align: center;
-            margin-bottom: 60px;
-            letter-spacing: 2px;
-        }
-
-        /* 网格布局 (核心服务) */
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .card {
-            background: var(--bg-panel);
-            padding: 40px 30px;
-            border-top: 2px solid var(--accent-gold);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .card h3 {
-            font-family: var(--font-heading);
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .card p { color: var(--text-muted); font-size: 15px; }
-
-        /* 会员体系列表 */
-        .society-tier {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .tier-name {
-            font-family: var(--font-heading);
-            font-size: 24px;
-            color: var(--accent-gold);
-            width: 30%;
-        }
-
-        .tier-desc { width: 65%; color: var(--text-muted); font-size: 15px; }
-
-        /* 滚动渐显动画逻辑 (灵动感核心) */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* 双语控制类 */
+        /* 语言控制 */
         .zh { display: none; }
     </style>
 </head>
@@ -183,153 +96,158 @@
 
     <header>
         <div class="logo">ALTIER</div>
-        <button class="lang-toggle" onclick="toggleLanguage()">中文 / EN</button>
+        <button class="lang-btn" onclick="toggleLang()">ENGLISH / 中文</button>
     </header>
 
-    <div class="hero">
+    <section class="hero">
         <h1 class="reveal active">
-            <span class="en">The Paradigm Shift in <br><span>Premium Travel</span></span>
-            <span class="zh">跨太平洋高端出行的<br><span>重构者</span></span>
+            <span class="en">Asset Managers for <br><span class="gold-text">Premium Travel</span></span>
+            <span class="zh">跨太平洋高端出行的<br><span class="gold-text">重构者</span></span>
         </h1>
-        <p class="subtitle reveal active" style="transition-delay: 0.2s;">
-            <span class="en">We are not traditional agents. We are your private travel asset managers, eliminating the $8,000 direct flight premium trap.</span>
-            <span class="zh">我们不是传统的票务中介，而是高净值留学生的私人出行资产管理者。打破直飞溢价陷阱，重塑绝对舒适与绝对安全。</span>
+        <p class="reveal active" style="color: var(--text-muted); max-width: 600px;">
+            <span class="en">Bypassing the information wall. We manage your trans-pacific journey with data-driven arbitrage and rigid risk control.</span>
+            <span class="zh">打破信息壁垒。我们依托数据驱动的航线测算与严密的风险控制，为您全面接管高端出行体验。</span>
         </p>
-    </div>
-
-    <section id="services">
-        <h2 class="section-title reveal">
-            <span class="en">Core Concierge Services</span>
-            <span class="zh">核心护航服务</span>
-        </h2>
-        <div class="grid-3">
-            <div class="card reveal" style="transition-delay: 0.1s;">
-                <h3>
-                    <span class="en">Strategic Route Arbitrage</span>
-                    <span class="zh">航线测算与空间套利</span>
-                </h3>
-                <p>
-                    <span class="en">Compressing $8,000+ fares to $3,000-$4,000 via expert 1-Stop multi-leg curation on top-tier airlines. 100% official tickets, zero inventory risk.</span>
-                    <span class="zh">摒弃昂贵的直飞垄断，匹配全日空、国泰等顶级航司的优质1-Stop联程航班，将成本精准压缩至 $3,000-$4,000 区间。</span>
-                </p>
-            </div>
-            <div class="card reveal" style="transition-delay: 0.2s;">
-                <h3>
-                    <span class="en">POE Intelligence</span>
-                    <span class="zh">独家风控矩阵</span>
-                </h3>
-                <p>
-                    <span class="en">Dynamic tracking of US Port of Entry scrutiny levels. We intentionally route you through safe, lenient ports to protect your academic journey.</span>
-                    <span class="zh">动态追踪全美入境口岸审查严格度，刻意规避高压审查区，为您规划最平稳通关航线，构建学业安全防火墙。</span>
-                </p>
-            </div>
-            <div class="card reveal" style="transition-delay: 0.3s;">
-                <h3>
-                    <span class="en">Seamless Connection Rescue</span>
-                    <span class="zh">零焦虑中转接管</span>
-                </h3>
-                <p>
-                    <span class="en">Single PNR ticketing only. If delays occur, relax in the lounge while our concierge negotiates free rebooking directly with airline backends.</span>
-                    <span class="zh">坚持仅出售单一预订代码客票。遭遇延误时，您只需在贵宾室休息，我们的专属管家将强硬保障您的免费改签。</span>
-                </p>
-            </div>
-        </div>
     </section>
 
-    <section style="background: var(--bg-panel);">
-        <h2 class="section-title reveal">
-            <span class="en">The Altiora Society</span>
-            <span class="zh">Altiora 会员阶层体系</span>
-        </h2>
-        <div class="society-tier reveal">
-            <div class="tier-name">Silver / 金卡</div>
-            <div class="tier-desc">
-                <span class="en">30,000 Miles. Unlocked after 1 round trip. Includes Apple Wallet / Google Pay exclusive card, fee reductions, and preference management.</span>
-                <span class="zh">30,000 实际飞行里程。包含专属电子感应卡，次轮咨询费减免及基础偏好预设管理。</span>
-            </div>
+    <section class="paradox-section reveal">
+        <div>
+            <h2 class="gold-text" style="font-family: var(--font-heading); margin-bottom: 20px;">
+                <span class="en">The Direct Flight Trap</span>
+                <span class="zh">直飞溢价陷阱</span>
+            </h2>
+            <p>
+                <span class="en">International students blindly pay $8,000 to $10,000 for single business class tickets due to legacy OTA failures.</span>
+                <span class="zh">长久以来，中国留学生及家长因传统平台的搜索壁垒，被动支付高达 $8,000 至 $10,000 的单程商务舱费用。</span>
+            </p>
         </div>
-        <div class="society-tier reveal">
-            <div class="tier-name">Gold / 铂金</div>
-            <div class="tier-desc">
-                <span class="en">60,000 Miles. Features a brushed metal card. Includes Entry Assurance (50% fee refund on non-personal entry denial) and waitlist clearing assistance.</span>
-                <span class="zh">60,000 实际飞行里程。首度配发实体金属拉丝纪念卡。包含启程安心承诺及免费候补(Waitlist)交涉。</span>
-            </div>
-        </div>
-        <div class="society-tier reveal">
-            <div class="tier-name">Platinum / 黑金</div>
-            <div class="tier-desc">
-                <span class="en">100,000 Miles. Heavyweight black metal card. Zero processing fees for changes/cancellations and highest priority routing during peak seasons.</span>
-                <span class="zh">100,000 实际飞行里程。实体重金属黑卡。免收一切人工退改签手续费，享春运等极度紧缺期最高刷票优先级。</span>
-            </div>
-        </div>
-        <div class="society-tier reveal" style="border-bottom: none;">
-            <div class="tier-name">Concierge / 终身</div>
-            <div class="tier-desc">
-                <span class="en">300,000 Miles. Mirrored metal card. Lifetime price caps on consulting fees and 24/7 direct access to the founding team.</span>
-                <span class="zh">300,000 实际飞行里程。极奢镜面金属典藏卡。终身跨洋服务费价格封顶，并享24/7创始人团队直连私人管家通道。</span>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <h2 class="section-title reveal">
-            <span class="en">Financial Transparency & Vision</span>
-            <span class="zh">财务透明与未来愿景</span>
-        </h2>
-        <div style="text-align: center; max-width: 800px; margin: 0 auto;" class="reveal">
-            <p style="color: var(--text-muted); font-size: 16px; margin-bottom: 20px;">
-                <span class="en">We charge ~30% of the actual savings we generate for you. Built by students from Carnegie Mellon University, Altier is transitioning from a manual elite concierge to a highly scalable Actionable AI Agent, leveraging deep data analytics to fully automate multi-leg optimization.</span>
-                <span class="zh">我们仅提取为您节省的票价差额的约30%作为咨询服务费。由卡内基梅隆大学的两位学生创立，Altier 正从精英人工管家模式，稳步迈向基于深度数据的 Actionable AI 自动化出行平台。</span>
+        <div class="price-card">
+            <span style="font-size: 12px; letter-spacing: 2px;">ALTIER ARBITRAGE</span>
+            <div class="price-tag">$3,000 - $4,000</div>
+            <p style="font-size: 14px; color: var(--accent-gold);">
+                <span class="en">Same business class comfort. 50%+ cost reduction.</span>
+                <span class="zh">同样的商务舱舒适度，节省超过 50% 的成本。</span>
             </p>
         </div>
     </section>
 
-    <footer style="text-align: center; padding: 40px; border-top: 1px solid #222; font-size: 12px; color: #555;">
-        <span class="en">&copy; 2026 Altier Official. Redefining High-Touch Premium Travel.</span>
-        <span class="zh">&copy; 2026 Altier Official. 重新定义高端出行。</span>
+    <section class="services">
+        <h2 class="reveal" style="text-align: center; margin-bottom: 60px; font-family: var(--font-heading);">
+            <span class="en">Professional Concierge Matrix</span>
+            <span class="zh">三大核心护航体系</span>
+        </h2>
+        <div class="grid-3">
+            <div class="service-card reveal">
+                <h3>
+                    <span class="en">Strategic Arbitrage</span>
+                    <span class="zh">航线测算与空间套利</span>
+                </h3>
+                <p style="margin-top: 15px; font-size: 14px; color: var(--text-muted);">
+                    <span class="en">Matching 1-Stop itineraries with top-tier airlines like ANA, Cathay, and Korean Air. Direct GDS interface ensures 100% ticket ownership.</span>
+                    <span class="zh">通过全日空、国泰、大韩等顶级航司的优质 1-Stop 联程航班实现对赌压缩。通过全球 GDS 底层接口出票，确保 100% 客票所有权。</span>
+                </p>
+            </div>
+            <div class="service-card reveal">
+                <h3>
+                    <span class="en">POE Intelligence</span>
+                    <span class="zh">入境口岸风控矩阵</span>
+                </h3>
+                <p style="margin-top: 15px; font-size: 14px; color: var(--text-muted);">
+                    <span class="en">Dynamic tracking of US customs scrutiny. We route you through "warm" ports of entry to ensure your academic safety.</span>
+                    <span class="zh">动态追踪全美各大入境口岸审查严格度，刻意规避高压区。这不仅是行程规划，更是留学生学业安全的防火墙。</span>
+                </p>
+            </div>
+            <div class="service-card reveal">
+                <h3>
+                    <span class="en">Single PNR Rescue</span>
+                    <span class="zh">零焦虑中转接管</span>
+                </h3>
+                <p style="margin-top: 15px; font-size: 14px; color: var(--text-muted);">
+                    <span class="en">Strictly official single-PNR tickets. In case of delays, our concierge handles rebooking directly with airline backends while you rest.</span>
+                    <span class="zh">坚持出售“同一预订代码”官方联程客票。一旦发生延误，专属管家将直接与航司交涉保障改签，彻底消除海外滞留恐慌。</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="society reveal">
+        <h2 style="font-family: var(--font-heading); margin-bottom: 40px;">The Altiora Society</h2>
+        <div class="tier-item">
+            <div class="tier-meta">Silver / 银卡</div>
+            <div class="tier-details">
+                <span class="en">30,000 Miles. Digital Wallet Card. Basic preference management and consulting fee reductions.</span>
+                <span class="zh">30,000 实际飞行里程。专属电子感应卡。次轮咨询费减免及航司餐食偏好预设管理。</span>
+            </div>
+        </div>
+        <div class="tier-item">
+            <div class="tier-meta">Gold / 金卡</div>
+            <div class="tier-details">
+                <span class="en">60,000 Miles. Brushed Metal Card. Entry Assurance: 50% fee refund on policy-based entry obstacles.</span>
+                <span class="zh">60,000 实际飞行里程。实体金属拉丝纪念卡。包含“启程安心承诺”：非个人原因入境阻碍退还 50% 服务费。</span>
+            </div>
+        </div>
+        <div class="tier-item">
+            <div class="tier-meta">Platinum / 白金</div>
+            <div class="tier-details">
+                <span class="en">100,000 Miles. Heavyweight Black Card. Zero-fee intervention for changes and highest priority in peak seasons.</span>
+                <span class="zh">100,000 实际飞行里程。实体重金属黑卡。免收人工退改签手续费，享有开学季最高优先级的刷票保护序列。</span>
+            </div>
+        </div>
+        <div class="tier-item">
+            <div class="tier-meta">Concierge / 礼宾</div>
+            <div class="tier-details">
+                <span class="en">300,000 Miles. Mirrored Metal Card. Lifetime price-capped service fees and 24/7 direct founder connection.</span>
+                <span class="zh">300,000 实际飞行里程。极奢镜面金属典藏卡。服务费永久封顶，并享有创始人团队 24/7 直连通道。</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="team reveal">
+        <h2 class="gold-text" style="font-family: var(--font-heading);">THE FOUNDERS</h2>
+        <div class="founder-grid">
+            <div class="founder">
+                <h4>YUESHAN JIN</h4>
+                <p style="font-size: 12px; color: #666;">
+                    <span class="en">Aviation Operations & Market Inefficiencies Expert</span>
+                    <span class="zh">跨太平洋航空运营与市场效率专家</span>
+                </p>
+            </div>
+            <div class="founder">
+                <h4>ZHOUXUAN YU</h4>
+                <p style="font-size: 12px; color: #666;">
+                    <span class="en">Data Synthesis & Customer Acquisition Strategy</span>
+                    <span class="zh">复杂数据分析与获客策略负责人</span>
+                </p>
+            </div>
+        </div>
+        <div style="margin-top: 60px; font-size: 14px; color: var(--accent-gold);">
+            <span class="en">FROM MANUAL CONCIERGE TO ACTIONABLE AI AGENT.</span>
+            <span class="zh">从人工礼宾管家，向自动化 AI 代理平台进发。</span>
+        </div>
+    </section>
+
+    <footer>
+        <span class="en">&copy; 2026 ALTIER OFFICIAL. ALL RIGHTS RESERVED.</span>
+        <span class="zh">&copy; 2026 ALTIER 官方版权所有。</span>
     </footer>
 
     <script>
-        // 1. 双语切换逻辑
-        let isEnglish = true;
-        function toggleLanguage() {
-            isEnglish = !isEnglish;
-            const enElements = document.querySelectorAll('.en');
-            const zhElements = document.querySelectorAll('.zh');
-            
-            enElements.forEach(el => el.style.display = isEnglish ? 'inline-block' : 'none');
-            zhElements.forEach(el => el.style.display = isEnglish ? 'none' : 'inline-block');
-            
-            // 修复块级元素的显示问题
-            document.querySelectorAll('p .en, div .en').forEach(el => {
-                if(el.tagName !== 'SPAN') el.style.display = isEnglish ? 'block' : 'none';
-            });
-            document.querySelectorAll('p .zh, div .zh').forEach(el => {
-                if(el.tagName !== 'SPAN') el.style.display = isEnglish ? 'none' : 'block';
-            });
+        // 语言切换
+        let isEn = true;
+        function toggleLang() {
+            isEn = !isEn;
+            document.querySelectorAll('.en').forEach(el => el.style.display = isEn ? 'inline' : 'none');
+            document.querySelectorAll('.zh').forEach(el => el.style.display = isEn ? 'none' : 'inline');
         }
 
-        // 2. 滚动渐显动画 (Intersection Observer)
-        const revealElements = document.querySelectorAll('.reveal');
-        
-        const revealCallback = function(entries, observer) {
+        // 滚动侦测
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    // 可选：如果只想触发一次动画，取消下行的注释
-                    // observer.unobserve(entry.target); 
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        };
+        }, { threshold: 0.1 });
 
-        const revealOptions = {
-            threshold: 0.15, // 元素出现 15% 时触发
-            rootMargin: "0px 0px -50px 0px"
-        };
-
-        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
-        
-        revealElements.forEach(el => revealObserver.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
