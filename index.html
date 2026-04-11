@@ -36,30 +36,66 @@
             position: relative;
         }
 
+        /* 顶级老钱风：从上至下的鎏金波浪呼吸背景 */
         .bg-contour {
             position: fixed;
-            /* 1. 减少裁切：将原本的 -5% 和 110% 缩小，保留更多原图边缘，同时留一点点余量给动画缩放，防止露白边 */
             top: -2%; left: -2%; 
             width: 104%; height: 104%; 
+            z-index: -2;
+            pointer-events: none;
+            /* 混合模式放在父级，保证两层都能正确剔除黑色背景 */
+            mix-blend-mode: lighten; 
+        }
+
+        /* 第一层（底层）：维持微弱质感的“静息状态”等高线 */
+        .bg-contour::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('./bg-gold.jpg'); 
             background-size: cover;
             background-position: center;
-            z-index: -2;
-            pointer-events: none;
-            mix-blend-mode: lighten; 
-            animation: breatheContour 2.8s infinite alternate ease-in-out;
+            opacity: 0.15; 
+            filter: brightness(0.8) contrast(1.1);
         }
 
-        /* 2. 亮度压暗：调整 100% 状态下的 opacity（不透明度）和 brightness（亮度） */
-        @keyframes breatheContour {
-            /* 0% 是最暗的时候，保持不变 */
-            0% { opacity: 0.15; filter: brightness(0.8) contrast(1.1); transform: scale(1); }
+        /* 第二层（顶层）：只在“遮罩”扫过的地方透出高光，形成波浪 */
+        .bg-contour::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('./bg-gold.jpg');
+            background-size: cover;
+            background-position: center;
             
-            /* 100% 是最亮的时候。
-               opacity 从原来的 0.75 降到 0.55；
-               brightness 从原来的 1.6 降到了 1.15；
-               整体视觉高光感下调了约 30% */
-            100% { opacity: 0.45; filter: brightness(1.08) contrast(1.20); transform: scale(1.01); }
+            /* 保持你自己调好的完美高光亮度参数 */
+            opacity: 0.45; 
+            filter: brightness(1.05) contrast(1.15);
+
+            /* 用 CSS 画一个边缘柔和的透明遮罩 */
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 50%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 50%, transparent 100%);
+            
+            /* 设置波浪遮罩的高度 */
+            -webkit-mask-size: 100% 60vh; 
+            mask-size: 100% 60vh;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            
+            /* 动画：6.5秒一个周期，采用 ease-in-out 让波浪符合人类慢呼吸的缓急节奏 */
+            animation: goldWaveSweep 6.5s infinite ease-in-out;
+        }
+
+        /* 控制隐形遮罩从上到下的位移 */
+        @keyframes goldWaveSweep {
+            0% {
+                -webkit-mask-position: 0 -60vh; 
+                mask-position: 0 -60vh;
+            }
+            100% {
+                -webkit-mask-position: 0 150vh; 
+                mask-position: 0 150vh;
+            }
         }
 
         /* 丝滑反复滚动动画 */
@@ -72,7 +108,7 @@
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* ---------------------------------------------------- */
-        /* 核心语言控制与 Typography (已通过更为强大的CSS重构，杜绝中英混杂) */
+        /* 核心语言控制与 Typography */
         /* ---------------------------------------------------- */
         .zh { display: none !important; }
         .en { display: inline-block; }
@@ -152,7 +188,6 @@
         }
 
         .hero p {
-            /* 字体已缩小 */
             font-size: 0.9rem; max-width: 700px; margin-top: 2.5rem;
             color: rgba(232, 228, 219, 0.8); line-height: 2.2;
         }
@@ -179,7 +214,6 @@
         .section { padding: 6rem 10%; position: relative; }
         
         .section-title {
-            /* 小标题加粗 30% */
             font-family: var(--font-heading-en); font-size: 2.8rem;
             color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 500; 
         }
@@ -188,7 +222,6 @@
         .paradox-grid {
             display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center;
         }
-        /* 加粗 30% */
         .paradox-text h3 { font-family: var(--font-heading-en); font-size: 2.2rem; color: var(--text-offwhite); margin-bottom: 1.5rem; font-weight: 500; line-height: 1.4;}
         .paradox-text p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); line-height: 2; }
         
@@ -208,7 +241,6 @@
             border-radius: var(--radius-large); backdrop-filter: blur(10px);
         }
         .service-card:hover { transform: translateY(-10px); background: rgba(30, 28, 26, 0.8); border-color: rgba(197, 179, 148, 0.3); }
-        /* 小标题加粗 40% */
         .service-card h4 { font-family: var(--font-heading-en); font-size: 1.8rem; color: var(--gold-muted); margin-bottom: 1.5rem; font-weight: 600; }
         .service-card p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); line-height: 2; }
 
@@ -226,7 +258,6 @@
             opacity: 0.3;
         }
         .tier-card:hover { transform: scale(1.02); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-        /* 小标题加粗 */
         .tier-name { font-family: var(--font-heading-en); font-size: 2rem; color: var(--gold-muted); margin: 0; font-weight: 500;}
         .tier-req { font-size: 0.75rem; color: var(--gold-dark); margin: 1.5rem 0; text-transform: uppercase; letter-spacing: 3px; }
         .tier-card p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); line-height: 2.2;}
@@ -236,7 +267,6 @@
             background-color: transparent; padding: 6rem 10%; display: flex; flex-wrap: wrap; align-items: center; gap: 4rem;
         }
         .founder-text { flex: 1.5; min-width: 300px; }
-        /* 引用字体调小 */
         .founder-text p.quote {
             font-family: var(--font-heading-en); font-size: 1.9rem; font-style: italic;
             color: var(--text-offwhite); margin-bottom: 2rem; line-height: 1.5; font-weight: 400;
@@ -408,12 +438,10 @@
     </footer>
 
     <script>
-        // 极致整洁的双语系统：直接通过 Body Class 切换
         function toggleLang() {
             document.body.classList.toggle('lang-zh-active');
         }
 
-        // 丝滑反复滚动动画
         const observerOptions = {
             threshold: 0.15, 
             rootMargin: "0px 0px -30px 0px"
