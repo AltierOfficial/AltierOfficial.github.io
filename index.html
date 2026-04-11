@@ -1,539 +1,354 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Altier | Private Travel Asset Management</title>
-    <style>
-        :root {
-            --bg-dark: #050505;
-            --bg-panel: #0f0f0f;
-            --accent-gold: #d4af37;
-            --gold-gradient: linear-gradient(135deg, #d4af37 0%, #f1d592 50%, #d4af37 100%);
-            --text-main: #ffffff;
-            --text-muted: #888888;
-            --font-heading: 'Cinzel', serif;
-            --font-body: 'Inter', -apple-system, sans-serif;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* 灵动滚动动画基础 */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        /* 导航 */
-        header {
-            position: fixed; top: 0; width: 100%; padding: 25px 5%;
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(5, 5, 5, 0.9); backdrop-filter: blur(15px);
-            z-index: 1000; border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-        }
-
-        .logo { font-family: var(--font-heading); font-size: 26px; color: var(--accent-gold); letter-spacing: 5px; font-weight: 700; }
-        .lang-btn { 
-            background: transparent; border: 1px solid var(--accent-gold); 
-            color: var(--accent-gold); padding: 8px 20px; border-radius: 1px; 
-            font-size: 11px; letter-spacing: 2px; transition: 0.4s;
-        }
-        .lang-btn:hover { background: var(--accent-gold); color: #000; }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; text-align: center;
-            background: radial-gradient(circle at 50% 50%, #151515 0%, #050505 100%);
-        }
-
-        h1 { font-family: var(--font-heading); font-size: 4rem; font-weight: 400; margin-bottom: 1rem; }
-        .gold-text { background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        /* 价格对比模块 (The Paradox) */
-        .paradox-section { padding: 100px 10%; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-        .price-card { background: var(--bg-panel); padding: 40px; border: 1px solid rgba(212, 175, 55, 0.2); }
-        .price-tag { font-size: 48px; font-weight: 700; color: var(--accent-gold); margin: 20px 0; }
-
-        /* 服务矩阵 */
-        .services { padding: 100px 10%; background: #000; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .service-card { 
-            padding: 50px 35px; background: var(--bg-panel); 
-            border-left: 1px solid var(--accent-gold); transition: 0.5s; 
-        }
-        .service-card:hover { background: #151515; border-left-width: 5px; }
-
-        /* 会员制度 (The Altiora Society) */
-        .society { padding: 100px 10%; }
-        .tier-item { 
-            display: flex; padding: 40px 0; border-bottom: 1px solid #222; 
-            transition: 0.3s; align-items: center;
-        }
-        .tier-item:hover { background: rgba(212, 175, 55, 0.05); padding-left: 20px; }
-        .tier-meta { width: 30%; font-family: var(--font-heading); font-size: 22px; color: var(--accent-gold); }
-        .tier-details { width: 70%; font-size: 14px; color: var(--text-muted); }
-
-        /* 团队展示 */
-        .team { padding: 100px 10%; text-align: center; }
-        .founder-grid { display: flex; justify-content: center; gap: 60px; margin-top: 50px; }
-        .founder h4 { font-family: var(--font-heading); color: var(--accent-gold); margin-bottom: 10px; }
-
-        /* 底部 */
-        footer { padding: 60px; text-align: center; border-top: 1px solid #111; font-size: 11px; color: #444; letter-spacing: 2px; }
-
-        /* 语言控制 */
-        .zh { display: none; }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="logo">ALTIER</div>
-        <button class="lang-btn" onclick="toggleLang()">ENGLISH / 中文</button>
-    </header>
-
-    <section class="hero">
-        <h1 class="reveal active">
-            <span class="en">Asset Managers for <br><span class="gold-text">Premium Travel</span></span>
-            <span class="zh">跨太平洋高端出行的<br><span class="gold-text">重构者</span></span>
-        </h1>
-        <p class="reveal active" style="color: var(--text-muted); max-width: 600px;">
-            <span class="en">Bypassing the information wall. We manage your trans-pacific journey with data-driven arbitrage and rigid risk control.</span>
-            <span class="zh">打破信息壁垒。我们依托数据驱动的航线测算与严密的风险控制，为您全面接管高端出行体验。</span>
-        </p>
-    </section>
-
-    <section class="paradox-section reveal">
-        <div>
-            <h2 class="gold-text" style="font-family: var(--font-heading); margin-bottom: 20px;">
-                <span class="en">The Direct Flight Trap</span>
-                <span class="zh">直飞溢价陷阱</span>
-            </h2>
-            <p>
-                <span class="en">International students blindly pay $8,000 to $10,000 for single business class tickets due to legacy OTA failures.</span>
-                <span class="zh">长久以来，中国留学生及家长因传统平台的搜索壁垒，被动支付高达 $8,000 至 $10,000 的单程商务舱费用。</span>
-            </p>
-        </div>
-        <div class="price-card">
-            <span style="font-size: 12px; letter-spacing: 2px;">ALTIER ARBITRAGE</span>
-            <div class="price-tag">$3,000 - $4,000</div>
-            <p style="font-size: 14px; color: var(--accent-gold);">
-                <span class="en">Same business class comfort. 50%+ cost reduction.</span>
-                <span class="zh">同样的商务舱舒适度，节省超过 50% 的成本。</span>
-            </p>
-        </div>
-    </section>
-
-    <section class="services">
-        <h2 class="reveal" style="text-align: center; margin-bottom: 60px; font-family: var(--font-heading);">
-            <span class="en">Professional Concierge Matrix</span>
-            <span class="zh">三大核心护航体系</span>
-        </h2>
-        <div class="grid-3">
-            <div class="service-card reveal">
-                <h3>
-                    <span class="en">Strategic Arbitrage</span>
-                    <span class="zh">航线测算与空间套利</span>
-                </h3>
-                <p style="margin-top: 15px; font-size: 14px; color: var(--text-muted);">
-                    <span class="en">Matching 1-Stop itineraries with top-tier airlines like ANA, Cathay, and Korean Air. Direct GDS interface ensures 100% ticket ownership.</span>
-                    <span class="zh">通过全日空、国泰、大韩等顶级航司的优质 1-Stop 联程航班实现对赌压缩。通过全球 GDS 底层接口出票，确保 100% 客票所有权。</span>
-                </p>
-            </div>
-            <div class="service-card reveal">
-                <h3>
-                    <span class="en">POE Intelligence</span>
-                    <span class="zh">入境口岸风控矩阵</span>
-                </h3>
-                <p style="margin-top: 15px; font-size: 14px; color: var(--text-muted);">
-                    <span class="en">Dynamic tracking of US customs scrutiny. We route you through "warm" ports of entry to ensure your academic safety.</span>
-                    <span class="zh">动态追踪全美各大入境口岸审查严格度，刻意规避高压区。这不仅是行程规划，更是留学生学业安全的防火墙。</span>
-                </p>
-            </div>
-            <div class="service-card reveal">
-                <h3>
-                    <span class="en">Single PNR Rescue</span>
-                    <span class="zh">零焦虑中转接管</span>
-                </h3>
-                <p style="margin-top: 15px; font-size: 14px; color: var(--text-muted);">
-                    <span class="en">Strictly official single-PNR tickets. In case of delays, our concierge handles rebooking directly with airline backends while you rest.</span>
-                    <span class="zh">坚持出售“同一预订代码”官方联程客票。一旦发生延误，专属管家将直接与航司交涉保障改签，彻底消除海外滞留恐慌。</span>
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="society reveal">
-        <h2 style="font-family: var(--font-heading); margin-bottom: 40px;">The Altiora Society</h2>
-        <div class="tier-item">
-            <div class="tier-meta">Silver / 银卡</div>
-            <div class="tier-details">
-                <span class="en">30,000 Miles. Digital Wallet Card. Basic preference management and consulting fee reductions.</span>
-                <span class="zh">30,000 实际飞行里程。专属电子感应卡。次轮咨询费减免及航司餐食偏好预设管理。</span>
-            </div>
-        </div>
-        <div class="tier-item">
-            <div class="tier-meta">Gold / 金卡</div>
-            <div class="tier-details">
-                <span class="en">60,000 Miles. Brushed Metal Card. Entry Assurance: 50% fee refund on policy-based entry obstacles.</span>
-                <span class="zh">60,000 实际飞行里程。实体金属拉丝纪念卡。包含“启程安心承诺”：非个人原因入境阻碍退还 50% 服务费。</span>
-            </div>
-        </div>
-        <div class="tier-item">
-            <div class="tier-meta">Platinum / 铂金</div>
-            <div class="tier-details">
-                <span class="en">100,000 Miles. Heavyweight Black Card. Zero-fee intervention for changes and highest priority in peak seasons.</span>
-                <span class="zh">100,000 实际飞行里程。实体重金属黑卡。免收人工退改签手续费，享有开学季最高优先级的刷票保护序列。</span>
-            </div>
-        </div>
-        <div class="tier-item">
-            <div class="tier-meta">Concierge / 礼宾</div>
-            <div class="tier-details">
-                <span class="en">300,000 Miles. Mirrored Metal Card. Lifetime price-capped service fees and 24/7 direct founder connection.</span>
-                <span class="zh">300,000 实际飞行里程。极奢镜面金属典藏卡。服务费永久封顶，并享有创始人团队 24/7 直连通道。</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="team reveal">
-        <h2 class="gold-text" style="font-family: var(--font-heading);">THE FOUNDERS</h2>
-        <div class="founder-grid">
-            <div class="founder">
-                <h4>YUESHAN JIN</h4>
-                <p style="font-size: 12px; color: #666;">
-                    <span class="en">Aviation Operations & Market Inefficiencies Expert</span>
-                    <span class="zh">跨太平洋航空运营与市场效率专家</span>
-                </p>
-            </div>
-            <div class="founder">
-                <h4>ZHOUXUAN YU</h4>
-                <p style="font-size: 12px; color: #666;">
-                    <span class="en">Data Synthesis & Customer Acquisition Strategy</span>
-                    <span class="zh">复杂数据分析与获客策略负责人</span>
-                </p>
-            </div>
-        </div>
-        <div style="margin-top: 60px; font-size: 14px; color: var(--accent-gold);">
-            <span class="en">FROM MANUAL CONCIERGE TO ACTIONABLE AI AGENT.</span>
-            <span class="zh">从人工礼宾管家，向自动化 AI 代理平台进发。</span>
-        </div>
-    </section>
-
-    <footer>
-        <span class="en">&copy; 2026 ALTIER OFFICIAL. ALL RIGHTS RESERVED.</span>
-        <span class="zh">&copy; 2026 ALTIER 官方版权所有。</span>
-    </footer>
-
-    <script>
-        // 语言切换
-        let isEn = true;
-        function toggleLang() {
-            isEn = !isEn;
-            document.querySelectorAll('.en').forEach(el => el.style.display = isEn ? 'inline' : 'none');
-            document.querySelectorAll('.zh').forEach(el => el.style.display = isEn ? 'none' : 'inline');
-        }
-
-        // 滚动侦测
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
-</body>
-</html> -->
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Altier | Asset Managers for Premium Travel</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
-        /* Part 5: 色彩重构 - 低饱和度、老钱风 */
+        /* 低饱和度、老钱风色彩重构 */
         :root {
-            --bg-charcoal: #1a1918; /* 带有暖调的深炭黑色，比纯黑更显高级 */
-            --text-offwhite: #e8e4db; /* 羊绒白，柔和不刺眼 */
-            --gold-muted: #c5b394; /* 哑光香槟金，降低饱和度 */
-            --gold-dark: #8c7a5c; /* 暗金色，用于辅助线条 */
+            --bg-charcoal: #1a1918; 
+            --bg-panel: #141312;
+            --text-offwhite: #e8e4db; 
+            --gold-muted: #c5b394; 
+            --gold-dark: #8c7a5c; 
             
-            /* Part 2: 正文字体设计感 */
-            --font-hero: "Snell Roundhand", "Palace Script MT", "Pinyon Script", cursive;
+            /* 字体设计 */
+            --font-hero: "Pinyon Script", "Snell Roundhand", cursive;
             --font-heading: "Cormorant Garamond", serif;
             --font-body: "Montserrat", sans-serif;
         }
 
-        body, html {
-            margin: 0;
-            padding: 0;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
             background-color: var(--bg-charcoal);
             color: var(--text-offwhite);
             font-family: var(--font-body);
             font-weight: 300;
             line-height: 1.8;
-            /* Part 4: 增加极简的纹理感（通过微弱的线性渐变营造光影流动） */
+            overflow-x: hidden;
+            /* 极简纹理感：微弱的线性渐变营造光影流动 */
             background-image: radial-gradient(circle at 50% 0%, rgba(197, 179, 148, 0.05) 0%, transparent 60%);
         }
 
+        /* 滚动渐显动画基础 */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
         /* 导航栏 */
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2rem 5%;
-            border-bottom: 1px solid rgba(197, 179, 148, 0.15); /* 细微的线条感 */
+            position: fixed; top: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 5%; z-index: 1000;
+            background: rgba(26, 25, 24, 0.85); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(197, 179, 148, 0.15); 
         }
 
         .nav-logo {
-            font-family: var(--font-hero);
-            font-size: 2.5rem;
-            color: var(--gold-muted);
-            text-decoration: none;
-            letter-spacing: 2px;
+            font-family: var(--font-hero); font-size: 2.2rem;
+            color: var(--gold-muted); text-decoration: none; letter-spacing: 2px;
         }
+
+        .lang-btn { 
+            background: transparent; border: 1px solid var(--gold-dark); 
+            color: var(--gold-muted); padding: 6px 18px; border-radius: 20px; 
+            font-size: 0.75rem; letter-spacing: 2px; transition: 0.4s; cursor: pointer;
+            font-family: var(--font-body); text-transform: uppercase;
+        }
+        .lang-btn:hover { background: var(--gold-dark); color: var(--bg-charcoal); }
 
         /* 英雄区域 (主视觉) */
         .hero {
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
+            height: 90vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            position: relative; padding: 0 20px;
         }
 
-        /* Part 1: 主标题为醒目但不艳俗的Altier，副标题为标准衬线体 */
         .hero h1 {
-            font-family: var(--font-hero);
-            font-size: 8rem;
-            color: var(--gold-muted);
-            margin: 0;
-            font-weight: normal;
-            text-shadow: 0px 4px 15px rgba(0,0,0,0.3); /* 增加厚重感 */
+            font-family: var(--font-hero); font-size: clamp(6rem, 10vw, 10rem);
+            color: var(--gold-muted); margin: 0; font-weight: normal;
+            text-shadow: 0px 4px 15px rgba(0,0,0,0.3); 
+            line-height: 1;
         }
 
         .hero h2 {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--text-offwhite);
-            margin-top: -10px;
-            font-weight: 300;
+            font-family: var(--font-heading); font-size: clamp(1rem, 2vw, 1.5rem);
+            letter-spacing: 4px; text-transform: uppercase;
+            color: var(--text-offwhite); margin-top: 10px; font-weight: 300;
         }
 
         .hero p {
-            font-size: 1rem;
-            max-width: 600px;
-            margin-top: 2rem;
-            color: rgba(232, 228, 219, 0.7);
-        }
-
-        /* 装饰线条 */
-        .decorative-line {
-            width: 1px;
-            height: 100px;
-            background: linear-gradient(to bottom, transparent, var(--gold-dark), transparent);
-            margin: 3rem auto;
-        }
-
-        /* 内容区块 */
-        .section {
-            padding: 5rem 10%;
-            text-align: center;
-        }
-
-        .section h3 {
-            font-family: var(--font-heading);
-            font-size: 2.5rem;
-            color: var(--gold-muted);
-            margin-bottom: 3rem;
-            font-weight: 400;
-        }
-
-        /* Part 3: 卡别展示区 (中英分离) */
-        .tiers {
-            display: flex;
-            justify-content: space-between;
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-
-        .tier-card {
-            flex: 1;
-            padding: 3rem 2rem;
-            border: 1px solid rgba(197, 179, 148, 0.2);
-            background: rgba(0, 0, 0, 0.2);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tier-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-muted), transparent);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .tier-card:hover::before {
-            opacity: 1;
-        }
-
-        .tier-name-en {
-            font-family: var(--font-heading);
-            font-size: 1.8rem;
-            color: var(--gold-muted);
-            margin: 0;
-            /* 默认隐藏英文版界面才会显示 */
-            display: none; 
-        }
-
-        .tier-name-cn {
-            font-family: var(--font-heading);
-            font-size: 1.8rem;
-            color: var(--gold-muted);
-            margin: 0;
-            letter-spacing: 2px;
-        }
-
-        .tier-req {
-            font-size: 0.85rem;
-            color: var(--gold-dark);
-            margin: 1rem 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* 创始团队背书区 */
-        .founder-section {
-            background-color: #141312;
-            padding: 5rem 10%;
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-            text-align: left;
-        }
-
-        .founder-text {
-            flex: 1;
-        }
-
-        .founder-text p {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-style: italic;
-            color: var(--text-offwhite);
-            margin-bottom: 1rem;
-        }
-
-        /* Part 6: 隐去真名 */
-        .founder-signature {
-            font-size: 0.9rem;
-            color: var(--gold-muted);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .endorsement-box {
-            flex: 1;
-            border-left: 1px solid var(--gold-dark);
-            padding-left: 3rem;
+            font-size: 0.95rem; max-width: 650px; margin-top: 2rem;
+            color: rgba(232, 228, 219, 0.7); letter-spacing: 1px;
         }
 
         /* 按钮设计 */
         .cta-btn {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 1rem 3rem;
-            border: 1px solid var(--gold-muted);
-            color: var(--gold-muted);
-            text-decoration: none;
-            font-family: var(--font-body);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-            background: transparent;
+            display: inline-block; margin-top: 3rem; padding: 1rem 3rem;
+            border: 1px solid var(--gold-muted); color: var(--gold-muted);
+            text-decoration: none; font-family: var(--font-body);
+            text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;
+            transition: all 0.4s ease; background: transparent; cursor: pointer;
+        }
+        .cta-btn:hover { background: var(--gold-muted); color: var(--bg-charcoal); }
+
+        /* 装饰线条 */
+        .decorative-line {
+            width: 1px; height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--gold-dark), transparent);
+            margin: 0 auto 4rem auto;
         }
 
-        .cta-btn:hover {
-            background: var(--gold-muted);
-            color: var(--bg-charcoal);
+        /* 通用内容区块 */
+        .section { padding: 4rem 10%; }
+        
+        .section-title {
+            font-family: var(--font-heading); font-size: 2.5rem;
+            color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 400;
         }
+
+        /* 价格悖论区 */
+        .paradox-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+        }
+        .paradox-text h3 { font-family: var(--font-heading); font-size: 2rem; color: var(--text-offwhite); margin-bottom: 1rem; font-weight: 300; }
+        .price-card { 
+            border: 1px solid rgba(197, 179, 148, 0.2); padding: 3rem; 
+            text-align: center; background: var(--bg-panel);
+        }
+        .price-tag { font-family: var(--font-heading); font-size: 3.5rem; color: var(--gold-muted); margin: 1rem 0; }
+
+        /* 服务矩阵 */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; }
+        .service-card { padding: 3rem 2rem; border-top: 1px solid var(--gold-dark); background: var(--bg-panel); transition: 0.4s; }
+        .service-card:hover { transform: translateY(-5px); background: #1a1918; border-top-width: 3px; }
+        .service-card h4 { font-family: var(--font-heading); font-size: 1.5rem; color: var(--gold-muted); margin-bottom: 1rem; font-weight: 400; }
+        .service-card p { font-size: 0.9rem; color: rgba(232, 228, 219, 0.7); }
+
+        /* 会员阶层 */
+        .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+        .tier-card {
+            padding: 3rem 2rem; border: 1px solid rgba(197, 179, 148, 0.15);
+            background: rgba(0, 0, 0, 0.2); transition: all 0.4s ease; text-align: center; position: relative; overflow: hidden;
+        }
+        .tier-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-muted), transparent); opacity: 0; transition: opacity 0.4s ease;
+        }
+        .tier-card:hover::before { opacity: 1; }
+        .tier-name { font-family: var(--font-heading); font-size: 1.8rem; color: var(--gold-muted); margin: 0; letter-spacing: 2px; }
+        .tier-req { font-size: 0.75rem; color: var(--gold-dark); margin: 1rem 0; text-transform: uppercase; letter-spacing: 1px; }
+        .tier-card p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); }
+
+        /* 创始团队背书区 */
+        .founder-section {
+            background-color: var(--bg-panel); padding: 6rem 10%; display: flex; flex-wrap: wrap; align-items: center; gap: 4rem;
+        }
+        .founder-text { flex: 1; min-width: 300px; }
+        .founder-text p.quote {
+            font-family: var(--font-heading); font-size: 1.8rem; font-style: italic;
+            color: var(--text-offwhite); margin-bottom: 1.5rem; line-height: 1.4;
+        }
+        .founder-signature { font-size: 0.8rem; color: var(--gold-dark); letter-spacing: 1px; text-transform: uppercase; }
+        .endorsement-box { flex: 1; min-width: 300px; border-left: 1px solid var(--gold-dark); padding-left: 3rem; }
+
+        footer { text-align: center; padding: 3rem; border-top: 1px solid rgba(197, 179, 148, 0.1); font-size: 0.75rem; color: var(--gold-dark); letter-spacing: 2px; text-transform: uppercase; }
+
+        /* 双语控制 */
+        .zh { display: none; }
     </style>
 </head>
 <body>
 
     <nav>
         <a href="#" class="nav-logo">Altier</a>
-        </nav>
+        <button class="lang-btn" onclick="toggleLang()">EN / 中文</button>
+    </nav>
 
     <div class="hero">
-        <h1>Altier</h1>
-        <h2>Asset Managers for Premium Travel</h2>
-        <p>跨太平洋高端出行的重构者。以数据算法驾驭航线，以顶级礼遇重塑归途。</p>
+        <h1 class="reveal">Altier</h1>
+        <h2 class="reveal" style="transition-delay: 0.2s;">
+            <span class="en">Asset Managers for Premium Travel</span>
+            <span class="zh">跨太平洋高端出行的重构者</span>
+        </h2>
+        <p class="reveal" style="transition-delay: 0.4s;">
+            <span class="en">Bypassing the information wall. We merge engineering rigor with exclusive concierge services to master your trans-pacific journey.</span>
+            <span class="zh">打破信息壁垒。我们将工程学的严谨注入每一次跨太平洋的飞行，以数据算法驾驭航线，以顶级礼遇重塑归途。</span>
+        </p>
         
-        <a href="YOUR_GOOGLE_FORM_URL" class="cta-btn" target="_blank">递交出行意向 (Submit Request)</a>
+        <a href="https://forms.gle/YOUR_FORM_LINK_HERE" class="cta-btn reveal" style="transition-delay: 0.6s;" target="_blank">
+            <span class="en">Submit Request</span>
+            <span class="zh">递交出行意向</span>
+        </a>
     </div>
 
-    <div class="decorative-line"></div>
+    <div class="decorative-line reveal"></div>
+
+    <div class="section paradox-grid">
+        <div class="paradox-text reveal">
+            <h3>
+                <span class="en">The Direct Flight Paradox</span>
+                <span class="zh">打破直飞溢价陷阱</span>
+            </h3>
+            <p>
+                <span class="en">International students blindly pay $8,000 to $10,000 for standard business class tickets due to legacy OTA failures. We redefine this model.</span>
+                <span class="zh">长久以来，中国留学生因传统信息壁垒，被动支付高达 $8,000 至 $10,000 的高昂费用。我们彻底重构了这一商业模型。</span>
+            </p>
+        </div>
+        <div class="price-card reveal">
+            <span style="font-size: 0.75rem; letter-spacing: 2px; color: var(--gold-dark); text-transform: uppercase;">
+                <span class="en">Altier Arbitrage</span>
+                <span class="zh">Altier 空间套利</span>
+            </span>
+            <div class="price-tag">$3,000 - $4,000</div>
+            <p style="font-size: 0.9rem; color: var(--text-offwhite);">
+                <span class="en">Same absolute comfort. 50%+ cost reduction.</span>
+                <span class="zh">极致舒适，节省超过 50% 核心成本。</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="section" style="background-color: var(--bg-panel);">
+        <h3 class="section-title reveal">
+            <span class="en">Professional Concierge Matrix</span>
+            <span class="zh">私人出行护航矩阵</span>
+        </h3>
+        <div class="services-grid">
+            <div class="service-card reveal" style="transition-delay: 0.1s;">
+                <h4>
+                    <span class="en">Strategic Arbitrage</span>
+                    <span class="zh">航线空间套利</span>
+                </h4>
+                <p>
+                    <span class="en">Matching elite 1-Stop itineraries with top-tier airlines (ANA, Cathay, Korean Air). Direct GDS ticketing ensures 100% ownership.</span>
+                    <span class="zh">匹配全日空、国泰等顶级航司的优质联程航班。通过全球底层接口出票，确保100%客票所有权与零库存风险。</span>
+                </p>
+            </div>
+            <div class="service-card reveal" style="transition-delay: 0.2s;">
+                <h4>
+                    <span class="en">POE Intelligence</span>
+                    <span class="zh">独家口岸风控</span>
+                </h4>
+                <p>
+                    <span class="en">Dynamic tracking of US customs scrutiny. We intentionally route you through lenient ports to safeguard your academic journey.</span>
+                    <span class="zh">动态追踪全美入境口岸审查严格度，刻意为您规避高压区，规划最平稳通关航线，构筑学业安全防火墙。</span>
+                </p>
+            </div>
+            <div class="service-card reveal" style="transition-delay: 0.3s;">
+                <h4>
+                    <span class="en">Seamless Rescue</span>
+                    <span class="zh">零焦虑接管</span>
+                </h4>
+                <p>
+                    <span class="en">Strictly single-PNR tickets. In case of delays, our concierge directly negotiates rebooking while you rest in the lounge.</span>
+                    <span class="zh">坚持仅出售“同一预订代码”官方客票。遭遇延误时，管家团队直接与航司后台强硬交涉，消除您的滞留恐慌。</span>
+                </p>
+            </div>
+        </div>
+    </div>
 
     <div class="section">
-        <h3>The Altiora Society<br><span style="font-size:1.2rem; color:var(--gold-dark);">专属阶层体系</span></h3>
-        
+        <h3 class="section-title reveal">
+            <span class="en">The Altiora Society</span>
+            <span class="zh">The Altiora Society <br><span style="font-size: 1.2rem; color: var(--gold-dark); letter-spacing: 4px;">专属会员阶层</span></span>
+        </h3>
         <div class="tiers">
-            <div class="tier-card">
-                <h4 class="tier-name-cn">银卡</h4>
+            <div class="tier-card reveal" style="transition-delay: 0.1s;">
+                <h4 class="tier-name">
+                    <span class="en">Silver</span><span class="zh">银卡</span>
+                </h4>
                 <p class="tier-req">30,000 Miles</p>
-                <p>专属服务费减免<br>起飞地贵宾室通道安排</p>
+                <p>
+                    <span class="en">Digital Wallet Card<br>Consulting Fee Reductions<br>Preference Management</span>
+                    <span class="zh">专属电子感应卡<br>次轮服务费减免<br>餐食偏好预设管理</span>
+                </p>
             </div>
-            
-            <div class="tier-card">
-                <h4 class="tier-name-cn">金卡</h4>
+            <div class="tier-card reveal" style="transition-delay: 0.2s;">
+                <h4 class="tier-name">
+                    <span class="en">Gold</span><span class="zh">金卡</span>
+                </h4>
                 <p class="tier-req">60,000 Miles</p>
-                <p>专属实体金属卡<br>免费升舱/候补(Waitlist)交涉<br>启程安心承诺 (50%兜底)</p>
+                <p>
+                    <span class="en">Brushed Metal Card<br>Waitlist Clearance<br>Entry Assurance (50%)</span>
+                    <span class="zh">实体金属拉丝卡<br>免费候补交涉<br>启程安心承诺 (50%兜底)</span>
+                </p>
             </div>
-
-            <div class="tier-card">
-                <h4 class="tier-name-cn">白金</h4>
+            <div class="tier-card reveal" style="transition-delay: 0.3s;">
+                <h4 class="tier-name">
+                    <span class="en">Platinum</span><span class="zh">白金</span>
+                </h4>
                 <p class="tier-req">100,000 Miles</p>
-                <p>实体重金属黑卡<br>退改签零介入费<br>极限票源优先保障</p>
+                <p>
+                    <span class="en">Heavyweight Black Card<br>Zero-fee Interventions<br>Peak Season Priority</span>
+                    <span class="zh">实体重金属黑卡<br>退改签零介入费<br>极限票源最高优先级</span>
+                </p>
             </div>
-
-            <div class="tier-card">
-                <h4 class="tier-name-cn">礼宾</h4>
+            <div class="tier-card reveal" style="transition-delay: 0.4s;">
+                <h4 class="tier-name">
+                    <span class="en">Concierge</span><span class="zh">礼宾</span>
+                </h4>
                 <p class="tier-req">300,000 Miles</p>
-                <p>典藏镜面金属卡<br>服务费终身封顶底价<br>24/7 私人管家直连专线</p>
+                <p>
+                    <span class="en">Mirrored Metal Card<br>Lifetime Price Caps<br>24/7 Founder Access</span>
+                    <span class="zh">极奢镜面金属卡<br>服务费终身封顶<br>24/7 创始人团队直连</span>
+                </p>
             </div>
         </div>
     </div>
 
     <div class="founder-section">
-        <div class="founder-text">
-            <p>“真正的奢华不是繁复的堆砌，而是剥离一切不确定性后的从容。我们将工程学的严谨，注入每一次跨越太平洋的飞行。”</p>
-            <div class="founder-signature">两位来自卡内基梅隆大学的学生<br>(Two students from Carnegie Mellon University)</div>
+        <div class="founder-text reveal">
+            <p class="quote">
+                <span class="en">"True luxury isn't about excessive embellishment; it's the elegance of eliminating uncertainty. We infuse engineering precision into every trans-pacific flight."</span>
+                <span class="zh">“真正的奢华不是繁复的堆砌，而是剥离一切不确定性后的从容。我们将工程学的严谨，注入每一次跨越太平洋的飞行。”</span>
+            </p>
+            <div class="founder-signature">
+                <span class="en">Two Students from Carnegie Mellon University</span>
+                <span class="zh">两位来自卡内基梅隆大学的学生<br>From Carnegie Mellon University</span>
+            </div>
         </div>
-        <div class="endorsement-box">
-            <h4 style="color:var(--gold-muted); margin-top:0;">Backed by</h4>
-            <img id="swartz-center-logo" src="https://via.placeholder.com/300x100/1a1918/c5b394?text=Swartz+Center+Logo" alt="Swartz Center for Entrepreneurship" style="max-width: 100%; opacity: 0.8; filter: grayscale(100%) contrast(1.2);">
-            <p style="font-size: 0.8rem; color: rgba(232,228,219,0.5); margin-top: 1rem;">
-                Supported by the Swartz Center for Entrepreneurship, Carnegie Mellon University.
+        <div class="endorsement-box reveal" style="transition-delay: 0.3s;">
+            <h4 style="color:var(--gold-dark); margin:0 0 1rem 0; font-family: var(--font-body); font-weight: 300; letter-spacing: 2px; text-transform: uppercase;">Backed by</h4>
+            
+            <a href="https://www.cmu.edu/swartz-center-for-entrepreneurship/index.html" target="_blank">
+                <img id="swartz-center-logo" src="https://via.placeholder.com/300x80/141312/c5b394?text=[+Swartz+Center+Logo+]" alt="Swartz Center for Entrepreneurship" style="max-width: 100%; opacity: 0.6; filter: grayscale(100%) contrast(1.2); transition: opacity 0.3s ease;">
+            </a>
+            
+            <p style="font-size: 0.75rem; color: rgba(232,228,219,0.5); margin-top: 1rem; line-height: 1.4;">
+                <span class="en">Supported by the Swartz Center for Entrepreneurship, CMU.</span>
+                <span class="zh">本项目由卡内基梅隆大学 Swartz 创业中心支持与背书。</span>
             </p>
         </div>
     </div>
 
+    <footer>
+        <span class="en">&copy; 2026 ALTIER. ALL RIGHTS RESERVED. REDEFINING QUIET LUXURY TRAVEL.</span>
+        <span class="zh">&copy; 2026 ALTIER. 官方版权所有。重塑静谧奢华出行。</span>
+    </footer>
+
+    <script>
+        // 中英双语切换逻辑 (遵循卡别中英文分离要求)
+        let isEn = true;
+        function toggleLang() {
+            isEn = !isEn;
+            document.querySelectorAll('.en').forEach(el => el.style.display = isEn ? 'inline-block' : 'none');
+            document.querySelectorAll('.zh').forEach(el => el.style.display = isEn ? 'none' : 'inline-block');
+        }
+        // 初始化语言状态
+        toggleLang(); toggleLang(); 
+
+        // 滚动渐显动画逻辑
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>
