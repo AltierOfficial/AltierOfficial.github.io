@@ -68,41 +68,37 @@
             background-size: cover;
             background-position: center;
             
-            /* 保持你自己调好的完美高光亮度参数 */
+            /* 保持你自己调好的高级哑光参数 */
             opacity: 0.45; 
             filter: brightness(1.05) contrast(1.15);
 
-            /* 用 CSS 画一个边缘柔和的透明遮罩 */
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 50%, transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 50%, transparent 100%);
+            /* 【终极调整 1：扩大发光区】将高光核心区从一个点，拉宽成一个占据 50% (25%到75%) 面积的超宽光带 */
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%);
             
-            /* 设置波浪遮罩的高度 */
-            -webkit-mask-size: 100% 60vh; 
-            mask-size: 100% 60vh;
+            /* 【终极调整 2：巨型波浪】波浪高度设为 180vh（屏幕高度的 1.8 倍），光芒会在屏幕上停留极长的时间 */
+            -webkit-mask-size: 100% 180vh; 
+            mask-size: 100% 180vh;
             -webkit-mask-repeat: no-repeat;
             mask-repeat: no-repeat;
             
-            /* 【修改点1】将总周期拉长到 5 秒，定下整体优雅的慢基调 */
+            /* 【终极调整 3：缩短总周期】周期缩短至 5 秒。由于光带巨大，即使 5 秒一次，视觉上也会觉得非常舒缓从容 */
             animation: goldWaveSweep 5s infinite ease-in-out;
         }
 
         /* 控制隐形遮罩从上到下的位移 */
         @keyframes goldWaveSweep {
             0% {
-                -webkit-mask-position: 0 -60vh; 
-                mask-position: 0 -60vh;
+                -webkit-mask-position: 0 -180vh; /* 波浪从屏幕正上方紧贴着开始 */
+                mask-position: 0 -180vh;
             }
-            /* 【修改点2】利用百分比精准控速：
-               前 80% 的时间（整整6秒），让波浪慢慢扫过屏幕。
-               并且将终点从 150vh 缩减到 110vh，波浪一离开屏幕底部就立刻停止，消除多余的位移。 */
             90% {
-                -webkit-mask-position: 0 110vh; 
-                mask-position: 0 110vh;
+                -webkit-mask-position: 0 100vh;  /* 用 90% 的时间 (4.5秒) 缓慢且大面积地沐浴整个屏幕 */
+                mask-position: 0 100vh;
             }
-            /* 后 20% 的时间（仅1.5秒），在屏幕外做一个极短的、符合人类呼吸停顿的换气等待，然后立刻开始下一轮。 */
             100% {
-                -webkit-mask-position: 0 110vh; 
-                mask-position: 0 110vh;
+                -webkit-mask-position: 0 100vh;  /* 仅留最后 10% (0.5秒) 作为极短的暗色“换气”停顿 */
+                mask-position: 0 100vh;
             }
         }
 
