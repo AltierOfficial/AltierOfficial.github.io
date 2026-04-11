@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Altier | Journey Brief</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <title>Altier | Start Your Journey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+SC:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -15,8 +15,9 @@
       --gold-dark: #8c7a5c;
 
       --font-hero: "Pinyon Script", "Snell Roundhand", cursive;
-      --font-heading: "Cormorant Garamond", serif;
-      --font-body: "Montserrat", sans-serif;
+      --font-heading-en: "Cormorant Garamond", serif;
+      --font-body-en: "Montserrat", sans-serif;
+      --font-zh: "Noto Serif SC", "Source Han Serif SC", "STZhongsong", serif;
 
       --radius-large: 28px;
       --radius-btn: 50px;
@@ -27,41 +28,67 @@
     body {
       background-color: var(--bg-charcoal);
       color: var(--text-offwhite);
-      font-family: var(--font-body);
+      font-family: var(--font-body-en);
       font-weight: 300;
       line-height: 1.8;
       overflow-x: hidden;
       position: relative;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: pageEnter 0.8s ease forwards;
     }
 
-    body::before {
-      content: '';
+    .bg-contour {
       position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background:
-        radial-gradient(circle at 40% 50%, rgba(197, 179, 148, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 70% 30%, rgba(140, 122, 92, 0.03) 0%, transparent 40%);
-      animation: slowDrift 25s infinite alternate ease-in-out;
-      z-index: -1;
+      top: -5%;
+      left: -5%;
+      width: 110%;
+      height: 110%;
+      background-image: url('./bg-gold.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
       pointer-events: none;
+      mix-blend-mode: lighten;
+      animation: breatheContour 2.5s infinite alternate ease-in-out;
     }
 
-    @keyframes slowDrift {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(3%, 4%) scale(1.05); }
+    @keyframes breatheContour {
+      0% { opacity: 0.15; filter: brightness(0.8) contrast(1.1); transform: scale(1); }
+      100% { opacity: 0.75; filter: brightness(1.6) contrast(1.5); transform: scale(1.015); }
     }
 
-    @keyframes pageEnter {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+                  transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .zh { display: none !important; }
+    .en { display: inline-block; }
+    p.en, h1.en, h2.en, h3.en, h4.en, div.en { display: block; }
+
+    body.lang-zh-active .en { display: none !important; }
+    body.lang-zh-active .zh { display: inline-block !important; }
+    body.lang-zh-active p.zh,
+    body.lang-zh-active h1.zh,
+    body.lang-zh-active h2.zh,
+    body.lang-zh-active h3.zh,
+    body.lang-zh-active h4.zh,
+    body.lang-zh-active div.zh { display: block !important; }
+
+    .en { letter-spacing: 0.08em; }
+    h1.en, h2.en, h3.en, h4.en, span.en { letter-spacing: 0.12em; }
+
+    .zh {
+      font-family: var(--font-zh);
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      transform: scaleX(1.03);
+      transform-origin: left center;
     }
 
     nav {
@@ -73,7 +100,7 @@
       align-items: center;
       padding: 1.5rem 5%;
       z-index: 1000;
-      background: linear-gradient(to bottom, rgba(22, 21, 20, 0.9), transparent);
+      background: linear-gradient(to bottom, rgba(22, 21, 20, 0.95), transparent);
     }
 
     .nav-logo {
@@ -82,6 +109,7 @@
       color: var(--gold-muted);
       text-decoration: none;
       text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      letter-spacing: 2px;
     }
 
     .lang-btn {
@@ -91,10 +119,10 @@
       padding: 8px 20px;
       border-radius: var(--radius-btn);
       font-size: 0.75rem;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
       cursor: pointer;
-      font-family: var(--font-body);
+      font-family: var(--font-body-en);
       text-transform: uppercase;
       backdrop-filter: blur(5px);
     }
@@ -106,101 +134,95 @@
       transform: scale(1.05);
     }
 
-    .page-wrap {
-      width: min(860px, 88vw);
-      margin: 0 auto;
-      padding: 8.8rem 0 4rem;
+    .journey-page {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-
-    .hero {
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      margin-bottom: 2.5rem;
+      position: relative;
+      padding: 7.8rem 5% 4rem;
     }
 
-    .eyebrow {
-      font-size: 0.75rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+    .journey-header {
+      width: min(900px, 100%);
+      margin: 0 auto 2.2rem;
+    }
+
+    .journey-kicker {
+      font-size: 0.78rem;
       color: var(--gold-dark);
-      margin-bottom: 0.8rem;
-    }
-
-    .hero h1 {
-      font-family: var(--font-heading);
-      font-size: clamp(3.1rem, 6vw, 4.6rem);
-      color: var(--gold-muted);
-      font-weight: 300;
-      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 4px;
       margin-bottom: 1rem;
     }
 
-    .hero p {
-      max-width: 520px;
-      margin: 0 auto;
-      color: rgba(232, 228, 219, 0.78);
-      font-size: 0.95rem;
-      letter-spacing: 0.4px;
-      line-height: 1.9;
-    }
-
-    .back-home {
-      display: inline-block;
-      margin-top: 1.2rem;
-      color: var(--gold-dark);
-      text-decoration: none;
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: 0.3s ease;
-    }
-
-    .back-home:hover {
+    .journey-title {
+      font-family: var(--font-heading-en);
+      font-size: clamp(3.2rem, 8vw, 6.2rem);
       color: var(--gold-muted);
+      font-weight: 300;
+      line-height: 1.02;
+      margin-bottom: 0.8rem;
     }
 
-    .progress-wrap {
-      margin: 2.6rem 0 2rem;
+    .journey-title.zh {
+      font-family: var(--font-zh);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      transform: none;
+      line-height: 1.25;
     }
 
-    .progress-top {
+    .journey-subtitle {
+      max-width: 660px;
+      margin: 0 auto;
+      color: rgba(232, 228, 219, 0.8);
+      line-height: 2.1;
+      font-size: 0.9rem;
+    }
+
+    .decorative-line {
+      width: 1px;
+      height: 100px;
+      background: linear-gradient(to bottom, transparent, rgba(197, 179, 148, 0.6), transparent);
+      margin: 2rem auto 1.8rem;
+    }
+
+    .progress-meta {
+      width: min(760px, 100%);
+      margin: 0 auto 1.4rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: var(--gold-dark);
-      font-size: 0.76rem;
-      letter-spacing: 2px;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      margin-bottom: 0.9rem;
+      letter-spacing: 3px;
     }
 
     .progress-bar {
-      width: 100%;
+      width: min(760px, 100%);
       height: 1px;
-      background: rgba(197, 179, 148, 0.12);
+      background: rgba(197, 179, 148, 0.15);
+      margin: 0 auto 2.2rem;
+      position: relative;
       overflow: hidden;
     }
 
     .progress-fill {
       height: 100%;
       width: 10%;
-      background: linear-gradient(to right, rgba(197, 179, 148, 0.3), rgba(197, 179, 148, 0.9));
-      transition: width 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+      background: linear-gradient(to right, rgba(197, 179, 148, 0.35), rgba(197, 179, 148, 0.95));
+      transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    form {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-
-    .question-stage {
-      position: relative;
+    .question-shell {
+      width: min(760px, 100%);
       min-height: 360px;
-      margin-top: 1rem;
+      margin: 0 auto;
+      position: relative;
     }
 
     .question-slide {
@@ -208,12 +230,13 @@
       inset: 0;
       opacity: 0;
       pointer-events: none;
-      transform: translateY(18px);
+      transform: translateY(24px);
       transition:
-        opacity 0.55s cubic-bezier(0.25, 1, 0.5, 1),
-        transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+        opacity 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: flex-start;
     }
 
@@ -226,32 +249,44 @@
     .question-number {
       color: var(--gold-dark);
       font-size: 0.78rem;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
 
-    .question-title {
-      font-family: var(--font-heading);
-      font-size: clamp(2.2rem, 4vw, 3.3rem);
-      font-weight: 300;
-      line-height: 1.12;
-      color: var(--text-offwhite);
-      margin-bottom: 1rem;
+    .question-title-block {
       max-width: 760px;
+      margin: 0 auto 1rem;
     }
 
-    .question-sub {
-      color: rgba(232, 228, 219, 0.56);
-      font-size: 0.9rem;
-      line-height: 1.8;
-      max-width: 560px;
-      margin-bottom: 2rem;
+    .question-title-block h2 {
+      font-family: var(--font-heading-en);
+      font-size: clamp(2.2rem, 4.8vw, 3.4rem);
+      color: var(--text-offwhite);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
     }
 
-    .input-wrap {
-      width: 100%;
+    .question-title-block h2.zh {
+      font-family: var(--font-zh);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      transform: none;
+      line-height: 1.45;
+    }
+
+    .question-title-block p {
+      color: rgba(232, 228, 219, 0.62);
+      font-size: 0.84rem;
+      line-height: 1.9;
       max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .input-area {
+      width: min(620px, 100%);
+      margin: 1.8rem auto 0;
     }
 
     input,
@@ -261,22 +296,31 @@
       background: transparent;
       color: var(--text-offwhite);
       border: none;
-      border-bottom: 1px solid rgba(197, 179, 148, 0.2);
-      padding: 0.9rem 0;
-      font-family: var(--font-body);
+      border-bottom: 1px solid rgba(197, 179, 148, 0.22);
+      padding: 0.95rem 0;
+      font-family: var(--font-body-en);
       font-size: 1rem;
       font-weight: 300;
       outline: none;
-      transition: border-color 0.3s ease;
       appearance: none;
       -webkit-appearance: none;
-      border-radius: 0;
+      transition: border-color 0.35s ease, opacity 0.35s ease;
+      text-align: center;
+      letter-spacing: 0.04em;
+    }
+
+    body.lang-zh-active input,
+    body.lang-zh-active select,
+    body.lang-zh-active textarea {
+      font-family: var(--font-zh);
+      letter-spacing: 0.08em;
+      font-weight: 400;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-bottom-color: rgba(197, 179, 148, 0.55);
+      border-bottom-color: rgba(197, 179, 148, 0.6);
     }
 
     input::placeholder,
@@ -289,59 +333,66 @@
         linear-gradient(45deg, transparent 50%, rgba(197,179,148,0.7) 50%),
         linear-gradient(135deg, rgba(197,179,148,0.7) 50%, transparent 50%);
       background-position:
-        calc(100% - 18px) calc(1.2rem),
-        calc(100% - 12px) calc(1.2rem);
+        calc(100% - 22px) calc(1.3rem),
+        calc(100% - 16px) calc(1.3rem);
       background-size: 6px 6px, 6px 6px;
       background-repeat: no-repeat;
-      padding-right: 2.2rem;
+      padding-right: 2.5rem;
+      text-align-last: center;
     }
 
     textarea {
       min-height: 120px;
-      resize: vertical;
-      padding-top: 0.7rem;
+      resize: none;
+      text-align: left;
+      line-height: 1.9;
+    }
+
+    body.lang-zh-active textarea {
+      text-align: left;
     }
 
     .controls {
+      width: min(760px, 100%);
+      margin: 2.6rem auto 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
-      margin-top: auto;
-      padding-top: 2rem;
     }
 
-    .secondary-btn,
+    .ghost-btn,
     .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem 2.6rem;
+      display: inline-block;
+      padding: 1.15rem 3rem;
+      text-decoration: none;
       border-radius: var(--radius-btn);
-      font-family: var(--font-body);
-      letter-spacing: 3px;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      cursor: pointer;
       transition: all 0.5s ease;
       backdrop-filter: blur(5px);
+      cursor: pointer;
+      font-size: 0.82rem;
+      text-transform: uppercase;
     }
 
-    .secondary-btn {
-      background: transparent;
+    .ghost-btn {
+      background: rgba(0,0,0,0.12);
+      border: 1px solid rgba(197, 179, 148, 0.18);
       color: var(--gold-dark);
-      border: 1px solid rgba(197, 179, 148, 0.16);
+      font-family: var(--font-body-en);
+      letter-spacing: 3px;
     }
 
-    .secondary-btn:hover {
-      color: var(--gold-muted);
+    .ghost-btn:hover {
       border-color: rgba(197, 179, 148, 0.35);
+      color: var(--gold-muted);
     }
 
     .cta-btn {
-      background: rgba(0,0,0,0.2);
-      color: var(--gold-muted);
       border: 1px solid rgba(197, 179, 148, 0.5);
+      color: var(--gold-muted);
+      font-family: var(--font-body-en);
+      letter-spacing: 4px;
+      background: rgba(0,0,0,0.2);
     }
 
     .cta-btn:hover {
@@ -350,130 +401,133 @@
       box-shadow: 0 10px 20px rgba(197, 179, 148, 0.2);
     }
 
-    .cta-btn:disabled,
-    .secondary-btn:disabled {
-      opacity: 0.35;
+    .ghost-btn:disabled,
+    .cta-btn:disabled {
+      opacity: 0.3;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
     }
 
-    .submit-note,
-    .success-message {
-      text-align: center;
+    .submit-note {
       margin-top: 1rem;
-      font-size: 0.82rem;
+      font-size: 0.76rem;
       color: rgba(232, 228, 219, 0.5);
-      letter-spacing: 0.4px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .submit-note.zh {
+      text-transform: none;
+      letter-spacing: 0.12em;
     }
 
     .success-message {
       display: none;
-      color: var(--gold-muted);
       margin-top: 2.2rem;
-      font-size: 0.92rem;
+      color: var(--gold-muted);
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      line-height: 1.9;
     }
 
-    .en { display: inline-block; }
-    .zh { display: none; }
+    .success-message.zh {
+      letter-spacing: 0.1em;
+      transform: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem 1rem 3.5rem;
+      font-size: 0.75rem;
+      color: var(--gold-dark);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
 
     iframe[name="hidden_iframe"] {
       display: none;
     }
 
-    footer {
-      text-align: center;
-      padding: 2rem 1rem 4rem;
-      font-size: 0.75rem;
-      color: var(--gold-dark);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    @media (max-width: 720px) {
-      .page-wrap {
-        width: min(92vw, 860px);
-        padding-top: 8rem;
+    @media (max-width: 768px) {
+      .journey-page {
+        padding-top: 7rem;
       }
 
-      .question-stage {
+      .question-shell {
         min-height: 430px;
-      }
-
-      .question-title {
-        font-size: 2rem;
       }
 
       .controls {
         flex-direction: column;
-        align-items: stretch;
       }
 
-      .secondary-btn,
+      .ghost-btn,
       .cta-btn {
         width: 100%;
+      }
+
+      .journey-title {
+        font-size: 3rem;
+      }
+
+      .question-title-block h2 {
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
+
+  <div class="bg-contour"></div>
+
   <nav>
     <a href="./index.html" class="nav-logo">Altier</a>
     <button class="lang-btn" onclick="toggleLang()">EN / 中文</button>
   </nav>
 
-  <div class="page-wrap">
-    <div class="hero">
-      <div class="eyebrow">
-        <span class="en">Journey Brief</span>
-        <span class="zh">行程简述</span>
-      </div>
+  <main class="journey-page">
+    <div class="journey-header reveal active">
+      <div class="journey-kicker en">Private Concierge Intake</div>
+      <div class="journey-kicker zh">尊享礼宾行程采集</div>
 
-      <h1>
-        <span class="en">Begin Quietly.</span>
-        <span class="zh">从容开启。</span>
-      </h1>
+      <h1 class="journey-title en">Start Your Journey</h1>
+      <h1 class="journey-title zh">开启您的旅程</h1>
 
-      <p>
-        <span class="en">A few considered details, and we will begin shaping your journey.</span>
-        <span class="zh">只需几项关键信息，我们便可开始为您梳理整段旅程。</span>
+      <p class="journey-subtitle en">
+        A discreet concierge brief for a journey shaped around comfort, clarity, and calm assurance.
+      </p>
+      <p class="journey-subtitle zh">
+        这是一份专属礼宾采集，我们将以舒适、清晰与从容为核心，为您梳理整段旅程。
       </p>
 
-      <a href="./index.html" class="back-home">
-        <span class="en">Back to Home</span>
-        <span class="zh">返回首页</span>
-      </a>
+      <div class="decorative-line"></div>
     </div>
 
-    <div class="progress-wrap">
-      <div class="progress-top">
-        <span id="progressText">01 / 10</span>
-        <span>
-          <span class="en">Refined Intake</span>
-          <span class="zh">精简采集</span>
-        </span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
+    <div class="progress-meta">
+      <span id="progressCount">01 / 10</span>
+      <span class="en">Private Sequence</span>
+      <span class="zh">礼宾流程</span>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
     </div>
 
     <form id="journeyForm" action="GOOGLE_SCRIPT_URL" method="POST" target="hidden_iframe">
       <input type="hidden" name="pageLanguage" id="pageLanguage" value="EN">
 
-      <div class="question-stage">
+      <div class="question-shell">
 
         <section class="question-slide active" data-step="1">
           <div class="question-number">01</div>
-          <div class="question-title">
-            <span class="en">May we have your name?</span>
-            <span class="zh">请问如何称呼您？</span>
+          <div class="question-title-block">
+            <h2 class="en">How may we address you?</h2>
+            <h2 class="zh">请问如何称呼您</h2>
+            <p class="en">A quiet beginning.</p>
+            <p class="zh">先从最基本的信息开始</p>
           </div>
-          <div class="question-sub">
-            <span class="en">A simple beginning.</span>
-            <span class="zh">先从最基本的信息开始。</span>
-          </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <input id="fullName" name="fullName" type="text" required
               data-en-placeholder="Your full name"
               data-zh-placeholder="请输入您的姓名"
@@ -483,15 +537,13 @@
 
         <section class="question-slide" data-step="2">
           <div class="question-number">02</div>
-          <div class="question-title">
-            <span class="en">How should we reach you?</span>
-            <span class="zh">我们该如何与您联系？</span>
+          <div class="question-title-block">
+            <h2 class="en">How should we reach you?</h2>
+            <h2 class="zh">我们该如何与您联系</h2>
+            <p class="en">Email, WeChat, or your preferred contact.</p>
+            <p class="zh">请填写 Email、微信或您最常用的联系方式</p>
           </div>
-          <div class="question-sub">
-            <span class="en">Email, WeChat, or another preferred contact.</span>
-            <span class="zh">请填写 Email、微信或您偏好的联系方式。</span>
-          </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <input id="contactInfo" name="contactInfo" type="text" required
               data-en-placeholder="Email / WeChat / preferred contact"
               data-zh-placeholder="Email / 微信 / 常用联系方式"
@@ -501,11 +553,11 @@
 
         <section class="question-slide" data-step="3">
           <div class="question-number">03</div>
-          <div class="question-title">
-            <span class="en">Where will your journey begin?</span>
-            <span class="zh">您的出发城市是？</span>
+          <div class="question-title-block">
+            <h2 class="en">Where will your journey begin?</h2>
+            <h2 class="zh">您的出发城市是哪里</h2>
           </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <input id="departureCity" name="departureCity" type="text" required
               data-en-placeholder="e.g. Pittsburgh"
               data-zh-placeholder="例如：Pittsburgh 匹兹堡"
@@ -515,11 +567,11 @@
 
         <section class="question-slide" data-step="4">
           <div class="question-number">04</div>
-          <div class="question-title">
-            <span class="en">And where are you headed?</span>
-            <span class="zh">您的目的地是？</span>
+          <div class="question-title-block">
+            <h2 class="en">And where are you headed?</h2>
+            <h2 class="zh">您的目的地是哪里</h2>
           </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <input id="destinationCity" name="destinationCity" type="text" required
               data-en-placeholder="e.g. Chengdu"
               data-zh-placeholder="例如：Chengdu 成都"
@@ -529,29 +581,27 @@
 
         <section class="question-slide" data-step="5">
           <div class="question-number">05</div>
-          <div class="question-title">
-            <span class="en">When would you ideally like to travel?</span>
-            <span class="zh">您理想中的出行时间是？</span>
+          <div class="question-title-block">
+            <h2 class="en">When would you ideally like to travel?</h2>
+            <h2 class="zh">您理想中的出行时间是</h2>
+            <p class="en">An exact date is not necessary. A window is enough.</p>
+            <p class="zh">不一定需要精确日期，大致时间范围即可</p>
           </div>
-          <div class="question-sub">
-            <span class="en">An exact date is not necessary — a window is enough.</span>
-            <span class="zh">不一定要非常精确，时间范围即可。</span>
-          </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <input id="travelWindow" name="travelWindow" type="text" required
               data-en-placeholder="e.g. Aug 5–10 / early December"
-              data-zh-placeholder="例如：8月5日–10日 / 12月上旬"
+              data-zh-placeholder="例如：8月5日至10日 / 12月上旬"
               placeholder="e.g. Aug 5–10 / early December" />
           </div>
         </section>
 
         <section class="question-slide" data-step="6">
           <div class="question-number">06</div>
-          <div class="question-title">
-            <span class="en">What kind of itinerary are you considering?</span>
-            <span class="zh">您目前考虑的是哪种行程形式？</span>
+          <div class="question-title-block">
+            <h2 class="en">What kind of itinerary are you considering?</h2>
+            <h2 class="zh">您目前考虑的是哪种行程形式</h2>
           </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <select id="tripType" name="tripType" required data-translate-select>
               <option value="">Please select</option>
               <option value="Round-trip">Round-trip</option>
@@ -563,11 +613,11 @@
 
         <section class="question-slide" data-step="7">
           <div class="question-number">07</div>
-          <div class="question-title">
-            <span class="en">Which best describes this trip?</span>
-            <span class="zh">以下哪项最符合这次出行情况？</span>
+          <div class="question-title-block">
+            <h2 class="en">Which best describes this trip?</h2>
+            <h2 class="zh">以下哪项最符合这次出行情况</h2>
           </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <select id="travelContext" name="travelContext" required data-translate-select>
               <option value="">Please select</option>
               <option value="Flying alone">Flying alone</option>
@@ -580,11 +630,11 @@
 
         <section class="question-slide" data-step="8">
           <div class="question-number">08</div>
-          <div class="question-title">
-            <span class="en">What matters most for this journey?</span>
-            <span class="zh">这次行程中，您最看重什么？</span>
+          <div class="question-title-block">
+            <h2 class="en">What matters most for this journey?</h2>
+            <h2 class="zh">这次行程中您最看重什么</h2>
           </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <select id="topPriority" name="topPriority" required data-translate-select>
               <option value="">Please select</option>
               <option value="Minimum hassle">Minimum hassle</option>
@@ -598,11 +648,11 @@
 
         <section class="question-slide" data-step="9">
           <div class="question-number">09</div>
-          <div class="question-title">
-            <span class="en">What would you most like us to reduce?</span>
-            <span class="zh">您最希望我们帮您降低哪方面的不确定性？</span>
+          <div class="question-title-block">
+            <h2 class="en">What would you most like us to reduce?</h2>
+            <h2 class="zh">您最希望我们替您降低哪方面的不确定性</h2>
           </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <select id="primaryConcern" name="primaryConcern" required data-translate-select>
               <option value="">Please select</option>
               <option value="Tight layovers">Tight layovers</option>
@@ -617,26 +667,24 @@
 
         <section class="question-slide" data-step="10">
           <div class="question-number">10</div>
-          <div class="question-title">
-            <span class="en">Is there anything else we should quietly keep in mind?</span>
-            <span class="zh">还有什么偏好或顾虑，是您希望我们提前纳入考虑的？</span>
+          <div class="question-title-block">
+            <h2 class="en">Is there anything else we should keep in mind?</h2>
+            <h2 class="zh">还有什么偏好或顾虑需要我们提前纳入考虑</h2>
+            <p class="en">Family preferences, baggage, timing sensitivities, or anything that would make the journey feel more effortless.</p>
+            <p class="zh">例如家人偏好、行李情况、时间敏感点，或任何能让整段旅程更省心的信息</p>
           </div>
-          <div class="question-sub">
-            <span class="en">Family preferences, baggage, routing dislikes, timing sensitivities, or anything that would make the journey feel more effortless.</span>
-            <span class="zh">例如家人偏好、行李情况、不喜欢的转机方式、时间敏感点，或任何能让旅程更省心的信息。</span>
-          </div>
-          <div class="input-wrap">
+          <div class="input-area">
             <textarea id="additionalNotes" name="additionalNotes"
-              data-en-placeholder="Share any details that would help us shape a smoother journey."
-              data-zh-placeholder="请输入任何有助于我们更好安排旅程的信息。"
-              placeholder="Share any details that would help us shape a smoother journey."></textarea>
+              data-en-placeholder="Share anything that would help us shape a smoother journey."
+              data-zh-placeholder="请输入任何有助于我们更好安排旅程的信息"
+              placeholder="Share anything that would help us shape a smoother journey."></textarea>
           </div>
         </section>
 
       </div>
 
       <div class="controls">
-        <button type="button" class="secondary-btn" id="prevBtn" disabled>
+        <button type="button" class="ghost-btn" id="prevBtn" disabled>
           <span class="en">Back</span>
           <span class="zh">上一步</span>
         </button>
@@ -647,44 +695,38 @@
         </button>
 
         <button type="submit" class="cta-btn" id="submitBtn" style="display:none;">
-          <span class="en">Submit Your Brief</span>
-          <span class="zh">提交行程信息</span>
+          <span class="en">Submit</span>
+          <span class="zh">提交</span>
         </button>
       </div>
 
-      <div class="submit-note">
-        <span class="en">Your details will be used only to understand your travel needs.</span>
-        <span class="zh">这些信息仅用于帮助我们理解您的出行需求。</span>
-      </div>
+      <p class="submit-note en">Your details will be used only to understand your travel needs.</p>
+      <p class="submit-note zh">这些信息仅用于帮助我们理解您的出行需求</p>
 
-      <div class="success-message" id="successMessage">
-        <span class="en">Thank you. Your brief has been received.</span>
-        <span class="zh">感谢提交，我们已经收到您的信息。</span>
+      <div class="success-message en" id="successMessageEn">
+        Thank you. Your private brief has been received.
+      </div>
+      <div class="success-message zh" id="successMessageZh">
+        感谢提交，我们已经收到您的专属行程信息
       </div>
     </form>
+  </main>
 
-    <iframe name="hidden_iframe"></iframe>
-  </div>
+  <iframe name="hidden_iframe"></iframe>
 
   <footer>
-    <span class="en">&copy; 2026 ALTIER. REDEFINING SEAMLESS LUXURY TRAVEL.</span>
+    <span class="en">&copy; 2026 ALTIER. REDEFINING SEAMLESS AND COMFORTABLE TRAVEL.</span>
     <span class="zh">&copy; 2026 ALTIER. 重塑从容与安心的云端体验。</span>
   </footer>
 
   <script>
-    let isEn = true;
-
-    const totalSteps = 10;
-    let currentStep = 1;
-
-    const slides = document.querySelectorAll('.question-slide');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const submitBtn = document.getElementById('submitBtn');
-    const progressFill = document.getElementById('progressFill');
-    const progressText = document.getElementById('progressText');
-    const form = document.getElementById('journeyForm');
-    const successMessage = document.getElementById('successMessage');
+    function toggleLang() {
+      document.body.classList.toggle('lang-zh-active');
+      document.getElementById('pageLanguage').value =
+        document.body.classList.contains('lang-zh-active') ? '中文' : 'EN';
+      applyPlaceholders();
+      applySelectTranslations();
+    }
 
     const selectTranslations = {
       tripType: {
@@ -705,9 +747,13 @@
       }
     };
 
+    function isZh() {
+      return document.body.classList.contains('lang-zh-active');
+    }
+
     function applyPlaceholders() {
       document.querySelectorAll('[data-en-placeholder]').forEach(el => {
-        el.placeholder = isEn ? el.dataset.enPlaceholder : el.dataset.zhPlaceholder;
+        el.placeholder = isZh() ? el.dataset.zhPlaceholder : el.dataset.enPlaceholder;
       });
     }
 
@@ -715,60 +761,50 @@
       Object.keys(selectTranslations).forEach(id => {
         const select = document.getElementById(id);
         if (!select) return;
-        const labels = isEn ? selectTranslations[id].en : selectTranslations[id].zh;
+        const labels = isZh() ? selectTranslations[id].zh : selectTranslations[id].en;
         [...select.options].forEach((opt, index) => {
           if (labels[index] !== undefined) opt.text = labels[index];
         });
       });
     }
 
-    function toggleLang() {
-      isEn = !isEn;
-      document.querySelectorAll('.en').forEach(el => el.style.display = isEn ? 'inline-block' : 'none');
-      document.querySelectorAll('.zh').forEach(el => el.style.display = isEn ? 'none' : 'inline-block');
-      document.getElementById('pageLanguage').value = isEn ? 'EN' : '中文';
-      applyPlaceholders();
-      applySelectTranslations();
+    const totalSteps = 10;
+    let currentStep = 1;
+
+    const slides = document.querySelectorAll('.question-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressFill = document.getElementById('progressFill');
+    const progressCount = document.getElementById('progressCount');
+    const form = document.getElementById('journeyForm');
+
+    function getFieldForStep(step) {
+      const slide = document.querySelector(`.question-slide[data-step="${step}"]`);
+      return slide ? slide.querySelector('input, select, textarea') : null;
     }
 
     function showStep(step) {
-      slides.forEach(slide => {
-        slide.classList.remove('active');
-      });
+      slides.forEach(slide => slide.classList.remove('active'));
+      const active = document.querySelector(`.question-slide[data-step="${step}"]`);
+      if (active) active.classList.add('active');
 
-      const activeSlide = document.querySelector(`.question-slide[data-step="${step}"]`);
-      if (activeSlide) {
-        activeSlide.classList.add('active');
-      }
-
-      progressText.textContent = `${String(step).padStart(2, '0')} / ${String(totalSteps).padStart(2, '0')}`;
+      progressCount.textContent = `${String(step).padStart(2, '0')} / ${String(totalSteps).padStart(2, '0')}`;
       progressFill.style.width = `${(step / totalSteps) * 100}%`;
 
       prevBtn.disabled = step === 1;
 
       if (step === totalSteps) {
         nextBtn.style.display = 'none';
-        submitBtn.style.display = 'inline-flex';
+        submitBtn.style.display = 'inline-block';
       } else {
-        nextBtn.style.display = 'inline-flex';
+        nextBtn.style.display = 'inline-block';
         submitBtn.style.display = 'none';
       }
     }
 
-    function getCurrentField(step) {
-      const slide = document.querySelector(`.question-slide[data-step="${step}"]`);
-      if (!slide) return null;
-      return slide.querySelector('input, select, textarea');
-    }
-
-    function validateCurrentStep() {
-      const field = getCurrentField(currentStep);
-      if (!field) return true;
-      return field.checkValidity();
-    }
-
     nextBtn.addEventListener('click', () => {
-      const field = getCurrentField(currentStep);
+      const field = getFieldForStep(currentStep);
       if (field && !field.checkValidity()) {
         field.reportValidity();
         return;
@@ -788,7 +824,7 @@
     });
 
     form.addEventListener('submit', function(e) {
-      const field = getCurrentField(currentStep);
+      const field = getFieldForStep(currentStep);
       if (field && !field.checkValidity()) {
         e.preventDefault();
         field.reportValidity();
@@ -796,12 +832,35 @@
       }
 
       setTimeout(() => {
-        successMessage.style.display = 'block';
+        const enMsg = document.getElementById('successMessageEn');
+        const zhMsg = document.getElementById('successMessageZh');
+        if (isZh()) {
+          zhMsg.style.display = 'block';
+        } else {
+          enMsg.style.display = 'block';
+        }
       }, 700);
     });
 
-    toggleLang();
-    toggleLang();
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: "0px 0px -30px 0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        } else if (!entry.target.classList.contains('question-slide')) {
+          entry.target.classList.remove('active');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    applyPlaceholders();
+    applySelectTranslations();
     showStep(currentStep);
   </script>
 </body>
