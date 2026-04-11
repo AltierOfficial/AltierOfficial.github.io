@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Altier | Curate Your Premium Journey</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+SC:wght@400;500;600&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+SC:wght@400;500;600&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
     <style>
         /* 引入 CSS 变量矩阵：赋予网站无缝切换日夜主题的能力 */
         :root {
@@ -209,6 +209,20 @@
             display: inline-block;
             transform: scaleY(0.9); 
             transform-origin: bottom center;
+        }
+
+        /* ==================================================== */
+        /* 新增：Brunello Cucinelli (BC) 专属高对比度紧凑字体风格 */
+        /* ==================================================== */
+        .bc-serif-heading {
+            /* 优先调用苹果系统原生的顶级 Didot 字体，后兜底 Bodoni Moda */
+            font-family: "Didot", "Bodoni MT", "Bodoni Moda", "Playfair Display", serif !important;
+            font-weight: 400 !important;
+            /* 核心：极其紧凑的字距，对抗全局的宽字距，还原 BC 的高级感 */
+            letter-spacing: -0.02em !important; 
+            word-spacing: 0.05em;
+            text-transform: none !important;
+            transform: none !important; /* 取消 LP 风格的扁平化，保持 Didot 原有的高耸昂扬姿态 */
         }
 
         /* 导航栏及其交互区组 */
@@ -526,7 +540,7 @@
 
     <div class="section paradox-grid">
         <div class="paradox-text reveal">
-            <h3 class="en lp-serif-heading">The Art of Smart Luxury</h3>
+            <h3 class="en bc-serif-heading">The Art of Smart Luxury</h3>
             <h3 class="zh">智享奢华之境</h3>
             
             <p class="en">
@@ -551,24 +565,24 @@
     </div>
 
     <div class="section">
-        <h3 class="section-title en">Bespoke Concierge Matrix</h3>
+        <h3 class="section-title en">Tailored Concierge Matrix</h3>
         <h3 class="section-title zh">私人出行护航矩阵</h3>
         
         <div class="services-grid">
             <div class="service-card reveal">
-                <h4 class="en lp-serif-heading">Bespoke Routing</h4>
+                <h4 class="en bc-serif-heading">Customized Routing</h4>
                 <h4 class="zh">定制化航线</h4>
                 <p class="en">Matching elite itineraries with top-tier airlines. Direct official ticketing ensures absolute ownership and peace of mind.</p>
                 <p class="zh">匹配顶级航司的优雅联程。通过全球底层接口直接出票，确保旅程绝对所有权与安心无虞。</p>
             </div>
             <div class="service-card reveal">
-                <h4 class="en lp-serif-heading">Seamless Arrival</h4>
+                <h4 class="en bc-serif-heading">Seamless Arrival</h4>
                 <h4 class="zh">从容入境护航</h4>
                 <p class="en">We discreetly navigate the complexities of customs scrutiny, routing you through welcoming ports to safeguard your endeavors.</p>
                 <p class="zh">隐性化解海关审查的繁杂，为您规划温和从容的通关航线，为学业之旅构筑无形防火墙。</p>
             </div>
             <div class="service-card reveal">
-                <h4 class="en lp-serif-heading">Unwavering Protection</h4>
+                <h4 class="en bc-serif-heading">Unwavering Protection</h4>
                 <h4 class="zh">全天候接管</h4>
                 <p class="en">Strictly unified bookings. Should any turbulence arise, our private concierge handles the backend intricacies while you rest.</p>
                 <p class="zh">严苛的单一预订代码标准。一旦遭遇变数，私人管家代为处理后台交涉，将喧嚣隔绝于贵宾室外。</p>
@@ -585,28 +599,28 @@
         
         <div class="tiers">
             <div class="tier-card reveal">
-                <h4 class="tier-name en">Silver</h4>
+                <h4 class="tier-name en bc-serif-heading">Silver</h4>
                 <h4 class="tier-name zh">银卡</h4>
                 <p class="tier-req">30,000 Miles</p>
                 <p class="en">Digital Identity<br>Concierge Fee Privileges<br>Curated Preferences</p>
                 <p class="zh">专属数字身份<br>咨询礼遇减免<br>起飞地贵宾体验</p>
             </div>
             <div class="tier-card reveal">
-                <h4 class="tier-name en">Gold</h4>
+                <h4 class="tier-name en bc-serif-heading">Gold</h4>
                 <h4 class="tier-name zh">金卡</h4>
                 <p class="tier-req">60,000 Miles</p>
                 <p class="en">Brushed Metal Card<br>Waitlist Priority<br>Entry Assurance</p>
                 <p class="zh">实体金属拉丝卡<br>优先候补交涉<br>启程安心兜底承诺</p>
             </div>
             <div class="tier-card reveal">
-                <h4 class="tier-name en">Platinum</h4>
+                <h4 class="tier-name en bc-serif-heading">Platinum</h4>
                 <h4 class="tier-name zh">铂金</h4>
                 <p class="tier-req">100,000 Miles</p>
                 <p class="en">Heavyweight Black Card<br>Complimentary Alterations<br>Peak Season Guarantee</p>
                 <p class="zh">实体重金属黑卡<br>免介入费退改签<br>极限票源顺位保障</p>
             </div>
             <div class="tier-card reveal">
-                <h4 class="tier-name en">Concierge</h4>
+                <h4 class="tier-name en bc-serif-heading">Concierge</h4>
                 <h4 class="tier-name zh">礼宾</h4>
                 <p class="tier-req">300,000 Miles</p>
                 <p class="en">Mirrored Metal Card<br>Lifetime Rate Caps<br>24/7 Founder Access</p>
