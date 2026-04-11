@@ -1,11 +1,265 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>我的创业项目</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altier Official</title>
+    <style>
+        /* 核心变量定义，用于快速修改网站主色调 */
+        :root {
+            --primary-dark: #0B192C; /* 类似商务舱网站的深邃底色 */
+            --accent-gold: #C6A87C;  /* 高端质感的强调色 */
+            --widget-bg: #FFFFFF;
+            --text-main: #1A1A1A;
+            --text-light: #F5F5F5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 1. 全局导航 */
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-light);
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        /* 2. 沉浸式首屏 (Hero Section) */
+        .hero {
+            height: 70vh;
+            background-color: var(--primary-dark);
+            /* 实际使用时，在此处添加 background-image */
+            background-image: linear-gradient(rgba(11, 25, 44, 0.8), rgba(11, 25, 44, 0.8)); 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            color: var(--text-light);
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        /* 3. 悬浮式转化组件 (UI 重点) */
+        .search-widget {
+            background-color: var(--widget-bg);
+            width: 80%;
+            max-width: 1000px;
+            margin: -60px auto 0; /* 负边距使其悬浮于 Hero 和主体之间 */
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .widget-field {
+            flex: 1;
+            min-width: 150px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #E0E0E0;
+            padding-right: 15px;
+        }
+        
+        .widget-field:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .widget-field label {
+            font-size: 12px;
+            color: #777;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .widget-field input {
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .cta-button {
+            background-color: var(--accent-gold);
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* 4. 网格化信息展示 */
+        .content-section {
+            padding: 80px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 50px;
+            color: var(--primary-dark);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image-placeholder {
+            height: 200px;
+            background-color: #E9ECEF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .card-content p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .search-widget {
+                flex-direction: column;
+                margin-top: -30px;
+                width: 90%;
+            }
+            .widget-field {
+                border-right: none;
+                border-bottom: 1px solid #E0E0E0;
+                padding-bottom: 15px;
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>你好，世界！</h1>
-    <p>这是我的创业项目官网，正在建设中...</p>
+
+    <header>
+        <div class="logo">ALTIER</div>
+        <div class="nav-links">
+            <a href="#">服务</a>
+            <a href="#">关于我们</a>
+            <a href="#">联系</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>重新定义您的旅程</h1>
+        <p style="color: #ccc; font-size: 18px; max-width: 600px; margin: 0 auto;">体验无与伦比的服务与极致的舒适。此处为您的项目核心价值主张描述区域。</p>
+    </section>
+
+    <div class="search-widget">
+        <div class="widget-field">
+            <label>出发地</label>
+            <input type="text" value="您的需求 1" readonly>
+        </div>
+        <div class="widget-field">
+            <label>目的地</label>
+            <input type="text" value="您的需求 2" readonly>
+        </div>
+        <div class="widget-field">
+            <label>日期</label>
+            <input type="text" value="随时准备" readonly>
+        </div>
+        <button class="cta-button">立即探索</button>
+    </div>
+
+    <section class="content-section">
+        <h2 class="section-title">核心优势</h2>
+        <div class="grid-container">
+            <div class="card">
+                <div class="card-image-placeholder">[图片区域]</div>
+                <div class="card-content">
+                    <h3>优势项目一</h3>
+                    <p>简要描述您的项目特点，对应原网站中的目的地展示或服务罗列逻辑。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image-placeholder">[图片区域]</div>
+                <div class="card-content">
+                    <h3>优势项目二</h3>
+                    <p>简要描述您的项目特点，对应原网站中的目的地展示或服务罗列逻辑。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-image-placeholder">[图片区域]</div>
+                <div class="card-content">
+                    <h3>优势项目三</h3>
+                    <p>简要描述您的项目特点，对应原网站中的目的地展示或服务罗列逻辑。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </body>
 </html>
