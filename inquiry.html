@@ -192,24 +192,33 @@
 
     .back-home {
       display: inline-block;
-      margin-top: 1.4rem;
-      color: var(--gold-dark);
+      margin-top: 1.5rem;
+      padding: 0.82rem 1.8rem;
+      color: var(--gold-muted);
       text-decoration: none;
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 3px;
-      transition: 0.35s ease;
+      border: 1px solid rgba(197, 179, 148, 0.42);
+      border-radius: var(--radius-btn);
+      background: rgba(0,0,0,0.18);
+      backdrop-filter: blur(5px);
+      transition: all 0.45s ease;
     }
 
     .back-home:hover {
-      color: var(--gold-muted);
+      color: var(--bg-charcoal);
+      background: var(--gold-muted);
+      border-color: var(--gold-muted);
+      box-shadow: 0 10px 20px rgba(197, 179, 148, 0.18);
     }
 
     .back-home.zh {
       text-transform: none;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.1em;
       transform: none;
-      font-size: 0.88rem;
+      font-size: 0.82rem;
+      padding: 0.86rem 1.7rem;
     }
 
     .decorative-line {
@@ -306,10 +315,14 @@
     .question-title-block h2.zh {
       font-family: var(--font-zh);
       font-weight: 500;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.03em;
       transform: none;
-      line-height: 1.42;
-      font-size: clamp(1.55rem, 3vw, 2.2rem);
+      line-height: 1.5;
+      font-size: clamp(1.52rem, 3vw, 2.1rem);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 0.75rem;
     }
 
     .question-title-block p {
@@ -471,6 +484,8 @@
       font-size: 0.9rem;
       letter-spacing: 1px;
       line-height: 1.9;
+      opacity: 0;
+      transition: opacity 0.6s ease;
     }
 
     .success-message.zh {
@@ -729,7 +744,7 @@
           <div class="question-title-block">
             <h2 class="en">Is there anything further we should keep in mind?</h2>
             <h2 class="zh">还有什么偏好或顾虑需要我们提前纳入考虑</h2>
-            <p class="en">Family preferences, baggage, timing sensitivities, or any detail that would make the journey feel more effortless.</p>
+            <p class="en">Family preferences, baggage, timing sensitivities, or any detail that would make the journey more effortless.</p>
             <p class="zh">例如家人偏好、行李情况、时间敏感点，或任何能让整段旅程更省心的信息</p>
           </div>
           <div class="input-area">
@@ -763,10 +778,10 @@
       <p class="submit-note zh">这些信息仅用于帮助我们理解您的出行需求</p>
 
       <div class="success-message en" id="successMessageEn">
-        Thank you. Your private brief has been received.
+        Thank you. Your journey brief has been received with care.
       </div>
       <div class="success-message zh" id="successMessageZh">
-        感谢提交，我们已经收到您的专属行程信息
+        感谢提交，我们已妥善收到您的行程信息。
       </div>
     </form>
   </main>
@@ -854,7 +869,6 @@
       prevBtn.disabled = step === 1;
 
       if (step === totalSteps) {
-        nextBtn.style.display = 'inline-block';
         nextBtn.style.display = 'none';
         submitBtn.style.display = 'inline-block';
       } else {
@@ -894,10 +908,13 @@
       setTimeout(() => {
         const enMsg = document.getElementById('successMessageEn');
         const zhMsg = document.getElementById('successMessageZh');
+
         if (isZh()) {
           zhMsg.style.display = 'block';
+          setTimeout(() => { zhMsg.style.opacity = '1'; }, 30);
         } else {
           enMsg.style.display = 'block';
+          setTimeout(() => { enMsg.style.opacity = '1'; }, 30);
         }
       }, 700);
     });
