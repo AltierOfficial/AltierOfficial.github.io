@@ -82,8 +82,8 @@
             -webkit-mask-repeat: no-repeat;
             mask-repeat: no-repeat;
             
-            /* 【修改点1】将总周期拉长到 7.5 秒，定下整体优雅的慢基调 */
-            animation: goldWaveSweep 7.5s infinite ease-in-out;
+            /* 【修改点1】将总周期拉长到 5 秒，定下整体优雅的慢基调 */
+            animation: goldWaveSweep 5s infinite ease-in-out;
         }
 
         /* 控制隐形遮罩从上到下的位移 */
@@ -95,7 +95,7 @@
             /* 【修改点2】利用百分比精准控速：
                前 80% 的时间（整整6秒），让波浪慢慢扫过屏幕。
                并且将终点从 150vh 缩减到 110vh，波浪一离开屏幕底部就立刻停止，消除多余的位移。 */
-            80% {
+            90% {
                 -webkit-mask-position: 0 110vh; 
                 mask-position: 0 110vh;
             }
