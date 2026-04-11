@@ -36,26 +36,30 @@
             position: relative;
         }
 
-        /* 1 & 5 & 6. 基于上传图片的鎏金地形呼吸背景 */
         .bg-contour {
             position: fixed;
-            top: -5%; left: -5%; 
-            width: 110%; height: 110%; 
-            background-image: url('./bg-gold.jpg'); /* <--- 只需把单引号里的名字换掉 */
+            /* 1. 减少裁切：将原本的 -5% 和 110% 缩小，保留更多原图边缘，同时留一点点余量给动画缩放，防止露白边 */
+            top: -2%; left: -2%; 
+            width: 104%; height: 104%; 
+            background-image: url('./bg-gold2.jpg'); 
             background-size: cover;
-            /* ... 后面代码省略 ... */
             background-position: center;
             z-index: -2;
             pointer-events: none;
-            /* 神奇的混合模式：滤除黑色，仅保留金线，并与网页底色完美融合 */
             mix-blend-mode: lighten; 
-            /* 短周期律动：更接近人类慢呼吸的2.5秒（一个来回5秒），差异化大幅增强 */
-            animation: breatheContour 2.5s infinite alternate ease-in-out;
+            animation: breatheContour 2.8s infinite alternate ease-in-out;
         }
 
+        /* 2. 亮度压暗：调整 100% 状态下的 opacity（不透明度）和 brightness（亮度） */
         @keyframes breatheContour {
+            /* 0% 是最暗的时候，保持不变 */
             0% { opacity: 0.15; filter: brightness(0.8) contrast(1.1); transform: scale(1); }
-            100% { opacity: 0.75; filter: brightness(1.6) contrast(1.5); transform: scale(1.015); }
+            
+            /* 100% 是最亮的时候。
+               opacity 从原来的 0.75 降到 0.55；
+               brightness 从原来的 1.6 降到了 1.15；
+               整体视觉高光感下调了约 30% */
+            100% { opacity: 0.55; filter: brightness(1.15) contrast(1.25); transform: scale(1.01); }
         }
 
         /* 丝滑反复滚动动画 */
