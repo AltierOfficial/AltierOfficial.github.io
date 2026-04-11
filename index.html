@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -187,7 +187,7 @@
             </div>
         </div>
         <div class="tier-item">
-            <div class="tier-meta">Platinum / 白金</div>
+            <div class="tier-meta">Platinum / 铂金</div>
             <div class="tier-details">
                 <span class="en">100,000 Miles. Heavyweight Black Card. Zero-fee intervention for changes and highest priority in peak seasons.</span>
                 <span class="zh">100,000 实际飞行里程。实体重金属黑卡。免收人工退改签手续费，享有开学季最高优先级的刷票保护序列。</span>
@@ -249,5 +249,291 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altier | Asset Managers for Premium Travel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <style>
+        /* Part 5: 色彩重构 - 低饱和度、老钱风 */
+        :root {
+            --bg-charcoal: #1a1918; /* 带有暖调的深炭黑色，比纯黑更显高级 */
+            --text-offwhite: #e8e4db; /* 羊绒白，柔和不刺眼 */
+            --gold-muted: #c5b394; /* 哑光香槟金，降低饱和度 */
+            --gold-dark: #8c7a5c; /* 暗金色，用于辅助线条 */
+            
+            /* Part 2: 正文字体设计感 */
+            --font-hero: "Snell Roundhand", "Palace Script MT", "Pinyon Script", cursive;
+            --font-heading: "Cormorant Garamond", serif;
+            --font-body: "Montserrat", sans-serif;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-charcoal);
+            color: var(--text-offwhite);
+            font-family: var(--font-body);
+            font-weight: 300;
+            line-height: 1.8;
+            /* Part 4: 增加极简的纹理感（通过微弱的线性渐变营造光影流动） */
+            background-image: radial-gradient(circle at 50% 0%, rgba(197, 179, 148, 0.05) 0%, transparent 60%);
+        }
+
+        /* 导航栏 */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 5%;
+            border-bottom: 1px solid rgba(197, 179, 148, 0.15); /* 细微的线条感 */
+        }
+
+        .nav-logo {
+            font-family: var(--font-hero);
+            font-size: 2.5rem;
+            color: var(--gold-muted);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        /* 英雄区域 (主视觉) */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Part 1: 主标题为醒目但不艳俗的Altier，副标题为标准衬线体 */
+        .hero h1 {
+            font-family: var(--font-hero);
+            font-size: 8rem;
+            color: var(--gold-muted);
+            margin: 0;
+            font-weight: normal;
+            text-shadow: 0px 4px 15px rgba(0,0,0,0.3); /* 增加厚重感 */
+        }
+
+        .hero h2 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-offwhite);
+            margin-top: -10px;
+            font-weight: 300;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 600px;
+            margin-top: 2rem;
+            color: rgba(232, 228, 219, 0.7);
+        }
+
+        /* 装饰线条 */
+        .decorative-line {
+            width: 1px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--gold-dark), transparent);
+            margin: 3rem auto;
+        }
+
+        /* 内容区块 */
+        .section {
+            padding: 5rem 10%;
+            text-align: center;
+        }
+
+        .section h3 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--gold-muted);
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        /* Part 3: 卡别展示区 (中英分离) */
+        .tiers {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .tier-card {
+            flex: 1;
+            padding: 3rem 2rem;
+            border: 1px solid rgba(197, 179, 148, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tier-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-muted), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .tier-card:hover::before {
+            opacity: 1;
+        }
+
+        .tier-name-en {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--gold-muted);
+            margin: 0;
+            /* 默认隐藏英文版界面才会显示 */
+            display: none; 
+        }
+
+        .tier-name-cn {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--gold-muted);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .tier-req {
+            font-size: 0.85rem;
+            color: var(--gold-dark);
+            margin: 1rem 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* 创始团队背书区 */
+        .founder-section {
+            background-color: #141312;
+            padding: 5rem 10%;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            text-align: left;
+        }
+
+        .founder-text {
+            flex: 1;
+        }
+
+        .founder-text p {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--text-offwhite);
+            margin-bottom: 1rem;
+        }
+
+        /* Part 6: 隐去真名 */
+        .founder-signature {
+            font-size: 0.9rem;
+            color: var(--gold-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .endorsement-box {
+            flex: 1;
+            border-left: 1px solid var(--gold-dark);
+            padding-left: 3rem;
+        }
+
+        /* 按钮设计 */
+        .cta-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 3rem;
+            border: 1px solid var(--gold-muted);
+            color: var(--gold-muted);
+            text-decoration: none;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .cta-btn:hover {
+            background: var(--gold-muted);
+            color: var(--bg-charcoal);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="nav-logo">Altier</a>
+        </nav>
+
+    <div class="hero">
+        <h1>Altier</h1>
+        <h2>Asset Managers for Premium Travel</h2>
+        <p>跨太平洋高端出行的重构者。以数据算法驾驭航线，以顶级礼遇重塑归途。</p>
+        
+        <a href="YOUR_GOOGLE_FORM_URL" class="cta-btn" target="_blank">递交出行意向 (Submit Request)</a>
+    </div>
+
+    <div class="decorative-line"></div>
+
+    <div class="section">
+        <h3>The Altiora Society<br><span style="font-size:1.2rem; color:var(--gold-dark);">专属阶层体系</span></h3>
+        
+        <div class="tiers">
+            <div class="tier-card">
+                <h4 class="tier-name-cn">银卡</h4>
+                <p class="tier-req">30,000 Miles</p>
+                <p>专属服务费减免<br>起飞地贵宾室通道安排</p>
+            </div>
+            
+            <div class="tier-card">
+                <h4 class="tier-name-cn">金卡</h4>
+                <p class="tier-req">60,000 Miles</p>
+                <p>专属实体金属卡<br>免费升舱/候补(Waitlist)交涉<br>启程安心承诺 (50%兜底)</p>
+            </div>
+
+            <div class="tier-card">
+                <h4 class="tier-name-cn">白金</h4>
+                <p class="tier-req">100,000 Miles</p>
+                <p>实体重金属黑卡<br>退改签零介入费<br>极限票源优先保障</p>
+            </div>
+
+            <div class="tier-card">
+                <h4 class="tier-name-cn">礼宾</h4>
+                <p class="tier-req">300,000 Miles</p>
+                <p>典藏镜面金属卡<br>服务费终身封顶底价<br>24/7 私人管家直连专线</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="founder-section">
+        <div class="founder-text">
+            <p>“真正的奢华不是繁复的堆砌，而是剥离一切不确定性后的从容。我们将工程学的严谨，注入每一次跨越太平洋的飞行。”</p>
+            <div class="founder-signature">两位来自卡内基梅隆大学的学生<br>(Two students from Carnegie Mellon University)</div>
+        </div>
+        <div class="endorsement-box">
+            <h4 style="color:var(--gold-muted); margin-top:0;">Backed by</h4>
+            <img id="swartz-center-logo" src="https://via.placeholder.com/300x100/1a1918/c5b394?text=Swartz+Center+Logo" alt="Swartz Center for Entrepreneurship" style="max-width: 100%; opacity: 0.8; filter: grayscale(100%) contrast(1.2);">
+            <p style="font-size: 0.8rem; color: rgba(232,228,219,0.5); margin-top: 1rem;">
+                Supported by the Swartz Center for Entrepreneurship, Carnegie Mellon University.
+            </p>
+        </div>
+    </div>
+
 </body>
 </html>
