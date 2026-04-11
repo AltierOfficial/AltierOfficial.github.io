@@ -39,8 +39,8 @@
         .bg-contour {
             position: fixed;
             /* 1. 减少裁切：将原本的 -5% 和 110% 缩小，保留更多原图边缘，同时留一点点余量给动画缩放，防止露白边 */
-            /*top: -2%; left: -2%; 
-            width: 104%; height: 104%; */
+            top: -2%; left: -2%; 
+            width: 104%; height: 104%; 
             background-image: url('./bg-gold.jpg'); 
             background-size: cover;
             background-position: center;
@@ -59,7 +59,7 @@
                opacity 从原来的 0.75 降到 0.55；
                brightness 从原来的 1.6 降到了 1.15；
                整体视觉高光感下调了约 30% */
-            100% { opacity: 0.45; filter: brightness(1) contrast(1.25); transform: scale(1.01); }
+            90% { opacity: 0.45; filter: brightness(1) contrast(1.15); transform: scale(1.01); }
         }
 
         /* 丝滑反复滚动动画 */
