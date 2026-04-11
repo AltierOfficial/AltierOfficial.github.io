@@ -142,7 +142,7 @@
             font-family: var(--font-heading-en);
             font-weight: 400;
             text-transform: none; /* 保持首字母大写，不要全大写 */
-            letter-spacing: 0.08em; /* 稍微增加间距 */
+            letter-spacing: 0.06em; /* 降低了约 25% 间距，更内敛统一 */
             display: inline-block;
             transform: scaleY(0.9); /* 扁平化 10%，制造高级宽阔感 */
             transform-origin: bottom center;
@@ -152,11 +152,14 @@
         nav {
             position: fixed; top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
+            /* 增加 padding-bottom，给退晕渐变留出更长的缓冲距离 */
             padding: 1.5rem 5% 3rem 5%; 
             z-index: 1000;
+            /* 色阶断点调整：深色部分提早在 15% 结束，后半段大面积留给半透明虚化，扩大虚化范围 30% */
             background: linear-gradient(to bottom, rgba(22, 21, 20, 0.95) 0%, rgba(22, 21, 20, 0.8) 15%, rgba(22, 21, 20, 0.3) 55%, transparent 100%);
-            pointer-events: none; 
+            pointer-events: none; /* 让下半截渐变不遮挡下方按钮点击 */
         }
+        /* 恢复导航栏内部元素的点击事件 */
         nav > * { pointer-events: auto; }
 
         .nav-logo {
@@ -221,7 +224,7 @@
         .section-title {
             font-family: var(--font-heading-en); font-size: 2.5rem;
             color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 400; 
-            letter-spacing: 0.05em; /* 显著收紧间距 */
+            letter-spacing: 0.035em; /* 降低了 30% 间距，更加紧凑端庄 */
             text-transform: uppercase;
         }
 
@@ -248,8 +251,8 @@
         
         /* 核心修位：价格标签优化 */
         .price-tag { 
-            font-family: var(--font-display-en); 
-            font-variant-numeric: lining-nums tabular-nums; 
+            font-family: var(--font-display-en); /* Playfair Display 带来的锋利现代感 */
+            font-variant-numeric: lining-nums tabular-nums; /* 强制数字底部对齐，告别高低起伏 */
             font-size: 3.2rem; /* 字号缩小，不再张扬 */
             color: var(--gold-muted); 
             margin: 1rem 0 0.5rem 0; 
