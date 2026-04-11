@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Altiora | Inquiry</title>
 </head>
+<style>
+  body {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: pageEnter 0.75s ease forwards;
+  }
+
+  @keyframes pageEnter {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
 <body>
   <h1>Inquiry Page</h1>
   <p>This is the new inquiry page.</p>
