@@ -69,7 +69,7 @@
 
     .zh { display: none !important; }
     .en { display: inline-block; }
-    p.en, h1.en, h2.en, h3.en, h4.en, div.en { display: block; }
+    p.en, h1.en, h2.en, h3.en, h4.en, div.en, a.en { display: block; }
 
     body.lang-zh-active .en { display: none !important; }
     body.lang-zh-active .zh { display: inline-block !important; }
@@ -78,7 +78,8 @@
     body.lang-zh-active h2.zh,
     body.lang-zh-active h3.zh,
     body.lang-zh-active h4.zh,
-    body.lang-zh-active div.zh { display: block !important; }
+    body.lang-zh-active div.zh,
+    body.lang-zh-active a.zh { display: block !important; }
 
     .en { letter-spacing: 0.08em; }
     h1.en, h2.en, h3.en, h4.en, span.en { letter-spacing: 0.12em; }
@@ -170,17 +171,45 @@
     .journey-title.zh {
       font-family: var(--font-zh);
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       transform: none;
-      line-height: 1.25;
+      line-height: 1.22;
+      font-size: clamp(2.6rem, 6vw, 4.5rem);
     }
 
     .journey-subtitle {
-      max-width: 660px;
+      max-width: 700px;
       margin: 0 auto;
       color: rgba(232, 228, 219, 0.8);
-      line-height: 2.1;
+      line-height: 2.15;
       font-size: 0.9rem;
+    }
+
+    .journey-subtitle.zh {
+      letter-spacing: 0.1em;
+      transform: none;
+    }
+
+    .back-home {
+      display: inline-block;
+      margin-top: 1.4rem;
+      color: var(--gold-dark);
+      text-decoration: none;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      transition: 0.35s ease;
+    }
+
+    .back-home:hover {
+      color: var(--gold-muted);
+    }
+
+    .back-home.zh {
+      text-transform: none;
+      letter-spacing: 0.14em;
+      transform: none;
+      font-size: 0.88rem;
     }
 
     .decorative-line {
@@ -200,6 +229,12 @@
       font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 3px;
+    }
+
+    .progress-meta .zh {
+      text-transform: none;
+      transform: none;
+      letter-spacing: 0.12em;
     }
 
     .progress-bar {
@@ -271,9 +306,10 @@
     .question-title-block h2.zh {
       font-family: var(--font-zh);
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       transform: none;
-      line-height: 1.45;
+      line-height: 1.42;
+      font-size: clamp(1.55rem, 3vw, 2.2rem);
     }
 
     .question-title-block p {
@@ -282,6 +318,11 @@
       line-height: 1.9;
       max-width: 620px;
       margin: 0 auto;
+    }
+
+    .question-title-block p.zh {
+      transform: none;
+      letter-spacing: 0.1em;
     }
 
     .input-area {
@@ -419,7 +460,8 @@
 
     .submit-note.zh {
       text-transform: none;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
+      transform: none;
     }
 
     .success-message {
@@ -443,6 +485,12 @@
       color: var(--gold-dark);
       letter-spacing: 4px;
       text-transform: uppercase;
+    }
+
+    footer .zh {
+      text-transform: none;
+      letter-spacing: 0.12em;
+      transform: none;
     }
 
     iframe[name="hidden_iframe"] {
@@ -471,8 +519,16 @@
         font-size: 3rem;
       }
 
+      .journey-title.zh {
+        font-size: 2.5rem;
+      }
+
       .question-title-block h2 {
         font-size: 2rem;
+      }
+
+      .question-title-block h2.zh {
+        font-size: 1.45rem;
       }
     }
   </style>
@@ -495,11 +551,14 @@
       <h1 class="journey-title zh">开启您的旅程</h1>
 
       <p class="journey-subtitle en">
-        A discreet concierge brief for a journey shaped around comfort, clarity, and calm assurance.
+        A discreet concierge brief for a passage shaped around comfort, clarity, and quiet assurance.
       </p>
       <p class="journey-subtitle zh">
-        这是一份专属礼宾采集，我们将以舒适、清晰与从容为核心，为您梳理整段旅程。
+        这是一份专属礼宾采集，我们将以舒适、清晰与从容为核心，为您细致梳理整段旅程。
       </p>
+
+      <a href="./index.html" class="back-home en">Back to Home</a>
+      <a href="./index.html" class="back-home zh">返回首页</a>
 
       <div class="decorative-line"></div>
     </div>
@@ -524,8 +583,8 @@
           <div class="question-title-block">
             <h2 class="en">How may we address you?</h2>
             <h2 class="zh">请问如何称呼您</h2>
-            <p class="en">A quiet beginning.</p>
-            <p class="zh">先从最基本的信息开始</p>
+            <p class="en">A graceful beginning.</p>
+            <p class="zh">我们先从最基本的信息开始</p>
           </div>
           <div class="input-area">
             <input id="fullName" name="fullName" type="text" required
@@ -540,7 +599,7 @@
           <div class="question-title-block">
             <h2 class="en">How should we reach you?</h2>
             <h2 class="zh">我们该如何与您联系</h2>
-            <p class="en">Email, WeChat, or your preferred contact.</p>
+            <p class="en">Email, WeChat, or your preferred point of contact.</p>
             <p class="zh">请填写 Email、微信或您最常用的联系方式</p>
           </div>
           <div class="input-area">
@@ -582,9 +641,9 @@
         <section class="question-slide" data-step="5">
           <div class="question-number">05</div>
           <div class="question-title-block">
-            <h2 class="en">When would you ideally like to travel?</h2>
+            <h2 class="en">When would you ideally prefer to travel?</h2>
             <h2 class="zh">您理想中的出行时间是</h2>
-            <p class="en">An exact date is not necessary. A window is enough.</p>
+            <p class="en">An exact date is not essential. A window is perfectly sufficient.</p>
             <p class="zh">不一定需要精确日期，大致时间范围即可</p>
           </div>
           <div class="input-area">
@@ -598,7 +657,7 @@
         <section class="question-slide" data-step="6">
           <div class="question-number">06</div>
           <div class="question-title-block">
-            <h2 class="en">What kind of itinerary are you considering?</h2>
+            <h2 class="en">What form of itinerary are you considering?</h2>
             <h2 class="zh">您目前考虑的是哪种行程形式</h2>
           </div>
           <div class="input-area">
@@ -614,7 +673,7 @@
         <section class="question-slide" data-step="7">
           <div class="question-number">07</div>
           <div class="question-title-block">
-            <h2 class="en">Which best describes this trip?</h2>
+            <h2 class="en">Which best reflects this journey?</h2>
             <h2 class="zh">以下哪项最符合这次出行情况</h2>
           </div>
           <div class="input-area">
@@ -631,7 +690,7 @@
         <section class="question-slide" data-step="8">
           <div class="question-number">08</div>
           <div class="question-title-block">
-            <h2 class="en">What matters most for this journey?</h2>
+            <h2 class="en">What matters most for this passage?</h2>
             <h2 class="zh">这次行程中您最看重什么</h2>
           </div>
           <div class="input-area">
@@ -649,7 +708,7 @@
         <section class="question-slide" data-step="9">
           <div class="question-number">09</div>
           <div class="question-title-block">
-            <h2 class="en">What would you most like us to reduce?</h2>
+            <h2 class="en">What would you most like us to soften?</h2>
             <h2 class="zh">您最希望我们替您降低哪方面的不确定性</h2>
           </div>
           <div class="input-area">
@@ -668,9 +727,9 @@
         <section class="question-slide" data-step="10">
           <div class="question-number">10</div>
           <div class="question-title-block">
-            <h2 class="en">Is there anything else we should keep in mind?</h2>
+            <h2 class="en">Is there anything further we should keep in mind?</h2>
             <h2 class="zh">还有什么偏好或顾虑需要我们提前纳入考虑</h2>
-            <p class="en">Family preferences, baggage, timing sensitivities, or anything that would make the journey feel more effortless.</p>
+            <p class="en">Family preferences, baggage, timing sensitivities, or any detail that would make the journey feel more effortless.</p>
             <p class="zh">例如家人偏好、行李情况、时间敏感点，或任何能让整段旅程更省心的信息</p>
           </div>
           <div class="input-area">
@@ -795,6 +854,7 @@
       prevBtn.disabled = step === 1;
 
       if (step === totalSteps) {
+        nextBtn.style.display = 'inline-block';
         nextBtn.style.display = 'none';
         submitBtn.style.display = 'inline-block';
       } else {
