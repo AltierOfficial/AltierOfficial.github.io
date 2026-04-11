@@ -39,17 +39,18 @@
         /* 1 & 5 & 6. 基于上传图片的鎏金地形呼吸背景 */
         .bg-contour {
             position: fixed;
-            top: -5%; left: -5%; /* 偏移 */
-            width: 110%; height: 110%; /* 放大110%以裁切掉右下角的水印 */
-            background-image: url('./image_8ad8de.jpg');
+            top: -5%; left: -5%; 
+            width: 110%; height: 110%; 
+            background-image: url('./bg-gold.jpg'); /* <--- 只需把单引号里的名字换掉 */
             background-size: cover;
+            /* ... 后面代码省略 ... */
             background-position: center;
             z-index: -2;
             pointer-events: none;
             /* 神奇的混合模式：滤除黑色，仅保留金线，并与网页底色完美融合 */
             mix-blend-mode: lighten; 
-            /* 短周期律动：更接近人类慢呼吸的4.5秒（一个来回9秒），差异化大幅增强 */
-            animation: breatheContour 4.5s infinite alternate ease-in-out;
+            /* 短周期律动：更接近人类慢呼吸的2.5秒（一个来回5秒），差异化大幅增强 */
+            animation: breatheContour 2.5s infinite alternate ease-in-out;
         }
 
         @keyframes breatheContour {
