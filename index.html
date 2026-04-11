@@ -20,22 +20,30 @@
             /* 导航栏退晕渐变的 RGB 基底 */
             --nav-rgb: 22, 21, 20;
 
-            /* 背景图的混合模式与滤镜 (黑科技核心) */
+            /* 背景图的混合模式与滤镜 */
             --bg-blend: lighten;
             --bg-op-base: 0.15;
             --bg-fil-base: brightness(0.8) contrast(1.1);
+            
+            /* 黑夜模式下的波浪动画配置 */
             --bg-op-active: 0.45;
             --bg-fil-active: brightness(1.05) contrast(1.15);
+            --bg-mask-active: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%);
+            --bg-anim-active: goldWaveSweep 6.5s infinite ease-in-out;
 
             /* 卡片渐变与边框 */
             --card-g1: rgba(26,25,24,0.8);
             --card-g2: rgba(15,14,13,0.9);
             --panel-border: rgba(197, 179, 148, 0.15);
+            --panel-shadow: rgba(0,0,0,0.2);
+
+            /* Logo 与主题色独立控制 (默认跟随金线) */
+            --hero-logo-color: var(--gold-muted);
 
             /* CMU Logo 适配 */
             --swartz-filter: invert(1) hue-rotate(180deg) brightness(1.3) contrast(1.1);
 
-            /* 字体定义 (保持不变) */
+            /* 字体定义 */
             --font-hero: "Pinyon Script", "Snell Roundhand", cursive;
             --font-heading-en: "Cormorant Garamond", serif;     
             --font-display-en: "Playfair Display", serif;       
@@ -46,32 +54,42 @@
             --radius-btn: 50px;
         }
 
-        /* === 日间模式 (羊毛白金) 覆盖参数 === */
+        /* === 日间模式 (纯净羊绒白金) 覆盖参数 === */
         body.light-mode {
-            /* 羊毛白/暖白色背景，深咖啡色文字 */
-            --bg-charcoal: #F2EFE9; 
-            --bg-panel: rgba(255, 255, 255, 0.55); 
-            --text-offwhite: #2E2A25; 
+            /* 极度克制的羊绒白，剔除多余黄色 */
+            --bg-charcoal: #F5F4F0; 
+            --bg-panel: rgba(255, 255, 255, 0.65); 
             
-            /* 金色适度加深，保证在白底上的可读性与老钱质感 */
-            --gold-muted: #A68A5E; 
-            --gold-dark: #7D664D; 
+            /* 文字压暗为极具质感的黑褐色 (Espresso)，极大提升对比度 */
+            --text-offwhite: #3A3530; 
+            
+            /* 浅色模式下的强调色 (用于小标题、数字等) */
+            --gold-muted: #8A7356; 
+            --gold-dark: #6B5742; 
 
-            --nav-rgb: 242, 239, 233; /* 对应 #F2EFE9 的 RGB */
+            /* 主 Logo 也改为黑褐色，增强气场 */
+            --hero-logo-color: #3A3530;
 
-            /* 神奇的背景翻转：反转黑白，再用 sepia 提炼出深金色，最后改为 darken 混合 */
+            --nav-rgb: 245, 244, 240;
+
+            /* 浅色背景滤镜：剔除黄色，保留暗金线条作为静态底纹 */
             --bg-blend: darken;
-            --bg-op-base: 0.3;
-            --bg-fil-base: invert(1) sepia(1) hue-rotate(-15deg) saturate(2.5) brightness(0.9) contrast(1.1);
-            --bg-op-active: 0.6;
-            --bg-fil-active: invert(1) sepia(1) hue-rotate(-15deg) saturate(3) brightness(0.8) contrast(1.2);
+            --bg-op-base: 0.12; /* 透明度调低，仅作为幽灵底纹 */
+            --bg-fil-base: invert(1) sepia(1) hue-rotate(-20deg) saturate(1.5) brightness(0.9) contrast(1.2);
+            
+            /* 彻底关闭日间模式的波浪动画 */
+            --bg-op-active: 0; 
+            --bg-fil-active: none;
+            --bg-mask-active: none;
+            --bg-anim-active: none;
 
-            --card-g1: rgba(255, 255, 255, 0.7);
-            --card-g2: rgba(240, 235, 225, 0.8);
-            --panel-border: rgba(166, 138, 94, 0.25);
+            --card-g1: rgba(255, 255, 255, 0.85);
+            --card-g2: rgba(248, 246, 242, 0.95);
+            --panel-border: rgba(138, 115, 86, 0.2);
+            --panel-shadow: rgba(0,0,0,0.06);
 
-            /* 浅色模式下，CMU 原版红黑 Logo 刚好完美匹配，微调明暗即可 */
-            --swartz-filter: brightness(0.9) contrast(1.1);
+            /* 浅色模式下，CMU 原版红黑 Logo 完美匹配 */
+            --swartz-filter: brightness(0.9) contrast(1.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -84,7 +102,7 @@
             line-height: 1.8;
             overflow-x: hidden;
             position: relative;
-            transition: background-color 0.8s ease, color 0.8s ease; /* 模式切换柔和过渡 */
+            transition: background-color 0.8s ease, color 0.8s ease; 
         }
 
         /* 顶级老钱风：背景底层设置 */
@@ -121,15 +139,15 @@
             filter: var(--bg-fil-active);
             transition: filter 0.8s ease, opacity 0.8s ease;
 
-            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%);
-            mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%);
+            -webkit-mask-image: var(--bg-mask-active);
+            mask-image: var(--bg-mask-active);
             
             -webkit-mask-size: 100% 180vh; 
             mask-size: 100% 180vh;
             -webkit-mask-repeat: no-repeat;
             mask-repeat: no-repeat;
             
-            animation: goldWaveSweep 6.5s infinite ease-in-out;
+            animation: var(--bg-anim-active);
         }
 
         @keyframes goldWaveSweep {
@@ -194,7 +212,6 @@
             display: flex; justify-content: space-between; align-items: center;
             padding: 1.5rem 5% 3rem 5%; 
             z-index: 1000;
-            /* 运用 RGB 变量，实现深浅色平滑切换的退晕效果 */
             background: linear-gradient(to bottom, rgba(var(--nav-rgb), 0.95) 0%, rgba(var(--nav-rgb), 0.8) 15%, rgba(var(--nav-rgb), 0.3) 55%, transparent 100%);
             pointer-events: none; 
         }
@@ -202,19 +219,18 @@
 
         .nav-logo {
             font-family: var(--font-hero); font-size: 2.8rem;
-            color: var(--gold-muted); text-decoration: none; 
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            color: var(--hero-logo-color); text-decoration: none; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.15);
             letter-spacing: 2px;
+            transition: color 0.8s ease;
         }
 
-        /* 按钮容器，确保主题切换和语言切换完美对齐 */
         .nav-controls {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        /* 极简按钮通用样式 */
         .btn-style {
             background: rgba(0,0,0,0.1); border: 1px solid rgba(197, 179, 148, 0.4); 
             color: var(--gold-muted); 
@@ -222,10 +238,10 @@
             cursor: pointer; 
             backdrop-filter: blur(5px);
         }
-        body.light-mode .btn-style { background: rgba(255,255,255,0.2); border-color: var(--gold-muted); }
-        .btn-style:hover { background: var(--gold-muted); color: var(--bg-charcoal); border-color: var(--gold-muted); transform: scale(1.05); }
+        body.light-mode .btn-style { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.4); color: var(--text-offwhite); }
+        .btn-style:hover { background: var(--gold-muted); color: #fff; border-color: var(--gold-muted); transform: scale(1.05); }
+        body.light-mode .btn-style:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
 
-        /* 圆形日月主题切换键 */
         .theme-btn {
             width: 36px; height: 36px; 
             border-radius: 50%; 
@@ -233,19 +249,16 @@
             padding: 0;
         }
         .theme-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        /* 默认黑夜模式：显示太阳(代表切换到白天) */
         .icon-sun { display: block; }
         .icon-moon { display: none; }
-        /* 白天模式：显示月亮(代表切换到黑夜) */
         body.light-mode .icon-sun { display: none; }
         body.light-mode .icon-moon { display: block; }
 
-        /* 语言切换键 */
         .lang-btn {
             padding: 8px 20px; border-radius: var(--radius-btn); 
             font-size: 0.75rem; letter-spacing: 3px; 
             font-family: var(--font-body-en); text-transform: uppercase;
-            height: 36px; /* 强制与左侧按钮等高 */
+            height: 36px; 
             display: flex; align-items: center;
         }
 
@@ -257,9 +270,10 @@
 
         .hero h1 {
             font-family: var(--font-hero); font-size: clamp(6rem, 12vw, 11rem);
-            color: var(--gold-muted); margin: 0; font-weight: normal;
-            text-shadow: 0px 10px 30px rgba(0,0,0,0.4); 
+            color: var(--hero-logo-color); margin: 0; font-weight: normal;
+            text-shadow: 0px 10px 30px rgba(0,0,0,0.15); 
             line-height: 1; padding-right: 15px;
+            transition: color 0.8s ease;
         }
 
         .hero h2 {
@@ -288,8 +302,9 @@
             transition: all 0.5s ease; background: rgba(0,0,0,0.1); backdrop-filter: blur(5px);
             text-transform: uppercase;
         }
-        body.light-mode .cta-btn { background: rgba(255,255,255,0.2); border-color: rgba(166, 138, 94, 0.4); }
-        .cta-btn:hover { background: var(--gold-muted); color: var(--bg-charcoal); box-shadow: 0 10px 20px rgba(0,0,0, 0.1); border-color: var(--gold-muted) !important;}
+        body.light-mode .cta-btn { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.4); color: var(--text-offwhite); }
+        .cta-btn:hover { background: var(--gold-muted); color: #fff; box-shadow: 0 10px 20px rgba(0,0,0, 0.1); border-color: var(--gold-muted); }
+        body.light-mode .cta-btn:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
 
         .section { padding: 6rem 10%; position: relative; }
         
@@ -356,7 +371,7 @@
         }
         .service-card:hover { transform: translateY(-10px); border-color: var(--gold-muted); }
         body:not(.light-mode) .service-card:hover { background: rgba(30, 28, 26, 0.8); }
-        body.light-mode .service-card:hover { background: rgba(255, 255, 255, 0.8); }
+        body.light-mode .service-card:hover { background: rgba(255, 255, 255, 0.85); box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
         
         .service-card h4 { 
             font-size: 2.2rem; 
@@ -625,17 +640,15 @@
     </footer>
 
     <script>
-        // 核心功能：语言切换
         function toggleLang() {
             document.body.classList.toggle('lang-zh-active');
         }
 
-        // 新增功能：日夜主题切换
+        // 切换主题时赋予 body 对应的 class
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
         }
 
-        // 滚动侦测动画
         const observerOptions = {
             threshold: 0.15, 
             rootMargin: "0px 0px -30px 0px"
