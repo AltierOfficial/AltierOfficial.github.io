@@ -186,21 +186,26 @@
             transform-origin: left center;
         }
 
+        /* 修改点 2：优化 Altiora 花体的对齐方式，并轻微调整大小和基线 */
         .altiora-text {
             font-family: var(--font-hero);
-            font-size: 1.4em; 
+            font-size: 1.45em; 
             font-weight: normal;
             letter-spacing: 0;
             text-transform: none;
             display: inline-block;
-            transform: translateY(0.1em);
+            vertical-align: baseline; /* 确保底部对齐 */
+            transform: translateY(0.15em); /* 细微下移以调整光学重心 */
+            margin-right: 0.1em; /* 避免和后面的词贴太紧 */
         }
 
+        /* 极奢小标题：扁平化、温润衬线体 (参考图 LP 风格) */
         .lp-serif-heading {
             font-family: var(--font-heading-en);
             font-weight: 400;
             text-transform: none; 
-            letter-spacing: 0.06em; 
+            /* 修改点 1a：将 The Art of Smart Luxury 等字距缩小 30% 左右 */
+            letter-spacing: 0.04em; 
             display: inline-block;
             transform: scaleY(0.9); 
             transform-origin: bottom center;
@@ -311,7 +316,8 @@
         .section-title {
             font-family: var(--font-heading-en); font-size: 2.5rem;
             color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 400; 
-            letter-spacing: 0.035em; 
+            /* 修改点 1b：将 Bespoke Concierge Matrix 等主标题的字距缩小约 25% */
+            letter-spacing: 0.025em; 
             text-transform: uppercase;
         }
 
@@ -640,15 +646,17 @@
     </footer>
 
     <script>
+        // 核心功能：语言切换
         function toggleLang() {
             document.body.classList.toggle('lang-zh-active');
         }
 
-        // 切换主题时赋予 body 对应的 class
+        // 新增功能：日夜主题切换
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
         }
 
+        // 滚动侦测动画
         const observerOptions = {
             threshold: 0.15, 
             rootMargin: "0px 0px -30px 0px"
