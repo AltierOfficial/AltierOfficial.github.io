@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Altier | Curate Your Premium Journey</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+SC:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&family=Playfair+Display:ital,wght@0,400;0,500;0,600&family=Noto+Serif+SC:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-charcoal: #161514; 
@@ -13,13 +13,13 @@
             --gold-muted: #c5b394; 
             --gold-dark: #8c7a5c; 
             
-            /* 字体定义 */
+            /* 字体定义：LP 与 BC 风格的融合 */
             --font-hero: "Pinyon Script", "Snell Roundhand", cursive;
-            --font-heading-en: "Cormorant Garamond", serif;
+            --font-heading-bc: "Playfair Display", serif; /* BC 风格：用于大标题和价格，方正端庄 */
+            --font-heading-lp: "Cormorant Garamond", serif; /* LP 风格：用于副标题和长句，温润舒缓 */
             --font-body-en: "Montserrat", sans-serif;
             --font-zh: "Noto Serif SC", "Source Han Serif SC", "STZhongsong", serif;
 
-            /* 大 R 角定义 */
             --radius-large: 28px;
             --radius-btn: 50px;
         }
@@ -43,11 +43,9 @@
             width: 104%; height: 104%; 
             z-index: -2;
             pointer-events: none;
-            /* 混合模式放在父级，保证两层都能正确剔除黑色背景 */
             mix-blend-mode: lighten; 
         }
 
-        /* 第一层（底层）：维持微弱质感的“静息状态”等高线 */
         .bg-contour::before {
             content: '';
             position: absolute;
@@ -59,7 +57,6 @@
             filter: brightness(0.8) contrast(1.1);
         }
 
-        /* 第二层（顶层）：只在“遮罩”扫过的地方透出高光，形成波浪 */
         .bg-contour::after {
             content: '';
             position: absolute;
@@ -67,42 +64,23 @@
             background-image: url('./bg-gold.jpg');
             background-size: cover;
             background-position: center;
-            
-            /* 保持你自己调好的高级哑光参数 */
             opacity: 0.45; 
             filter: brightness(1.05) contrast(1.15);
-
-            /* 【终极调整 1：扩大发光区】将高光核心区从一个点，拉宽成一个占据 50% (25%到75%) 面积的超宽光带 */
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%);
             mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,1) 25%, rgba(0,0,0,1) 75%, transparent 100%);
-            
-            /* 【终极调整 2：巨型波浪】波浪高度设为 180vh（屏幕高度的 1.8 倍），光芒会在屏幕上停留极长的时间 */
             -webkit-mask-size: 100% 180vh; 
             mask-size: 100% 180vh;
             -webkit-mask-repeat: no-repeat;
             mask-repeat: no-repeat;
-            
-            /* 【终极调整 3：缩短总周期】周期缩短至 5 秒。由于光带巨大，即使 5 秒一次，视觉上也会觉得非常舒缓从容 */
             animation: goldWaveSweep 6.5s infinite ease-in-out;
         }
 
-        /* 控制隐形遮罩从上到下的位移 */
         @keyframes goldWaveSweep {
-            0% {
-                -webkit-mask-position: 0 -180vh; /* 波浪从屏幕正上方紧贴着开始 */
-                mask-position: 0 -180vh;
-            }
-            90% {
-                -webkit-mask-position: 0 100vh;  /* 用 90% 的时间 (4.5秒) 缓慢且大面积地沐浴整个屏幕 */
-                mask-position: 0 100vh;
-            }
-            100% {
-                -webkit-mask-position: 0 100vh;  /* 仅留最后 10% (0.5秒) 作为极短的暗色“换气”停顿 */
-                mask-position: 0 100vh;
-            }
+            0% { -webkit-mask-position: 0 -180vh; mask-position: 0 -180vh; }
+            90% { -webkit-mask-position: 0 100vh; mask-position: 0 100vh; }
+            100% { -webkit-mask-position: 0 100vh; mask-position: 0 100vh; }
         }
 
-        /* 丝滑反复滚动动画 */
         .reveal { 
             opacity: 0; 
             transform: translateY(50px); 
@@ -118,28 +96,24 @@
         .en { display: inline-block; }
         p.en, h2.en, h3.en, h4.en { display: block; }
         
-        /* 激活中文时的状态 */
         body.lang-zh-active .en { display: none !important; }
         body.lang-zh-active .zh { display: inline-block !important; }
         body.lang-zh-active p.zh, body.lang-zh-active h2.zh, body.lang-zh-active h3.zh, body.lang-zh-active h4.zh { display: block !important; }
 
-        /* 英文专属质感 */
         .en { letter-spacing: 0.08em; }
         h2.en, h3.en, h4.en, span.en { letter-spacing: 0.15em; }
 
-        /* 中文专属质感 (现代东方奢华) */
         .zh {
             font-family: var(--font-zh);
             font-weight: 400;
             letter-spacing: 0.18em; 
-            transform: scaleX(1.08); /* 微微扁平，重心更稳 */
+            transform: scaleX(1.08);
             transform-origin: left center;
         }
 
-        /* 3. 专属 Altiora 花体设计 */
         .altiora-text {
             font-family: var(--font-hero);
-            font-size: 1.4em; /* 补偿花体字通常较小的问题 */
+            font-size: 1.4em; 
             font-weight: normal;
             letter-spacing: 0;
             text-transform: none;
@@ -147,12 +121,28 @@
             transform: translateY(0.1em);
         }
 
-        /* 导航栏 */
+        /* 【升级】导航栏毛玻璃特效范围扩大与渐变过渡 */
         nav {
             position: fixed; top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 1.5rem 5%; z-index: 1000;
-            background: linear-gradient(to bottom, rgba(22, 21, 20, 0.95), transparent);
+            /* 移除了原本自带的局促背景，交给 ::before 处理 */
+        }
+        
+        /* 创造一个比导航栏大 50% 的“毛玻璃幕墙”在后面 */
+        nav::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            height: 160%; /* 高度扩大，让滚动上来的内容提早被虚化 */
+            z-index: -1; 
+            background: linear-gradient(to bottom, rgba(22, 21, 20, 0.95) 40%, rgba(22, 21, 20, 0.2) 80%, transparent 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            /* 底部边缘羽化，完美融入页面 */
+            -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+            pointer-events: none; /* 防止遮挡下方内容的点击 */
         }
 
         .nav-logo {
@@ -171,7 +161,6 @@
         }
         .lang-btn:hover { background: var(--gold-muted); color: var(--bg-charcoal); border-color: var(--gold-muted); transform: scale(1.05); }
 
-        /* 英雄区域 (主视觉) */
         .hero {
             min-height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
@@ -185,8 +174,9 @@
             line-height: 1; padding-right: 15px;
         }
 
+        /* 英雄区副标题保持 LP 风格的舒缓感 */
         .hero h2 {
-            font-family: var(--font-heading-en); font-size: clamp(1rem, 2vw, 1.4rem);
+            font-family: var(--font-heading-lp); font-size: clamp(1rem, 2vw, 1.4rem);
             text-transform: uppercase;
             color: var(--text-offwhite); margin-top: -10px; font-weight: 300;
         }
@@ -196,14 +186,12 @@
             color: rgba(232, 228, 219, 0.8); line-height: 2.2;
         }
 
-        /* 动态线条 */
         .decorative-line {
             width: 1px; height: 100px;
             background: linear-gradient(to bottom, transparent, rgba(197, 179, 148, 0.6), transparent);
             margin: 2rem auto;
         }
 
-        /* 按钮设计 */
         .cta-btn {
             display: inline-block; margin-top: 2rem; padding: 1.2rem 3.5rem;
             border: 1px solid rgba(197, 179, 148, 0.5); color: var(--gold-muted);
@@ -214,19 +202,20 @@
         }
         .cta-btn:hover { background: var(--gold-muted); color: var(--bg-charcoal); box-shadow: 0 10px 20px rgba(197, 179, 148, 0.2); }
 
-        /* 通用内容区块 */
         .section { padding: 6rem 10%; position: relative; }
         
+        /* 【升级】大标题采用 BC 风格字体 (Playfair Display)，方正端庄，充满大牌感 */
         .section-title {
-            font-family: var(--font-heading-en); font-size: 2.8rem;
-            color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 500; 
+            font-family: var(--font-heading-bc); font-size: 2.8rem;
+            color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 400; 
         }
 
-        /* 理念区 */
         .paradox-grid {
             display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center;
         }
-        .paradox-text h3 { font-family: var(--font-heading-en); font-size: 2.2rem; color: var(--text-offwhite); margin-bottom: 1.5rem; font-weight: 500; line-height: 1.4;}
+        
+        /* 小标题使用偏锋利的 BC 风格，更抓眼球 */
+        .paradox-text h3 { font-family: var(--font-heading-bc); font-size: 2.2rem; color: var(--text-offwhite); margin-bottom: 1.5rem; font-weight: 400; line-height: 1.4;}
         .paradox-text p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); line-height: 2; }
         
         .price-card { 
@@ -235,9 +224,15 @@
             border-radius: var(--radius-large); backdrop-filter: blur(10px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-        .price-tag { font-family: var(--font-heading-en); font-size: 3.8rem; color: var(--gold-muted); margin: 1rem 0; font-weight: 300; letter-spacing: 0.05em;}
+        
+        /* 【核心升级】数字价格标签：使用 BC 风格字体 + 强制等高数字对齐 (lining-nums) */
+        .price-tag { 
+            font-family: var(--font-heading-bc); 
+            font-variant-numeric: lining-nums; /* 终极黑科技：强制数字下划线对齐，解决高低不平问题 */
+            font-size: 3.8rem; color: var(--gold-muted); margin: 1rem 0; 
+            font-weight: 400; letter-spacing: 0.05em;
+        }
 
-        /* 服务矩阵 */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; }
         .service-card { 
             padding: 4rem 2.5rem; border: 1px solid rgba(197, 179, 148, 0.1); 
@@ -245,10 +240,9 @@
             border-radius: var(--radius-large); backdrop-filter: blur(10px);
         }
         .service-card:hover { transform: translateY(-10px); background: rgba(30, 28, 26, 0.8); border-color: rgba(197, 179, 148, 0.3); }
-        .service-card h4 { font-family: var(--font-heading-en); font-size: 1.8rem; color: var(--gold-muted); margin-bottom: 1.5rem; font-weight: 600; }
+        .service-card h4 { font-family: var(--font-heading-bc); font-size: 1.8rem; color: var(--gold-muted); margin-bottom: 1.5rem; font-weight: 500; }
         .service-card p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); line-height: 2; }
 
-        /* 会员阶层 */
         .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2.5rem; }
         .tier-card {
             padding: 4rem 2rem; border: 1px solid rgba(197, 179, 148, 0.1);
@@ -262,17 +256,20 @@
             opacity: 0.3;
         }
         .tier-card:hover { transform: scale(1.02); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-        .tier-name { font-family: var(--font-heading-en); font-size: 2rem; color: var(--gold-muted); margin: 0; font-weight: 500;}
-        .tier-req { font-size: 0.75rem; color: var(--gold-dark); margin: 1.5rem 0; text-transform: uppercase; letter-spacing: 3px; }
+        
+        .tier-name { font-family: var(--font-heading-bc); font-size: 2rem; color: var(--gold-muted); margin: 0; font-weight: 400;}
+        /* 强制等高对齐用于所有数字 */
+        .tier-req { font-variant-numeric: lining-nums; font-size: 0.75rem; color: var(--gold-dark); margin: 1.5rem 0; text-transform: uppercase; letter-spacing: 3px; }
         .tier-card p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); line-height: 2.2;}
 
-        /* 创始团队背书区 */
         .founder-section {
             background-color: transparent; padding: 6rem 10%; display: flex; flex-wrap: wrap; align-items: center; gap: 4rem;
         }
         .founder-text { flex: 1.5; min-width: 300px; }
+        
+        /* 名言警句：使用 LP 风格的 Garamond，保留书卷气和优雅过渡感 */
         .founder-text p.quote {
-            font-family: var(--font-heading-en); font-size: 1.9rem; font-style: italic;
+            font-family: var(--font-heading-lp); font-size: 1.9rem; font-style: italic;
             color: var(--text-offwhite); margin-bottom: 2rem; line-height: 1.5; font-weight: 400;
         }
         .founder-signature { font-size: 0.75rem; color: var(--gold-dark); letter-spacing: 3px; text-transform: uppercase; }
@@ -284,7 +281,6 @@
             text-align: center;
         }
 
-        /* CMU Swartz Logo 显色 Hack */
         #swartz-center-logo {
             filter: invert(1) hue-rotate(180deg) brightness(1.3) contrast(1.1);
             max-width: 100%; height: auto; opacity: 0.85; transition: opacity 0.4s ease;
@@ -294,83 +290,28 @@
         footer { text-align: center; padding: 4rem; font-size: 0.75rem; color: var(--gold-dark); letter-spacing: 4px; text-transform: uppercase; }
 
         /* ==================================================== */
-        /* 移动端窄屏适配 (Mobile Optimization) */
+        /* 移动端窄屏适配 (完全保留) */
         /* ==================================================== */
         @media (max-width: 768px) {
-            /* 1. 缩减全局边距，留出更多显示空间 */
-            .section {
-                padding: 4rem 6%;
-            }
-
-            /* 2. 英雄区标题优化：防止超长单词溢出 */
-            .hero h1 {
-                font-size: clamp(4rem, 15vw, 6rem);
-                padding-right: 0;
-            }
-            .hero p {
-                font-size: 0.85rem;
-                line-height: 1.8;
-            }
-
-            /* 3. 理念区：从横向两栏转为纵向单栏 */
-            .paradox-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                text-align: center;
-            }
-            .paradox-text h3 {
-                font-size: 1.8rem;
-            }
-
-            /* 4. 导航栏调整 */
-            nav {
-                padding: 1rem 5%;
-            }
-            .nav-logo {
-                font-size: 2rem;
-            }
-
-            /* 5. 卡片组调整：增加间距，确保在窄屏下不显得局促 */
-            .services-grid, .tiers {
-                gap: 1.5rem;
-            }
-            .service-card, .tier-card {
-                padding: 2.5rem 1.5rem;
-            }
-
-            /* 6. 创始团队区域：确保在手机上垂直对齐 */
-            .founder-section {
-                padding: 4rem 6%;
-                gap: 3rem;
-            }
-            .founder-text p.quote {
-                font-size: 1.5rem;
-                text-align: center;
-            }
-            .founder-signature {
-                text-align: center;
-            }
-            .endorsement-box {
-                padding: 2rem;
-            }
-            
-            /* 7. 中文缩放微调：防止在极窄屏幕下因 scaleX 导致的文字切断 */
-            .zh {
-                letter-spacing: 0.12em;
-                transform: none; /* 手机端取消扁平化缩放，优先保证阅读清晰度 */
-            }
+            .section { padding: 4rem 6%; }
+            .hero h1 { font-size: clamp(4rem, 15vw, 6rem); padding-right: 0; }
+            .hero p { font-size: 0.85rem; line-height: 1.8; }
+            .paradox-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+            .paradox-text h3 { font-size: 1.8rem; }
+            nav { padding: 1rem 5%; }
+            .nav-logo { font-size: 2rem; }
+            .services-grid, .tiers { gap: 1.5rem; }
+            .service-card, .tier-card { padding: 2.5rem 1.5rem; }
+            .founder-section { padding: 4rem 6%; gap: 3rem; }
+            .founder-text p.quote { font-size: 1.5rem; text-align: center; }
+            .founder-signature { text-align: center; }
+            .endorsement-box { padding: 2rem; }
+            .zh { letter-spacing: 0.12em; transform: none; }
         }
-
-        /* 针对超窄屏幕 (iPhone SE 等) 的进一步优化 */
         @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 3.5rem;
-            }
-            .price-tag {
-                font-size: 2.5rem;
-            }
+            .hero h1 { font-size: 3.5rem; }
+            .price-tag { font-size: 2.5rem; }
         }
-        
     </style>
 </head>
 <body>
@@ -512,35 +453,3 @@
                 <span class="en">Proudly supported by the Swartz Center for Entrepreneurship.</span>
                 <span class="zh">本项目由卡内基梅隆大学 Swartz 创业中心鼎力支持。</span>
             </p>
-        </div>
-    </div>
-
-    <footer>
-        <span class="en">&copy; 2026 ALTIER. REDEFINING SEAMLESS AND COMFORTABLE TRAVEL.</span>
-        <span class="zh">&copy; 2026 ALTIER. 重塑从容与安心的云端体验。</span>
-    </footer>
-
-    <script>
-        function toggleLang() {
-            document.body.classList.toggle('lang-zh-active');
-        }
-
-        const observerOptions = {
-            threshold: 0.15, 
-            rootMargin: "0px 0px -30px 0px"
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                } else {
-                    entry.target.classList.remove('active');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
-</body>
-</html>
