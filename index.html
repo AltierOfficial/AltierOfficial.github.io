@@ -83,7 +83,7 @@
             mask-repeat: no-repeat;
             
             /* 【终极调整 3：缩短总周期】周期缩短至 5 秒。由于光带巨大，即使 5 秒一次，视觉上也会觉得非常舒缓从容 */
-            animation: goldWaveSweep 7s infinite ease-in-out;
+            animation: goldWaveSweep 6.5s infinite ease-in-out;
         }
 
         /* 控制隐形遮罩从上到下的位移 */
@@ -92,7 +92,7 @@
                 -webkit-mask-position: 0 -180vh; /* 波浪从屏幕正上方紧贴着开始 */
                 mask-position: 0 -180vh;
             }
-            95% {
+            90% {
                 -webkit-mask-position: 0 100vh;  /* 用 90% 的时间 (4.5秒) 缓慢且大面积地沐浴整个屏幕 */
                 mask-position: 0 100vh;
             }
