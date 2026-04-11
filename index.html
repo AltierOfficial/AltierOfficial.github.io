@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Altier | Curate Your Premium Journey</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+SC:wght@400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+SC:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-charcoal: #161514; 
@@ -36,23 +36,25 @@
             position: relative;
         }
 
-        /* 1. 鎏金呼吸线条 (取代死板的背景渐变) */
-        body::before {
-            content: '';
+        /* 1 & 5 & 6. 基于上传图片的鎏金地形呼吸背景 */
+        .bg-contour {
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            /* 绘制极细的对角金属切线 */
-            background-image: 
-                linear-gradient(115deg, transparent 35%, rgba(197, 179, 148, 0.02) 35.1%, rgba(197, 179, 148, 0.15) 35.2%, rgba(197, 179, 148, 0.02) 35.3%, transparent 35.4%),
-                linear-gradient(-65deg, transparent 65%, rgba(197, 179, 148, 0.02) 65.1%, rgba(197, 179, 148, 0.12) 65.2%, rgba(197, 179, 148, 0.02) 65.3%, transparent 65.4%);
-            z-index: -1;
+            top: -5%; left: -5%; /* 偏移 */
+            width: 110%; height: 110%; /* 放大110%以裁切掉右下角的水印 */
+            background-image: url('./image_8ad8de.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
             pointer-events: none;
-            animation: breatheGilt 7s infinite alternate ease-in-out;
+            /* 神奇的混合模式：滤除黑色，仅保留金线，并与网页底色完美融合 */
+            mix-blend-mode: lighten; 
+            /* 短周期律动：更接近人类慢呼吸的4.5秒（一个来回9秒），差异化大幅增强 */
+            animation: breatheContour 4.5s infinite alternate ease-in-out;
         }
 
-        @keyframes breatheGilt {
-            0% { opacity: 0.2; filter: brightness(0.8); transform: scale(1); }
-            100% { opacity: 1; filter: brightness(1.5); transform: scale(1.02); }
+        @keyframes breatheContour {
+            0% { opacity: 0.15; filter: brightness(0.8) contrast(1.1); transform: scale(1); }
+            100% { opacity: 0.75; filter: brightness(1.6) contrast(1.5); transform: scale(1.015); }
         }
 
         /* 丝滑反复滚动动画 */
@@ -64,22 +66,40 @@
         }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* 3. 语言专属 Typography 样式 */
-        .en {
-            letter-spacing: 0.08em; /* 英文间距增加，提升从容感 */
-        }
+        /* ---------------------------------------------------- */
+        /* 核心语言控制与 Typography (已通过更为强大的CSS重构，杜绝中英混杂) */
+        /* ---------------------------------------------------- */
+        .zh { display: none !important; }
+        .en { display: inline-block; }
+        p.en, h2.en, h3.en, h4.en { display: block; }
         
-        h2 .en, h3 .en, h4 .en {
-            letter-spacing: 0.15em;
-        }
+        /* 激活中文时的状态 */
+        body.lang-zh-active .en { display: none !important; }
+        body.lang-zh-active .zh { display: inline-block !important; }
+        body.lang-zh-active p.zh, body.lang-zh-active h2.zh, body.lang-zh-active h3.zh, body.lang-zh-active h4.zh { display: block !important; }
 
+        /* 英文专属质感 */
+        .en { letter-spacing: 0.08em; }
+        h2.en, h3.en, h4.en, span.en { letter-spacing: 0.15em; }
+
+        /* 中文专属质感 (现代东方奢华) */
         .zh {
-            display: none; /* 默认隐藏中文 */
             font-family: var(--font-zh);
             font-weight: 400;
-            letter-spacing: 0.18em; /* 宽裕的中文字间距 */
-            transform: scaleX(1.08); /* 略微扁平化，稳重感 */
+            letter-spacing: 0.18em; 
+            transform: scaleX(1.08); /* 微微扁平，重心更稳 */
             transform-origin: left center;
+        }
+
+        /* 3. 专属 Altiora 花体设计 */
+        .altiora-text {
+            font-family: var(--font-hero);
+            font-size: 1.4em; /* 补偿花体字通常较小的问题 */
+            font-weight: normal;
+            letter-spacing: 0;
+            text-transform: none;
+            display: inline-block;
+            transform: translateY(0.1em);
         }
 
         /* 导航栏 */
@@ -87,7 +107,7 @@
             position: fixed; top: 0; width: 100%;
             display: flex; justify-content: space-between; align-items: center;
             padding: 1.5rem 5%; z-index: 1000;
-            background: linear-gradient(to bottom, rgba(22, 21, 20, 0.9), transparent);
+            background: linear-gradient(to bottom, rgba(22, 21, 20, 0.95), transparent);
         }
 
         .nav-logo {
@@ -117,7 +137,7 @@
             font-family: var(--font-hero); font-size: clamp(6rem, 12vw, 11rem);
             color: var(--gold-muted); margin: 0; font-weight: normal;
             text-shadow: 0px 10px 30px rgba(0,0,0,0.4); 
-            line-height: 1; padding-right: 15px; /* 补偿斜体溢出 */
+            line-height: 1; padding-right: 15px;
         }
 
         .hero h2 {
@@ -127,7 +147,8 @@
         }
 
         .hero p {
-            font-size: 1rem; max-width: 700px; margin-top: 2.5rem;
+            /* 字体已缩小 */
+            font-size: 0.9rem; max-width: 700px; margin-top: 2.5rem;
             color: rgba(232, 228, 219, 0.8); line-height: 2.2;
         }
 
@@ -153,15 +174,19 @@
         .section { padding: 6rem 10%; position: relative; }
         
         .section-title {
+            /* 小标题加粗 30% */
             font-family: var(--font-heading-en); font-size: 2.8rem;
-            color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 300;
+            color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 500; 
         }
 
         /* 理念区 */
         .paradox-grid {
             display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem; align-items: center;
         }
-        .paradox-text h3 { font-family: var(--font-heading-en); font-size: 2.2rem; color: var(--text-offwhite); margin-bottom: 1.5rem; font-weight: 300; line-height: 1.4;}
+        /* 加粗 30% */
+        .paradox-text h3 { font-family: var(--font-heading-en); font-size: 2.2rem; color: var(--text-offwhite); margin-bottom: 1.5rem; font-weight: 500; line-height: 1.4;}
+        .paradox-text p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); line-height: 2; }
+        
         .price-card { 
             border: 1px solid rgba(197, 179, 148, 0.15); padding: 4rem 3rem; 
             text-align: center; background: var(--bg-panel);
@@ -178,8 +203,9 @@
             border-radius: var(--radius-large); backdrop-filter: blur(10px);
         }
         .service-card:hover { transform: translateY(-10px); background: rgba(30, 28, 26, 0.8); border-color: rgba(197, 179, 148, 0.3); }
-        .service-card h4 { font-family: var(--font-heading-en); font-size: 1.8rem; color: var(--gold-muted); margin-bottom: 1.5rem; font-weight: 400; }
-        .service-card p { font-size: 0.95rem; color: rgba(232, 228, 219, 0.8); line-height: 2; }
+        /* 小标题加粗 40% */
+        .service-card h4 { font-family: var(--font-heading-en); font-size: 1.8rem; color: var(--gold-muted); margin-bottom: 1.5rem; font-weight: 600; }
+        .service-card p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); line-height: 2; }
 
         /* 会员阶层 */
         .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2.5rem; }
@@ -195,20 +221,22 @@
             opacity: 0.3;
         }
         .tier-card:hover { transform: scale(1.02); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-        .tier-name { font-family: var(--font-heading-en); font-size: 2rem; color: var(--gold-muted); margin: 0; font-weight: 300;}
-        .tier-req { font-size: 0.8rem; color: var(--gold-dark); margin: 1.5rem 0; text-transform: uppercase; letter-spacing: 3px; }
-        .tier-card p { font-size: 0.9rem; color: rgba(232, 228, 219, 0.8); line-height: 2.2;}
+        /* 小标题加粗 */
+        .tier-name { font-family: var(--font-heading-en); font-size: 2rem; color: var(--gold-muted); margin: 0; font-weight: 500;}
+        .tier-req { font-size: 0.75rem; color: var(--gold-dark); margin: 1.5rem 0; text-transform: uppercase; letter-spacing: 3px; }
+        .tier-card p { font-size: 0.85rem; color: rgba(232, 228, 219, 0.8); line-height: 2.2;}
 
         /* 创始团队背书区 */
         .founder-section {
             background-color: transparent; padding: 6rem 10%; display: flex; flex-wrap: wrap; align-items: center; gap: 4rem;
         }
         .founder-text { flex: 1.5; min-width: 300px; }
+        /* 引用字体调小 */
         .founder-text p.quote {
-            font-family: var(--font-heading-en); font-size: 2.2rem; font-style: italic;
-            color: var(--text-offwhite); margin-bottom: 2rem; line-height: 1.5; font-weight: 300;
+            font-family: var(--font-heading-en); font-size: 1.9rem; font-style: italic;
+            color: var(--text-offwhite); margin-bottom: 2rem; line-height: 1.5; font-weight: 400;
         }
-        .founder-signature { font-size: 0.85rem; color: var(--gold-dark); letter-spacing: 3px; text-transform: uppercase; }
+        .founder-signature { font-size: 0.75rem; color: var(--gold-dark); letter-spacing: 3px; text-transform: uppercase; }
         
         .endorsement-box { 
             flex: 1; min-width: 300px; padding: 3rem; 
@@ -217,9 +245,8 @@
             text-align: center;
         }
 
-        /* 2. CMU Swartz Logo 显色 Hack */
+        /* CMU Swartz Logo 显色 Hack */
         #swartz-center-logo {
-            /* 神奇的互补色反转：将黑色转亮白/金，同时将红色完美保留/还原 */
             filter: invert(1) hue-rotate(180deg) brightness(1.3) contrast(1.1);
             max-width: 100%; height: auto; opacity: 0.85; transition: opacity 0.4s ease;
         }
@@ -229,6 +256,8 @@
     </style>
 </head>
 <body>
+    
+    <div class="bg-contour"></div>
 
     <nav>
         <a href="#" class="nav-logo">Altier</a>
@@ -237,13 +266,14 @@
 
     <div class="hero">
         <h1 class="reveal">Altier</h1>
-        <h2 class="reveal" style="transition-delay: 0.1s;">
-            <span class="en">Asset Managers for Premium Travel</span>
-            <span class="zh">跨太平洋高端出行的重构者</span>
-        </h2>
-        <p class="reveal" style="transition-delay: 0.2s;">
-            <span class="en">Transcending the ordinary. We meticulously craft your trans-pacific voyages, merging unparalleled comfort with absolute peace of mind.</span>
-            <span class="zh">跨越凡常界限。我们为您悉心打磨每一次跨洋之旅，让极致舒适与从容相伴。</span>
+        <h2 class="reveal en" style="transition-delay: 0.1s;">Asset Managers for Premium Travel</h2>
+        <h2 class="reveal zh" style="transition-delay: 0.1s;">跨太平洋高端出行的重构者</h2>
+        
+        <p class="reveal en" style="transition-delay: 0.2s;">
+            Transcending the ordinary. We meticulously craft your trans-pacific voyages, merging unparalleled comfort with absolute peace of mind.
+        </p>
+        <p class="reveal zh" style="transition-delay: 0.2s;">
+            跨越凡常界限。我们为您悉心打磨每一次跨洋之旅，让极致舒适与从容相伴。
         </p>
         
         <div class="decorative-line reveal" style="transition-delay: 0.3s;"></div>
@@ -256,13 +286,14 @@
 
     <div class="section paradox-grid">
         <div class="paradox-text reveal">
-            <h3>
-                <span class="en">The Art of Smart Luxury</span>
-                <span class="zh">智享奢华之境</span>
-            </h3>
-            <p>
-                <span class="en">True luxury is not about unthinking expenditure, but the elegant optimization of resources. While the market accepts extravagant direct flight premiums as the norm, we redefine value through curated intelligence.</span>
-                <span class="zh">真正的奢华从不意味着盲目溢价，而是对出行艺术的优雅重构。当市场将高昂直飞溢价视为常态，我们以数据与智慧，重新定义飞行价值。</span>
+            <h3 class="en">The Art of Smart Luxury</h3>
+            <h3 class="zh">智享奢华之境</h3>
+            
+            <p class="en">
+                True luxury is not about unthinking expenditure, but the elegant optimization of resources. While the market accepts extravagant direct flight premiums as the norm, we redefine value through curated intelligence.
+            </p>
+            <p class="zh">
+                真正的奢华从不意味着盲目溢价，而是对出行艺术的优雅重构。当市场将高昂直飞溢价视为常态，我们以数据与智慧，重新定义飞行价值。
             </p>
         </div>
         <div class="price-card reveal">
@@ -271,110 +302,84 @@
                 <span class="zh">Altier 云端套利</span>
             </span>
             <div class="price-tag">$3,000 - $4,000</div>
-            <p>
-                <span class="en">Uncompromised comfort. Elevated wisdom.</span>
-                <span class="zh">绝不妥协的舒适，从容掌控的智慧。</span>
-            </p>
+            <p class="en">Uncompromised comfort. Elevated wisdom.</p>
+            <p class="zh">绝不妥协的舒适，从容掌控的智慧。</p>
         </div>
     </div>
 
     <div class="section">
-        <h3 class="section-title reveal">
-            <span class="en">Bespoke Concierge Matrix</span>
-            <span class="zh">私人出行护航矩阵</span>
-        </h3>
+        <h3 class="section-title en">Bespoke Concierge Matrix</h3>
+        <h3 class="section-title zh">私人出行护航矩阵</h3>
+        
         <div class="services-grid">
             <div class="service-card reveal">
-                <h4>
-                    <span class="en">Bespoke Routing</span>
-                    <span class="zh">定制化航线</span>
-                </h4>
-                <p>
-                    <span class="en">Matching elite itineraries with top-tier airlines. Direct official ticketing ensures absolute ownership and peace of mind.</span>
-                    <span class="zh">匹配顶级航司的优雅联程。通过全球底层接口直接出票，确保旅程绝对所有权与安心无虞。</span>
-                </p>
+                <h4 class="en">Bespoke Routing</h4>
+                <h4 class="zh">定制化航线</h4>
+                <p class="en">Matching elite itineraries with top-tier airlines. Direct official ticketing ensures absolute ownership and peace of mind.</p>
+                <p class="zh">匹配顶级航司的优雅联程。通过全球底层接口直接出票，确保旅程绝对所有权与安心无虞。</p>
             </div>
             <div class="service-card reveal">
-                <h4>
-                    <span class="en">Seamless Arrival</span>
-                    <span class="zh">从容入境护航</span>
-                </h4>
-                <p>
-                    <span class="en">We discreetly navigate the complexities of customs scrutiny, routing you through welcoming ports to safeguard your endeavors.</span>
-                    <span class="zh">隐性化解海关审查的繁杂，为您规划温和从容的通关航线，为学业之旅构筑无形防火墙。</span>
-                </p>
+                <h4 class="en">Seamless Arrival</h4>
+                <h4 class="zh">从容入境护航</h4>
+                <p class="en">We discreetly navigate the complexities of customs scrutiny, routing you through welcoming ports to safeguard your endeavors.</p>
+                <p class="zh">隐性化解海关审查的繁杂，为您规划温和从容的通关航线，为学业之旅构筑无形防火墙。</p>
             </div>
             <div class="service-card reveal">
-                <h4>
-                    <span class="en">Unwavering Protection</span>
-                    <span class="zh">全天候接管</span>
-                </h4>
-                <p>
-                    <span class="en">Strictly unified bookings. Should any turbulence arise, our private concierge handles the backend intricacies while you rest.</span>
-                    <span class="zh">严苛的单一预订代码标准。一旦遭遇变数，私人管家代为处理后台交涉，将喧嚣隔绝于贵宾室外。</span>
-                </p>
+                <h4 class="en">Unwavering Protection</h4>
+                <h4 class="zh">全天候接管</h4>
+                <p class="en">Strictly unified bookings. Should any turbulence arise, our private concierge handles the backend intricacies while you rest.</p>
+                <p class="zh">严苛的单一预订代码标准。一旦遭遇变数，私人管家代为处理后台交涉，将喧嚣隔绝于贵宾室外。</p>
             </div>
         </div>
     </div>
 
     <div class="section">
-        <h3 class="section-title reveal">
-            <span class="en">The Altiora Society</span>
-            <span class="zh">The Altiora Society <br><span style="font-size: 1.2rem; color: var(--gold-dark); letter-spacing: 6px; font-weight: 300; display: block; margin-top: 15px;">专属会员阶层</span></span>
+        <h3 class="section-title en">The <span class="altiora-text">Altiora</span> Society</h3>
+        <h3 class="section-title zh">
+            <span class="altiora-text">Altiora</span> Society <br>
+            <span style="font-size: 1.2rem; color: var(--gold-dark); letter-spacing: 6px; font-weight: 300; display: block; margin-top: 15px;">专属会员阶层</span>
         </h3>
+        
         <div class="tiers">
             <div class="tier-card reveal">
-                <h4 class="tier-name">
-                    <span class="en">Silver</span><span class="zh">银卡</span>
-                </h4>
+                <h4 class="tier-name en">Silver</h4>
+                <h4 class="tier-name zh">银卡</h4>
                 <p class="tier-req">30,000 Miles</p>
-                <p>
-                    <span class="en">Digital Identity<br>Concierge Fee Privileges<br>Curated Preferences</span>
-                    <span class="zh">专属数字身份<br>咨询礼遇减免<br>起飞地贵宾体验</span>
-                </p>
+                <p class="en">Digital Identity<br>Concierge Fee Privileges<br>Curated Preferences</p>
+                <p class="zh">专属数字身份<br>咨询礼遇减免<br>起飞地贵宾体验</p>
             </div>
             <div class="tier-card reveal">
-                <h4 class="tier-name">
-                    <span class="en">Gold</span><span class="zh">金卡</span>
-                </h4>
+                <h4 class="tier-name en">Gold</h4>
+                <h4 class="tier-name zh">金卡</h4>
                 <p class="tier-req">60,000 Miles</p>
-                <p>
-                    <span class="en">Brushed Metal Card<br>Waitlist Priority<br>Entry Assurance</span>
-                    <span class="zh">实体金属拉丝卡<br>优先候补交涉<br>启程安心兜底承诺</span>
-                </p>
+                <p class="en">Brushed Metal Card<br>Waitlist Priority<br>Entry Assurance</p>
+                <p class="zh">实体金属拉丝卡<br>优先候补交涉<br>启程安心兜底承诺</p>
             </div>
             <div class="tier-card reveal">
-                <h4 class="tier-name">
-                    <span class="en">Platinum</span><span class="zh">白金</span>
-                </h4>
+                <h4 class="tier-name en">Platinum</h4>
+                <h4 class="tier-name zh">白金</h4>
                 <p class="tier-req">100,000 Miles</p>
-                <p>
-                    <span class="en">Heavyweight Black Card<br>Complimentary Alterations<br>Peak Season Guarantee</span>
-                    <span class="zh">实体重金属黑卡<br>免介入费退改签<br>极限票源顺位保障</span>
-                </p>
+                <p class="en">Heavyweight Black Card<br>Complimentary Alterations<br>Peak Season Guarantee</p>
+                <p class="zh">实体重金属黑卡<br>免介入费退改签<br>极限票源顺位保障</p>
             </div>
             <div class="tier-card reveal">
-                <h4 class="tier-name">
-                    <span class="en">Concierge</span><span class="zh">礼宾</span>
-                </h4>
+                <h4 class="tier-name en">Concierge</h4>
+                <h4 class="tier-name zh">礼宾</h4>
                 <p class="tier-req">300,000 Miles</p>
-                <p>
-                    <span class="en">Mirrored Metal Card<br>Lifetime Rate Caps<br>24/7 Founder Access</span>
-                    <span class="zh">典藏镜面金属卡<br>服务费终身极值<br>私人管家全天候直连</span>
-                </p>
+                <p class="en">Mirrored Metal Card<br>Lifetime Rate Caps<br>24/7 Founder Access</p>
+                <p class="zh">典藏镜面金属卡<br>服务费终身极值<br>私人管家全天候直连</p>
             </div>
         </div>
     </div>
 
     <div class="founder-section">
         <div class="founder-text reveal">
-            <p class="quote">
-                <span class="en">"True luxury is not about excessive embellishment; it is the elegance of eliminating uncertainty."</span>
-                <span class="zh" style="display: block;">“真正的奢华不是繁复的堆砌，而是剥离一切不确定性后的从容。”</span>
-            </p>
+            <p class="quote en">"True luxury is not about excessive embellishment; it is the elegance of eliminating uncertainty."</p>
+            <p class="quote zh">“真正的奢华不是繁复的堆砌，而是剥离一切不确定性后的从容。”</p>
+            
             <div class="founder-signature">
                 <span class="en">Two Students from Carnegie Mellon University</span>
-                <span class="zh" style="display: block;">两位来自卡内基梅隆大学的学生<br>From Carnegie Mellon University</span>
+                <span class="zh">两位来自卡内基梅隆大学的学生</span>
             </div>
         </div>
         
@@ -398,22 +403,11 @@
     </footer>
 
     <script>
-        // 中英双语切换逻辑
-        let isEn = true;
+        // 极致整洁的双语系统：直接通过 Body Class 切换
         function toggleLang() {
-            isEn = !isEn;
-            
-            document.querySelectorAll('.en').forEach(el => {
-                // 如果父级已经是 block/flex 等结构，则保持内联，否则使用 inline-block 保证排版
-                el.style.display = isEn ? 'inline-block' : 'none';
-            });
-            
-            document.querySelectorAll('.zh').forEach(el => {
-                // 中文需要 inline-block 才能让 scaleX 生效
-                el.style.display = isEn ? 'none' : 'inline-block';
-            });
+            document.body.classList.toggle('lang-zh-active');
         }
-        
+
         // 丝滑反复滚动动画
         const observerOptions = {
             threshold: 0.15, 
