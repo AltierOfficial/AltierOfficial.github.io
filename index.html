@@ -186,7 +186,7 @@
             transform-origin: left center;
         }
 
-        /* 修改：强制底边对齐，移除导致悬浮的 translateY */
+        /* 修改点 2：优化 Altiora 花体的对齐方式，并轻微调整大小和基线 */
         .altiora-text {
             font-family: var(--font-hero);
             font-size: 1.45em; 
@@ -194,9 +194,9 @@
             letter-spacing: 0;
             text-transform: none;
             display: inline-block;
-            vertical-align: bottom; /* 强制底部对齐 */
-            transform: translateY(0.08em); /* 极微小的视错觉下沉，使其与 Society 底部完美贴合 */
-            margin-right: 0.15em; 
+            vertical-align: baseline; /* 确保底部对齐 */
+            transform: translateY(0.15em); /* 细微下移以调整光学重心 */
+            margin-right: 0.1em; /* 避免和后面的词贴太紧 */
         }
 
         /* 极奢小标题：扁平化、温润衬线体 (参考图 LP 风格) */
@@ -204,6 +204,7 @@
             font-family: var(--font-heading-en);
             font-weight: 400;
             text-transform: none; 
+            /* 修改点 1a：将 The Art of Smart Luxury 等字距缩小 30% 左右 */
             letter-spacing: 0.04em; 
             display: inline-block;
             transform: scaleY(0.9); 
@@ -211,31 +212,17 @@
         }
 
         /* ==================================================== */
-        /* Brunello Cucinelli (BC) 专属高对比度字体风格 */
+        /* 新增：Brunello Cucinelli (BC) 专属高对比度紧凑字体风格 */
         /* ==================================================== */
         .bc-serif-heading {
+            /* 优先调用苹果系统原生的顶级 Didot 字体，后兜底 Bodoni Moda */
             font-family: "Didot", "Bodoni MT", "Bodoni Moda", "Playfair Display", serif !important;
             font-weight: 400 !important;
-            /* 修改：按要求增加字间距 8-18%，调整为 0.12em */
-            letter-spacing: 0.12em !important; 
+            /* 核心：极其紧凑的字距，对抗全局的宽字距，还原 BC 的高级感 */
+            letter-spacing: -0.02em !important; 
             word-spacing: 0.05em;
             text-transform: none !important;
-            transform: none !important; 
-        }
-
-        /* 新增：专属 The Art of Smart Luxury 样式（字号减小，颜色更金，间距拉大） */
-        .art-luxury-heading {
-            font-family: "Didot", "Bodoni MT", "Bodoni Moda", "Playfair Display", serif !important;
-            font-weight: 400 !important;
-            font-size: 2.3rem !important; /* 缩小了约两号 */
-            color: #e1dacd !important; /* 原色融合了20%的金色，更显奢华 */
-            letter-spacing: 0.15em !important; /* 增加约15%间距 */
-            text-transform: none !important;
-            margin-bottom: 1.5rem; 
-            line-height: 1.2;
-        }
-        body.light-mode .art-luxury-heading {
-            color: #4a4138 !important; /* 日间模式同样融合20%金色 */
+            transform: none !important; /* 取消 LP 风格的扁平化，保持 Didot 原有的高耸昂扬姿态 */
         }
 
         /* 导航栏及其交互区组 */
@@ -343,6 +330,7 @@
         .section-title {
             font-family: var(--font-heading-en); font-size: 2.5rem;
             color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 400; 
+            /* 修改点 1b：将 Bespoke Concierge Matrix 等主标题的字距缩小约 25% */
             letter-spacing: 0.025em; 
             text-transform: uppercase;
         }
@@ -440,7 +428,6 @@
         }
         .founder-text { flex: 1.5; min-width: 300px; }
         
-        /* 修改：减小引言的字间距，使其更紧凑凝练 */
         .founder-text p.quote {
             font-family: var(--font-heading-en); 
             font-size: 2.2rem; 
@@ -449,7 +436,7 @@
             margin-bottom: 2rem; 
             line-height: 1.4; 
             font-weight: 300;
-            letter-spacing: -0.05em; /* 降低了15%-20%左右的间距 */
+            letter-spacing: 0.05em;
         }
         
         .founder-signature { font-size: 0.75rem; color: var(--gold-dark); letter-spacing: 3px; text-transform: uppercase; }
@@ -553,7 +540,7 @@
 
     <div class="section paradox-grid">
         <div class="paradox-text reveal">
-            <h3 class="en art-luxury-heading">The Art of Smart Luxury</h3>
+            <h3 class="en bc-serif-heading">The Art of Smart Luxury</h3>
             <h3 class="zh">智享奢华之境</h3>
             
             <p class="en">
