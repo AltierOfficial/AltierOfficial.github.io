@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Altier | Curate Your Premium Journey</title>
     <link rel="icon" href="./favicon.jpg" type="image/jpeg">
+    <title>Altier | Curate Your Premium Journey</title>
     <meta name="description" content="Altier - Asset Manager for Premium Travel. We meticulously craft your trans-pacific voyages, merging unparalleled comfort with absolute peace of mind.">
     <meta name="keywords" content="Altier, Altier Official, Travel, Premium Travel, Trans-pacific flights, Concierge, Swartz Center for Entrpreneurship, Swartz Center, Carnegie Mellon University, CMU, 卡梅, 卡耐基梅隆, 卡内基梅隆, 留学生, 留学机票, 便宜机票, 跨洋航班, 高端出行, 私人管家">
     <meta name="author" content="Altier Official">
@@ -699,12 +699,26 @@
     </footer>
 
     <script>
-        // === localStorage 记忆系统引擎 ===
+        // === 智能记忆系统：优先用户选择，其次时间感应 ===
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('altier_theme');
             const savedLang = localStorage.getItem('altier_lang');
             
-            if (savedTheme === 'light') document.body.classList.add('light-mode');
+            // 1. 主题判断逻辑
+            if (savedTheme) {
+                // 如果用户手动点击过，绝对尊重用户选择
+                if (savedTheme === 'light') document.body.classList.add('light-mode');
+            } else {
+                // 如果用户是第一次来，按时间自动感应 (早6点-晚6点为白天)
+                const currentHour = new Date().getHours();
+                if (currentHour >= 6 && currentHour < 18) {
+                    document.body.classList.add('light-mode');
+                }
+                // 注意：这里我们故意不保存到 localStorage，
+                // 这样用户在不同时间段访问，依然能自动变色，直到他们手动点按钮！
+            }
+
+            // 2. 语言判断逻辑
             if (savedLang === 'zh') document.body.classList.add('lang-zh-active');
         });
 
