@@ -436,7 +436,13 @@
             margin-bottom: 2rem; 
             line-height: 1.4; 
             font-weight: 300;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.03em;
+        }
+
+        /* 新增：强制中文引言使用专属中文字体并取消斜体，以对齐签名 */
+        .founder-text p.quote.zh {
+            font-family: var(--font-zh);
+            font-style: italic;
         }
         
         .founder-signature { font-size: 0.75rem; color: var(--gold-dark); letter-spacing: 3px; text-transform: uppercase; }
