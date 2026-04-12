@@ -892,11 +892,9 @@
       <p class="submit-note en">Your details will be used only to understand your travel needs.</p>
       <p class="submit-note zh">这些信息仅用于帮助我们理解您的出行需求</p>
 
-      <div class="success-message en" id="successMessageEn">
-        Thank you. Your journey brief has been received with care.
-      </div>
-      <div class="success-message zh" id="successMessageZh">
-        感谢提交，我们已妥善收到您的行程信息。
+      <div id="successScreen" class="question-title-block" style="display: none; opacity: 0; transition: opacity 0.8s ease; max-width: 1000px; margin-top: 2rem;">
+        <h2 class="en" style="max-width: 100%;">Thank you. Your journey brief has been received with care.</h2>
+        <h2 class="zh" style="max-width: 100%;">感谢提交，我们已妥善收到您的行程信息。</h2>
       </div>
     </form>
   </main>
@@ -1045,16 +1043,17 @@
       }
 
       setTimeout(() => {
-        const enMsg = document.getElementById('successMessageEn');
-        const zhMsg = document.getElementById('successMessageZh');
+        // 1. 隐藏多余的表单UI组件，保持顶部 header 不变
+        document.querySelector('.progress-meta').style.display = 'none';
+        document.querySelector('.progress-bar').style.display = 'none';
+        document.querySelector('.question-shell').style.display = 'none';
+        document.querySelector('.controls').style.display = 'none';
+        document.querySelectorAll('.submit-note').forEach(el => el.style.display = 'none');
 
-        if (isZh()) {
-          zhMsg.style.display = 'block';
-          setTimeout(() => { zhMsg.style.opacity = '1'; }, 30);
-        } else {
-          enMsg.style.display = 'block';
-          setTimeout(() => { enMsg.style.opacity = '1'; }, 30);
-        }
+        // 2. 丝滑淡入新版的超大成功提示界面
+        const successScreen = document.getElementById('successScreen');
+        successScreen.style.display = 'block';
+        setTimeout(() => { successScreen.style.opacity = '1'; }, 30);
       }, 700);
     });
 
