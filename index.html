@@ -325,12 +325,14 @@
         .cta-btn:hover { background: var(--gold-muted); color: #fff; box-shadow: 0 10px 20px rgba(0,0,0, 0.1); border-color: var(--gold-muted); }
         body.light-mode .cta-btn:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
 
-        .section { padding: 6rem 10%; position: relative; }
+        /* 扩大板块上下的 padding 以拉开间距 */
+        .section { padding: 9rem 10%; position: relative; } /* 上下 padding 从 6rem 扩大到 9rem (1.5倍) */
         
         .section-title {
             font-family: var(--font-heading-en); font-size: 2.5rem;
-            color: var(--gold-muted); text-align: center; margin-bottom: 4rem; font-weight: 400; 
-            /* 修改点 1b：将 Bespoke Concierge Matrix 等主标题的字距缩小约 25% */
+            color: var(--gold-muted); text-align: center; 
+            margin-bottom: 5.5rem; /* 原为 4rem，现扩大为 ~1.4倍 */
+            font-weight: 400; 
             letter-spacing: 0.025em; 
             text-transform: uppercase;
         }
