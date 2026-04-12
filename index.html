@@ -95,14 +95,26 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-charcoal);
+            background-color: transparent; /* 核心修改1：将原有背景色移除，设为透明 */
             color: var(--text-offwhite);
             font-family: var(--font-body-en);
             font-weight: 300;
             line-height: 1.8;
             overflow-x: hidden;
             position: relative;
-            transition: background-color 0.8s ease, color 0.8s ease; 
+            transition: color 0.8s ease; /* 核心修改2：取消背景色过渡，只保留文字颜色过渡 */
+        }
+
+        /* 核心修改3：新增独立的固定底层，专治 Safari 日夜切换残影 Bug */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background-color: var(--bg-charcoal);
+            transition: background-color 0.8s ease;
+            z-index: -3; /* 完美垫在所有的背景金线（-2）的最下方 */
+            pointer-events: none;
         }
 
         /* 顶级老钱风：背景底层设置 */
