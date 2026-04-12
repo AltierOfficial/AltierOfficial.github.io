@@ -246,17 +246,10 @@
     /* ==================================================== */
     /* 精准替换英文标题的字体，保留原大小和颜色 */
     /* ==================================================== */
-    .journey-title {
-      font-size: clamp(3.2rem, 8vw, 6.2rem);
-      color: var(--gold-muted);
-      font-weight: 300;
-      line-height: 1.02;
-      margin-bottom: 0.8rem;
-    }
-
-    /* === 新增：为白天模式下的主标题单独设定深松露褐色 === */
-    body.light-mode .journey-title {
-      color: #3b2a1a !important; /* 极具质感的深褐色，对比度极高，同时保留了老钱风的温润底色 */
+    .journey-title.en, 
+    .question-title-block h2.en {
+      font-family: "Didot", "Bodoni MT", "Bodoni Moda", "Playfair Display", serif;
+      letter-spacing: 0.03em !important; /* 统一套用主页 The Art of Smart Luxury 的紧凑感 */
     }
 
     .journey-title {
