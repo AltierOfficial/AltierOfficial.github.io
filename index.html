@@ -298,7 +298,9 @@
         .hero h2 {
             font-family: var(--font-heading-en); font-size: clamp(1rem, 2vw, 1.4rem);
             text-transform: uppercase;
-            color: var(--text-offwhite); margin-top: -10px; font-weight: 300;
+            color: var(--text-offwhite); 
+            margin-top: 1.2rem; /* 核心修改：取消 -10px，改为 1.2rem，强制向下推开安全距离 */
+            font-weight: 300;
         }
 
         .hero p {
