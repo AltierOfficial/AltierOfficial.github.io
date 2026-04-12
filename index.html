@@ -673,14 +673,25 @@
     </footer>
 
     <script>
-        // 核心功能：语言切换
+        // === localStorage 记忆系统引擎 ===
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('altier_theme');
+            const savedLang = localStorage.getItem('altier_lang');
+            
+            if (savedTheme === 'light') document.body.classList.add('light-mode');
+            if (savedLang === 'zh') document.body.classList.add('lang-zh-active');
+        });
+
+        // 核心功能：语言切换并保存状态
         function toggleLang() {
             document.body.classList.toggle('lang-zh-active');
+            localStorage.setItem('altier_lang', document.body.classList.contains('lang-zh-active') ? 'zh' : 'en');
         }
 
-        // 新增功能：日夜主题切换
+        // 新增功能：日夜主题切换并保存状态
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
+            localStorage.setItem('altier_theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
         }
 
         // 滚动侦测动画
