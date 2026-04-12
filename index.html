@@ -311,6 +311,12 @@
             transition: color 0.8s ease;
         }
 
+        /* === 新增：为白天模式下的 Altier 大标题单独设定深褐色 === */
+        body.light-mode .hero h1 {
+            color: #4a321d !important;
+            text-shadow: none; /* 白天模式下文字较深，不需要黑色阴影托底，保持干净 */
+        }
+
         .hero h2 {
             font-family: var(--font-heading-en); font-size: clamp(1rem, 2vw, 1.4rem);
             text-transform: uppercase;
@@ -361,7 +367,7 @@
         
         .paradox-text h3 { 
             font-size: 2.8rem; 
-            color: var(--text-offwhite); 
+            color: var(--gold-muted); 
             margin-bottom: 1.5rem; 
             line-height: 1.2;
         }
