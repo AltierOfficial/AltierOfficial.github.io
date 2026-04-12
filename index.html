@@ -424,9 +424,14 @@
         .tier-card p { font-size: 0.85rem; color: var(--text-offwhite); opacity: 0.8; line-height: 2.2;}
 
         .founder-section {
-            background-color: transparent; padding: 6rem 10%; display: flex; flex-wrap: wrap; align-items: center; gap: 4rem;
+            background-color: transparent; padding: 6rem 10%; display: flex; flex-wrap: wrap; align-items: center; 
+            gap: 7rem; /* 修改这行：将原本的 4rem 改为 7rem，直接拉开左右板块的物理距离 */
         }
-        .founder-text { flex: 1.5; min-width: 300px; }
+        .founder-text { 
+            flex: 1.2; /* 修改这行：将原本的 1.5 改为 1.2，收缩左侧文字框的整体占地面积 */
+            min-width: 300px; 
+            padding-right: 3rem; /* 新增这行：在文字框右侧加上安全边距，双重防止文字贴近右侧 */
+        }
         
         .founder-text p.quote {
             font-family: var(--font-heading-en); 
@@ -445,6 +450,7 @@
             font-size: 2.0rem; 
             font-style: italic;
             letter-spacing: 0.01em;
+            max-width: 88%; /* 新增这行：限制最大宽度，强制它在“而是”左右换行，让上下行长度匀称 */
         }
         
         .founder-signature { font-size: 0.75rem; color: var(--gold-dark); letter-spacing: 3px; text-transform: uppercase; }
