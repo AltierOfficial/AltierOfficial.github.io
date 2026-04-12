@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" href="./favicon.jpg" type="image/jpeg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Altier | Start Your Journey</title>
-  <link rel="icon" href="./favicon.jpg" type="image/jpeg">
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+SC:wght@400;500;600&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
 
   <style>
@@ -913,17 +913,27 @@
   </footer>
 
   <script>
-    // === 独家跨页面状态同步系统 (localStorage) ===
+    // === 智能记忆系统：优先用户选择，其次时间感应 ===
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. 读取浏览器缓存
       const savedTheme = localStorage.getItem('altier_theme');
       const savedLang = localStorage.getItem('altier_lang');
       
-      // 2. 根据缓存瞬间应用状态
-      if (savedTheme === 'light') document.body.classList.add('light-mode');
+      // 1. 主题判断逻辑
+      if (savedTheme) {
+          // 手动干预过，优先缓存
+          if (savedTheme === 'light') document.body.classList.add('light-mode');
+      } else {
+          // 未干预过，自动感应时间 (早6点-晚6点为白天)
+          const currentHour = new Date().getHours();
+          if (currentHour >= 6 && currentHour < 18) {
+              document.body.classList.add('light-mode');
+          }
+      }
+      
+      // 2. 语言判断逻辑
       if (savedLang === 'zh') document.body.classList.add('lang-zh-active');
       
-      // 初始化表单隐藏域和文本占位符
+      // 3. 初始化问卷表单内部语言数据
       document.getElementById('pageLanguage').value = document.body.classList.contains('lang-zh-active') ? '中文' : 'EN';
       applyPlaceholders();
       applySelectTranslations();
