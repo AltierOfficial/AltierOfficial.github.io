@@ -8,11 +8,18 @@
 
   <style>
     :root {
+      /* === 同步主页的基础变量 === */
       --bg-charcoal: #161514;
       --bg-panel: rgba(26, 25, 24, 0.6);
       --text-offwhite: #e8e4db;
       --gold-muted: #c5b394;
       --gold-dark: #8c7a5c;
+      --nav-rgb: 22, 21, 20;
+
+      /* 核心：同步主页的滤镜变量，让背景图一模一样 */
+      --bg-blend: lighten;
+      --bg-op-base: 0.15;
+      --bg-fil-base: brightness(0.8) contrast(1.1);
 
       --font-hero: "Pinyon Script", "Snell Roundhand", cursive;
       --font-heading-en: "Cormorant Garamond", serif;
@@ -23,13 +30,19 @@
       --radius-btn: 50px;
     }
 
-    /* === 补回：日间模式 (纯净羊绒白金) 覆盖参数 === */
+    /* === 补回：日间模式 (纯净羊绒白金) 覆盖参数，同步主页最新数据 === */
     body.light-mode {
       --bg-charcoal: #F5F4F0; 
       --bg-panel: rgba(255, 255, 255, 0.65); 
       --text-offwhite: #3A3530; 
       --gold-muted: #8A7356; 
       --gold-dark: #6B5742; 
+      --nav-rgb: 245, 244, 240;
+
+      /* 同步主页白天金线高对比度参数 */
+      --bg-blend: darken;
+      --bg-op-base: 0.22;
+      --bg-fil-base: invert(1) sepia(1) hue-rotate(-20deg) saturate(1.5) brightness(0.9) contrast(1.4);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -52,28 +65,34 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
+    /* === 让背景图代码与 index.html 完全对齐 === */
     .bg-contour {
       position: fixed;
-      top: -5%;
-      left: -5%;
-      width: 110%;
-      height: 110%;
+      top: -2%; left: -2%; 
+      width: 104%; height: 104%; 
+      z-index: -2;
+      pointer-events: none;
+      mix-blend-mode: var(--bg-blend);
+      /* inquiry 保留了原本的 breathing 动画，这里可以不套用波浪，保持原设计 */
+      animation: breatheContour 2.5s infinite alternate ease-in-out;
+      transition: filter 0.8s ease, opacity 0.8s ease, mix-blend-mode 0.8s ease;
+    }
+
+    .bg-contour::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
       background-image: url('./bg-gold.jpg');
       background-size: cover;
       background-position: center;
-      z-index: -2;
-      pointer-events: none;
-      mix-blend-mode: lighten;
-      animation: breatheContour 2.5s infinite alternate ease-in-out;
+      opacity: var(--bg-op-base);
+      filter: var(--bg-fil-base);
       transition: filter 0.8s ease, opacity 0.8s ease;
     }
 
-    /* 补回：白天模式背景图金线高对比度调整 */
+    /* 白天模式关闭呼吸动画，仅显示底层金线 */
     body.light-mode .bg-contour {
-      mix-blend-mode: darken;
-      opacity: 0.35; 
-      filter: invert(1) sepia(1) hue-rotate(-20deg) saturate(2.5) brightness(0.85) contrast(1.6);
-      animation: none; /* 白天模式关掉呼吸动画，保持纯净 */
+        animation: none;
     }
 
     @keyframes breatheContour {
@@ -127,7 +146,7 @@
       align-items: center;
       padding: 1.5rem 5%;
       z-index: 1000;
-      background: linear-gradient(to bottom, rgba(22, 21, 20, 0.95), transparent);
+      background: linear-gradient(to bottom, rgba(var(--nav-rgb), 0.95) 0%, rgba(var(--nav-rgb), 0.8) 15%, rgba(var(--nav-rgb), 0.3) 55%, transparent 100%);
       transition: background 0.8s ease;
     }
     body.light-mode nav { background: linear-gradient(to bottom, rgba(245, 244, 240, 0.95), transparent); }
@@ -143,7 +162,6 @@
     }
     body.light-mode .nav-logo { color: var(--text-offwhite); text-shadow: none; }
 
-    /* 补回：导航栏控制组布局 */
     .nav-controls {
       display: flex;
       align-items: center;
@@ -174,11 +192,9 @@
       transform: scale(1.05);
     }
     
-    /* 补回：白天模式按钮适配 */
     body.light-mode .lang-btn { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.4); color: var(--text-offwhite); }
     body.light-mode .lang-btn:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
 
-    /* 补回：主题切换按钮样式 */
     .theme-btn {
       width: 36px; height: 36px; 
       border-radius: 50%; 
@@ -221,12 +237,12 @@
     }
 
     /* ==================================================== */
-    /* 新增：因地制宜的专属高级字体 (保留原颜色和字号大小) */
+    /* 精准替换英文标题的字体，保留原大小和颜色 */
     /* ==================================================== */
     .journey-title.en, 
     .question-title-block h2.en {
       font-family: "Didot", "Bodoni MT", "Bodoni Moda", "Playfair Display", serif;
-      letter-spacing: 0.12em; /* 统一套用主页 The Art of Smart Luxury 的紧凑质感 */
+      letter-spacing: 0.12em; /* 统一套用主页 The Art of Smart Luxury 的紧凑感 */
     }
 
     .journey-title {
@@ -378,6 +394,7 @@
       margin: 0 auto 1rem;
     }
 
+    /* 保留原始字号，仅替换 font-family (已在前面统一设置) */
     .question-title-block h2 {
       font-size: clamp(2.2rem, 4.8vw, 3.4rem);
       color: var(--text-offwhite);
@@ -884,17 +901,17 @@
   </footer>
 
   <script>
-    // === 补回：加入 localStorage 记忆系统引擎 ===
+    // === 独家跨页面状态同步系统 (localStorage) ===
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. 抓取本地缓存状态
+      // 1. 读取浏览器缓存
       const savedTheme = localStorage.getItem('altier_theme');
       const savedLang = localStorage.getItem('altier_lang');
       
-      // 2. 根据状态秒切页面
+      // 2. 根据缓存瞬间应用状态
       if (savedTheme === 'light') document.body.classList.add('light-mode');
       if (savedLang === 'zh') document.body.classList.add('lang-zh-active');
       
-      // 初始化表单内部语言数据
+      // 初始化表单隐藏域和文本占位符
       document.getElementById('pageLanguage').value = document.body.classList.contains('lang-zh-active') ? '中文' : 'EN';
       applyPlaceholders();
       applySelectTranslations();
