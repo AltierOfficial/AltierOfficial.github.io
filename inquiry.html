@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Altier | Start Your Journey</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+SC:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400&family=Noto+Serif+SC:wght@400;500;600&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -23,6 +23,15 @@
       --radius-btn: 50px;
     }
 
+    /* === 补回：日间模式 (纯净羊绒白金) 覆盖参数 === */
+    body.light-mode {
+      --bg-charcoal: #F5F4F0; 
+      --bg-panel: rgba(255, 255, 255, 0.65); 
+      --text-offwhite: #3A3530; 
+      --gold-muted: #8A7356; 
+      --gold-dark: #6B5742; 
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -33,6 +42,14 @@
       line-height: 1.8;
       overflow-x: hidden;
       position: relative;
+      transition: background-color 0.8s ease, color 0.8s ease; 
+      /* 新增：跨页面跳转时的丝滑全局入场动画 */
+      animation: pageFadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes pageFadeIn {
+      0% { opacity: 0; transform: translateY(15px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
     .bg-contour {
@@ -48,6 +65,15 @@
       pointer-events: none;
       mix-blend-mode: lighten;
       animation: breatheContour 2.5s infinite alternate ease-in-out;
+      transition: filter 0.8s ease, opacity 0.8s ease;
+    }
+
+    /* 补回：白天模式背景图金线高对比度调整 */
+    body.light-mode .bg-contour {
+      mix-blend-mode: darken;
+      opacity: 0.35; 
+      filter: invert(1) sepia(1) hue-rotate(-20deg) saturate(2.5) brightness(0.85) contrast(1.6);
+      animation: none; /* 白天模式关掉呼吸动画，保持纯净 */
     }
 
     @keyframes breatheContour {
@@ -102,7 +128,9 @@
       padding: 1.5rem 5%;
       z-index: 1000;
       background: linear-gradient(to bottom, rgba(22, 21, 20, 0.95), transparent);
+      transition: background 0.8s ease;
     }
+    body.light-mode nav { background: linear-gradient(to bottom, rgba(245, 244, 240, 0.95), transparent); }
 
     .nav-logo {
       font-family: var(--font-hero);
@@ -111,6 +139,15 @@
       text-decoration: none;
       text-shadow: 0 2px 10px rgba(0,0,0,0.5);
       letter-spacing: 2px;
+      transition: color 0.8s ease;
+    }
+    body.light-mode .nav-logo { color: var(--text-offwhite); text-shadow: none; }
+
+    /* 补回：导航栏控制组布局 */
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .lang-btn {
@@ -126,6 +163,8 @@
       font-family: var(--font-body-en);
       text-transform: uppercase;
       backdrop-filter: blur(5px);
+      height: 36px;
+      display: flex; align-items: center;
     }
 
     .lang-btn:hover {
@@ -134,6 +173,28 @@
       border-color: var(--gold-muted);
       transform: scale(1.05);
     }
+    
+    /* 补回：白天模式按钮适配 */
+    body.light-mode .lang-btn { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.4); color: var(--text-offwhite); }
+    body.light-mode .lang-btn:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
+
+    /* 补回：主题切换按钮样式 */
+    .theme-btn {
+      width: 36px; height: 36px; 
+      border-radius: 50%; 
+      display: flex; justify-content: center; align-items: center;
+      padding: 0;
+      background: rgba(0,0,0,0.2); border: 1px solid rgba(197, 179, 148, 0.4); 
+      color: var(--gold-muted); cursor: pointer; transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1); backdrop-filter: blur(5px);
+    }
+    body.light-mode .theme-btn { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.4); color: var(--text-offwhite); }
+    .theme-btn:hover { background: var(--gold-muted); color: var(--bg-charcoal); border-color: var(--gold-muted); transform: scale(1.05); }
+    body.light-mode .theme-btn:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
+    .theme-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-sun { display: block; }
+    .icon-moon { display: none; }
+    body.light-mode .icon-sun { display: none; }
+    body.light-mode .icon-moon { display: block; }
 
     .journey-page {
       min-height: 100vh;
@@ -159,8 +220,16 @@
       margin-bottom: 1rem;
     }
 
+    /* ==================================================== */
+    /* 新增：因地制宜的专属高级字体 (保留原颜色和字号大小) */
+    /* ==================================================== */
+    .journey-title.en, 
+    .question-title-block h2.en {
+      font-family: "Didot", "Bodoni MT", "Bodoni Moda", "Playfair Display", serif;
+      letter-spacing: 0.12em; /* 统一套用主页 The Art of Smart Luxury 的紧凑质感 */
+    }
+
     .journey-title {
-      font-family: var(--font-heading-en);
       font-size: clamp(3.2rem, 8vw, 6.2rem);
       color: var(--gold-muted);
       font-weight: 300;
@@ -184,6 +253,7 @@
       line-height: 2.15;
       font-size: 0.9rem;
     }
+    body.light-mode .journey-subtitle { color: rgba(58, 53, 48, 0.8); }
 
     .journey-subtitle.zh {
       letter-spacing: 0.1em;
@@ -205,6 +275,7 @@
       backdrop-filter: blur(5px);
       transition: all 0.45s ease;
     }
+    body.light-mode .back-home { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.4); color: var(--text-offwhite); }
 
     .back-home:hover {
       color: var(--bg-charcoal);
@@ -212,6 +283,7 @@
       border-color: var(--gold-muted);
       box-shadow: 0 10px 20px rgba(197, 179, 148, 0.18);
     }
+    body.light-mode .back-home:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
 
     .back-home.zh {
       text-transform: none;
@@ -227,6 +299,7 @@
       background: linear-gradient(to bottom, transparent, rgba(197, 179, 148, 0.6), transparent);
       margin: 2rem auto 1.8rem;
     }
+    body.light-mode .decorative-line { background: linear-gradient(to bottom, transparent, var(--gold-dark), transparent); opacity: 0.6; }
 
     .progress-meta {
       width: min(760px, 100%);
@@ -254,6 +327,7 @@
       position: relative;
       overflow: hidden;
     }
+    body.light-mode .progress-bar { background: rgba(138, 115, 86, 0.2); }
 
     .progress-fill {
       height: 100%;
@@ -261,6 +335,7 @@
       background: linear-gradient(to right, rgba(197, 179, 148, 0.35), rgba(197, 179, 148, 0.95));
       transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
     }
+    body.light-mode .progress-fill { background: linear-gradient(to right, rgba(138, 115, 86, 0.35), rgba(138, 115, 86, 0.95)); }
 
     .question-shell {
       width: min(760px, 100%);
@@ -304,7 +379,6 @@
     }
 
     .question-title-block h2 {
-      font-family: var(--font-heading-en);
       font-size: clamp(2.2rem, 4.8vw, 3.4rem);
       color: var(--text-offwhite);
       font-weight: 400;
@@ -332,6 +406,7 @@
       max-width: 620px;
       margin: 0 auto;
     }
+    body.light-mode .question-title-block p { color: rgba(58, 53, 48, 0.7); }
 
     .question-title-block p.zh {
       transform: none;
@@ -362,6 +437,7 @@
       text-align: center;
       letter-spacing: 0.04em;
     }
+    body.light-mode input, body.light-mode select, body.light-mode textarea { color: var(--text-offwhite); border-bottom-color: rgba(138, 115, 86, 0.3); }
 
     body.lang-zh-active input,
     body.lang-zh-active select,
@@ -376,11 +452,13 @@
     textarea:focus {
       border-bottom-color: rgba(197, 179, 148, 0.6);
     }
+    body.light-mode input:focus, body.light-mode select:focus, body.light-mode textarea:focus { border-bottom-color: rgba(138, 115, 86, 0.8); }
 
     input::placeholder,
     textarea::placeholder {
       color: rgba(232, 228, 219, 0.34);
     }
+    body.light-mode input::placeholder, body.light-mode textarea::placeholder { color: rgba(58, 53, 48, 0.4); }
 
     select {
       background-image:
@@ -394,6 +472,7 @@
       padding-right: 2.5rem;
       text-align-last: center;
     }
+    body.light-mode select { background-image: linear-gradient(45deg, transparent 50%, rgba(138,115,86,0.7) 50%), linear-gradient(135deg, rgba(138,115,86,0.7) 50%, transparent 50%); }
 
     textarea {
       min-height: 120px;
@@ -435,11 +514,13 @@
       font-family: var(--font-body-en);
       letter-spacing: 3px;
     }
+    body.light-mode .ghost-btn { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.3); color: var(--gold-dark); }
 
     .ghost-btn:hover {
       border-color: rgba(197, 179, 148, 0.35);
       color: var(--gold-muted);
     }
+    body.light-mode .ghost-btn:hover { background: var(--gold-muted); color: #fff; border-color: var(--gold-muted); }
 
     .cta-btn {
       border: 1px solid rgba(197, 179, 148, 0.5);
@@ -448,12 +529,14 @@
       letter-spacing: 4px;
       background: rgba(0,0,0,0.2);
     }
+    body.light-mode .cta-btn { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.5); color: var(--text-offwhite); }
 
     .cta-btn:hover {
       background: var(--gold-muted);
       color: var(--bg-charcoal);
       box-shadow: 0 10px 20px rgba(197, 179, 148, 0.2);
     }
+    body.light-mode .cta-btn:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); box-shadow: 0 10px 20px rgba(0,0,0, 0.1); }
 
     .ghost-btn:disabled,
     .cta-btn:disabled {
@@ -470,6 +553,7 @@
       letter-spacing: 1px;
       text-transform: uppercase;
     }
+    body.light-mode .submit-note { color: rgba(58, 53, 48, 0.6); }
 
     .submit-note.zh {
       text-transform: none;
@@ -554,7 +638,13 @@
 
   <nav>
     <a href="./index.html" class="nav-logo">Altier</a>
-    <button class="lang-btn" onclick="toggleLang()">EN / 中文</button>
+    <div class="nav-controls">
+      <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle Day/Night Theme">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+      <button class="lang-btn" onclick="toggleLang()">EN / 中文</button>
+    </div>
   </nav>
 
   <main class="journey-page">
@@ -794,10 +884,34 @@
   </footer>
 
   <script>
+    // === 补回：加入 localStorage 记忆系统引擎 ===
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. 抓取本地缓存状态
+      const savedTheme = localStorage.getItem('altier_theme');
+      const savedLang = localStorage.getItem('altier_lang');
+      
+      // 2. 根据状态秒切页面
+      if (savedTheme === 'light') document.body.classList.add('light-mode');
+      if (savedLang === 'zh') document.body.classList.add('lang-zh-active');
+      
+      // 初始化表单内部语言数据
+      document.getElementById('pageLanguage').value = document.body.classList.contains('lang-zh-active') ? '中文' : 'EN';
+      applyPlaceholders();
+      applySelectTranslations();
+    });
+
+    // 强化：切换主题时保存状态
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+      localStorage.setItem('altier_theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+    }
+
+    // 强化：切换语言时保存状态
     function toggleLang() {
       document.body.classList.toggle('lang-zh-active');
-      document.getElementById('pageLanguage').value =
-        document.body.classList.contains('lang-zh-active') ? '中文' : 'EN';
+      const isZh = document.body.classList.contains('lang-zh-active');
+      document.getElementById('pageLanguage').value = isZh ? '中文' : 'EN';
+      localStorage.setItem('altier_lang', isZh ? 'zh' : 'en');
       applyPlaceholders();
       applySelectTranslations();
     }
