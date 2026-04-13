@@ -443,12 +443,14 @@
 
     .name-area,
     .contact-area,
-    .travel-area {
+    .travel-area,
+    .budget-area {
       width: min(620px, 100%);
       margin: 1.8rem auto 0;
     }
 
-    .name-row {
+    .name-row,
+    .budget-row {
       display: flex;
       gap: 1.4rem;
       width: 100%;
@@ -462,11 +464,13 @@
       flex: 1;
     }
 
-    .title-field {
+    .title-field,
+    .currency-field {
       flex: 0 0 180px;
     }
 
-    .surname-field {
+    .surname-field,
+    .budget-value-field {
       flex: 1;
     }
 
@@ -475,7 +479,9 @@
     }
 
     .name-area input,
-    .name-area select {
+    .name-area select,
+    .budget-area input,
+    .budget-area select {
       width: 100%;
     }
 
@@ -816,7 +822,7 @@
       }
 
       .question-shell {
-        min-height: 820px;
+        min-height: 860px;
       }
 
       .controls {
@@ -845,6 +851,7 @@
       }
 
       .name-row,
+      .budget-row,
       .contact-detail-row,
       .travel-detail-row,
       .phone-composite {
@@ -854,6 +861,7 @@
       }
 
       .title-field,
+      .currency-field,
       .contact-method-pill,
       .travel-label-pill,
       .phone-code-wrap,
@@ -1159,23 +1167,55 @@
         <section class="question-slide" data-step="8">
           <div class="question-number">08</div>
           <div class="question-title-block">
-            <h2 class="en">What matters most for this passage?</h2>
-            <h2 class="zh">这次行程中您最看重什么</h2>
+            <h2 class="en">What range would feel appropriate for this journey?</h2>
+            <h2 class="zh">这次旅程中，您希望我们参考的预算范围是</h2>
+            <p class="en">A thoughtful range is perfectly sufficient.</p>
+            <p class="zh">大致范围即可，我们会据此更好地平衡舒适与选择。</p>
           </div>
-          <div class="input-area">
-            <select id="topPriority" name="topPriority" required data-translate-select>
-              <option value="">Please select</option>
-              <option value="Minimum hassle">Minimum hassle</option>
-              <option value="Maximum comfort">Maximum comfort</option>
-              <option value="Balanced value">Balanced value</option>
-              <option value="Flexible changes">Flexible changes</option>
-              <option value="A calmer experience overall">A calmer experience overall</option>
-            </select>
+          <div class="input-area budget-area">
+            <div class="budget-row">
+              <div class="currency-field">
+                <select id="budgetCurrency" name="budgetCurrency" required data-translate-select>
+                  <option value="">Currency</option>
+                  <option value="$">$</option>
+                  <option value="¥">¥</option>
+                  <option value="€">€</option>
+                  <option value="£">£</option>
+                  <option value="HK$">HK$</option>
+                  <option value="SGD">SGD</option>
+                </select>
+              </div>
+              <div class="budget-value-field">
+                <input id="budgetAmount" name="budgetAmount" type="text" required
+                  data-en-placeholder="Your preferred budget range"
+                  data-zh-placeholder="请输入您的预算范围"
+                  placeholder="Your preferred budget range" />
+              </div>
+            </div>
           </div>
         </section>
 
         <section class="question-slide" data-step="9">
           <div class="question-number">09</div>
+          <div class="question-title-block">
+            <h2 class="en">How many connections would feel acceptable?</h2>
+            <h2 class="zh">您最多可以接受几次转机</h2>
+            <p class="en">We will keep this in mind as we refine the balance between comfort and routing.</p>
+            <p class="zh">我们会据此进一步平衡舒适度、航线与整体体验。</p>
+          </div>
+          <div class="input-area">
+            <select id="maxConnections" name="maxConnections" required data-translate-select>
+              <option value="">Please select</option>
+              <option value="0 (Direct)">0 (Direct)</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="2+">2+</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="question-slide" data-step="10">
+          <div class="question-number">10</div>
           <div class="question-title-block">
             <h2 class="en">What would you most like us to soften?</h2>
             <h2 class="zh">您最希望我们替您降低哪方面的不确定性</h2>
@@ -1190,22 +1230,6 @@
               <option value="First-time solo travel anxiety">First-time solo travel anxiety</option>
               <option value="General uncertainty">General uncertainty</option>
             </select>
-          </div>
-        </section>
-
-        <section class="question-slide" data-step="10">
-          <div class="question-number">10</div>
-          <div class="question-title-block">
-            <h2 class="en">Is there anything further we should keep in mind?</h2>
-            <h2 class="zh">还有什么偏好或顾虑需要我们提前纳入考虑</h2>
-            <p class="en">Frequent Flyer Program, Baggages, Timing sensitivities, or any detail that would make the journey more soothing</p>
-            <p class="zh">例如常旅客计划、航司偏好、行李情况、时间敏感点，或任何能让整段旅程更舒心的信息</p>
-          </div>
-          <div class="input-area">
-            <textarea id="additionalNotes" name="additionalNotes"
-              data-en-placeholder="Share anything that would help us shape a smoother journey."
-              data-zh-placeholder="请输入任何有助于我们更好安排旅程的信息"
-              placeholder="Share anything that would help us shape a smoother journey."></textarea>
           </div>
         </section>
 
@@ -1303,6 +1327,14 @@
       travelContext: {
         en: ["Please select", "Flying alone", "First transpacific trip alone", "Family is involved in the decision", "Traveling with someone else"],
         zh: ["请选择", "独自出行", "第一次独自跨太平洋出行", "家人会参与决策", "与他人同行"]
+      },
+      budgetCurrency: {
+        en: ["Currency", "$", "¥", "€", "£", "HK$", "SGD"],
+        zh: ["货币", "$", "¥", "€", "£", "HK$", "SGD"]
+      },
+      maxConnections: {
+        en: ["Please select", "0 (Direct)", "1", "2", "2+"],
+        zh: ["请选择", "0（直飞）", "1", "2", "2+"]
       },
       topPriority: {
         en: ["Please select", "Minimum hassle", "Maximum comfort", "Balanced value", "Flexible changes", "A calmer experience overall"],
