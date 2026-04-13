@@ -75,7 +75,7 @@
     .bg-contour::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
+      inset: 0;
       background-image: url('./bg-gold.jpg');
       background-size: cover;
       background-position: center;
@@ -175,7 +175,8 @@
       text-transform: uppercase;
       backdrop-filter: blur(5px);
       height: 36px;
-      display: flex; align-items: center;
+      display: flex;
+      align-items: center;
     }
 
     .lang-btn:hover {
@@ -194,12 +195,19 @@
     body.light-mode .lang-btn:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
 
     .theme-btn {
-      width: 36px; height: 36px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      display: flex; justify-content: center; align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 0;
-      background: rgba(0,0,0,0.2); border: 1px solid rgba(197, 179, 148, 0.4);
-      color: var(--gold-muted); cursor: pointer; transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1); backdrop-filter: blur(5px);
+      background: rgba(0,0,0,0.2);
+      border: 1px solid rgba(197, 179, 148, 0.4);
+      color: var(--gold-muted);
+      cursor: pointer;
+      transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      backdrop-filter: blur(5px);
     }
     body.light-mode .theme-btn { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.4); color: var(--text-offwhite); }
     .theme-btn:hover { background: var(--gold-muted); color: var(--bg-charcoal); border-color: var(--gold-muted); transform: scale(1.05); }
@@ -354,7 +362,7 @@
 
     .question-shell {
       width: min(760px, 100%);
-      min-height: 470px;
+      min-height: 600px;
       margin: 0 auto;
       position: relative;
     }
@@ -434,7 +442,8 @@
     }
 
     .name-area,
-    .contact-area {
+    .contact-area,
+    .travel-area {
       width: min(620px, 100%);
       margin: 1.8rem auto 0;
     }
@@ -470,11 +479,13 @@
       width: 100%;
     }
 
-    .contact-method-block {
+    .contact-method-block,
+    .travel-method-block {
       width: 100%;
     }
 
-    .contact-detail-panel {
+    .contact-detail-panel,
+    .travel-detail-panel {
       max-height: 0;
       opacity: 0;
       overflow: hidden;
@@ -487,21 +498,30 @@
       margin-top: 0;
     }
 
-    .contact-detail-panel.active {
-      max-height: 220px;
+    .contact-detail-panel.active,
+    .travel-detail-panel.active {
       opacity: 1;
       transform: translateY(0);
       margin-top: 1.6rem;
     }
 
-    .contact-detail-row {
+    .contact-detail-panel.active { max-height: 240px; }
+    .travel-detail-panel.active { max-height: 340px; }
+
+    .contact-detail-row,
+    .travel-detail-row {
       display: flex;
       gap: 1.4rem;
       align-items: flex-end;
       width: 100%;
     }
 
-    .contact-method-pill {
+    .travel-detail-row + .travel-detail-row {
+      margin-top: 1.2rem;
+    }
+
+    .contact-method-pill,
+    .travel-label-pill {
       flex: 0 0 180px;
       min-height: 58px;
       display: flex;
@@ -518,18 +538,21 @@
       padding: 0 0.6rem;
     }
 
-    body.light-mode .contact-method-pill {
+    body.light-mode .contact-method-pill,
+    body.light-mode .travel-label-pill {
       border-bottom-color: rgba(138, 115, 86, 0.3);
     }
 
-    .contact-method-pill .zh {
+    .contact-method-pill .zh,
+    .travel-label-pill .zh {
       letter-spacing: 0.1em;
       text-transform: none;
       transform: none;
       font-size: 0.82rem;
     }
 
-    .contact-detail-input-wrap {
+    .contact-detail-input-wrap,
+    .travel-detail-input-wrap {
       flex: 1;
       min-width: 0;
     }
@@ -554,12 +577,24 @@
     }
 
     .contact-detail-input-wrap input,
-    .contact-detail-input-wrap select {
+    .contact-detail-input-wrap select,
+    .travel-detail-input-wrap input,
+    .travel-detail-input-wrap textarea {
       width: 100%;
     }
 
+    .travel-freeform-wrap {
+      display: none;
+    }
+    .travel-freeform-wrap.active {
+      display: block;
+    }
+
     #contactDetailText.hidden,
-    #phoneComposite.hidden {
+    #phoneComposite.hidden,
+    #roundTripFields.hidden,
+    #oneWayField.hidden,
+    #flexibleField.hidden {
       display: none !important;
     }
 
@@ -731,7 +766,7 @@
       }
 
       .question-shell {
-        min-height: 560px;
+        min-height: 760px;
       }
 
       .controls {
@@ -759,38 +794,26 @@
         font-size: 1.45rem;
       }
 
-      .name-row {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .title-field {
-        flex: 1 1 auto;
-      }
-
-      .name-row + .name-row {
-        margin-top: 1rem;
-      }
-
-      .contact-detail-row {
+      .name-row,
+      .contact-detail-row,
+      .travel-detail-row,
+      .phone-composite {
         flex-direction: column;
         gap: 1rem;
         align-items: stretch;
       }
 
-      .contact-method-pill {
-        flex: 1 1 auto;
-        min-height: 52px;
-      }
-
-      .phone-composite {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
+      .title-field,
+      .contact-method-pill,
+      .travel-label-pill,
       .phone-code-wrap,
       .phone-number-wrap {
         flex: 1 1 auto;
+      }
+
+      .name-row + .name-row,
+      .travel-detail-row + .travel-detail-row {
+        margin-top: 1rem;
       }
     }
   </style>
@@ -845,6 +868,7 @@
       <input type="hidden" name="pageLanguage" id="pageLanguage" value="EN">
       <input type="hidden" name="fullName" id="fullName">
       <input type="hidden" name="contactInfo" id="contactInfo">
+      <input type="hidden" name="travelWindow" id="travelWindow">
 
       <div class="question-shell">
 
@@ -858,7 +882,7 @@
           </div>
 
           <div class="input-area name-area">
-            <div class="name-row name-row-top">
+            <div class="name-row">
               <div class="name-field title-field">
                 <select id="honorific" name="honorific" required data-translate-select>
                   <option value="">Title</option>
@@ -871,29 +895,19 @@
               </div>
 
               <div class="name-field surname-field">
-                <input
-                  id="lastName"
-                  name="lastName"
-                  type="text"
-                  required
+                <input id="lastName" name="lastName" type="text" required
                   data-en-placeholder="Last name / Surname"
                   data-zh-placeholder="姓"
-                  placeholder="Last name / Surname"
-                />
+                  placeholder="Last name / Surname" />
               </div>
             </div>
 
             <div class="name-row">
               <div class="name-field full-width">
-                <input
-                  id="firstName"
-                  name="firstName"
-                  type="text"
-                  required
+                <input id="firstName" name="firstName" type="text" required
                   data-en-placeholder="First name / Given name"
                   data-zh-placeholder="名"
-                  placeholder="First name / Given name"
-                />
+                  placeholder="First name / Given name" />
               </div>
             </div>
           </div>
@@ -927,14 +941,11 @@
                   <span class="zh">已选择</span>
                 </div>
 
-                <div class="contact-detail-input-wrap" id="contactDetailInputWrap">
-                  <input
-                    id="contactDetailText"
-                    type="text"
+                <div class="contact-detail-input-wrap">
+                  <input id="contactDetailText" type="text"
                     data-en-placeholder="Enter your contact detail"
                     data-zh-placeholder="请输入对应联系方式"
-                    placeholder="Enter your contact detail"
-                  />
+                    placeholder="Enter your contact detail" />
 
                   <div id="phoneComposite" class="phone-composite hidden">
                     <div class="phone-code-wrap">
@@ -950,14 +961,10 @@
                     </div>
 
                     <div class="phone-number-wrap">
-                      <input
-                        id="phoneNumber"
-                        type="tel"
-                        inputmode="tel"
+                      <input id="phoneNumber" type="tel" inputmode="tel"
                         data-en-placeholder="Phone number"
                         data-zh-placeholder="电话号码"
-                        placeholder="Phone number"
-                      />
+                        placeholder="Phone number" />
                     </div>
                   </div>
                 </div>
@@ -997,22 +1004,6 @@
         <section class="question-slide" data-step="5">
           <div class="question-number">05</div>
           <div class="question-title-block">
-            <h2 class="en">When would you ideally prefer to travel?</h2>
-            <h2 class="zh">您理想中的出行时间是</h2>
-            <p class="en">An exact date is not essential. A window is perfectly sufficient.</p>
-            <p class="zh">不一定需要精确日期，大致区间范围即可</p>
-          </div>
-          <div class="input-area">
-            <input id="travelWindow" name="travelWindow" type="text" required
-              data-en-placeholder="e.g. Aug 5–10 / Early December"
-              data-zh-placeholder="例如：8月5日至10日 / 12月上旬"
-              placeholder="e.g. Aug 5–15 / Early December" />
-          </div>
-        </section>
-
-        <section class="question-slide" data-step="6">
-          <div class="question-number">06</div>
-          <div class="question-title-block">
             <h2 class="en">What form of itinerary are you considering?</h2>
             <h2 class="zh">您目前考虑的是哪种行程形式</h2>
           </div>
@@ -1023,6 +1014,70 @@
               <option value="One-way">One-way</option>
               <option value="Flexible / not fully decided">Flexible / not fully decided</option>
             </select>
+          </div>
+        </section>
+
+        <section class="question-slide" data-step="6">
+          <div class="question-number">06</div>
+          <div class="question-title-block">
+            <h2 class="en">When would you ideally prefer to travel?</h2>
+            <h2 class="zh">您理想中的出行时间是</h2>
+            <p class="en">We will adapt this step to the itinerary format you selected.</p>
+            <p class="zh">我们会根据您刚才选择的行程形式，为您呈现相应的时间填写方式</p>
+          </div>
+
+          <div class="input-area travel-area">
+            <div id="travelDetailPanel" class="travel-detail-panel">
+              <div id="roundTripFields" class="hidden">
+                <div class="travel-detail-row">
+                  <div class="travel-label-pill">
+                    <span class="en">Departure</span>
+                    <span class="zh">出发</span>
+                  </div>
+                  <div class="travel-detail-input-wrap">
+                    <input id="departureDate" type="text" inputmode="numeric" maxlength="10"
+                      data-en-placeholder="MM/DD/YYYY"
+                      data-zh-placeholder="月/日/年"
+                      placeholder="MM/DD/YYYY" />
+                  </div>
+                </div>
+
+                <div class="travel-detail-row">
+                  <div class="travel-label-pill">
+                    <span class="en">Return</span>
+                    <span class="zh">返程</span>
+                  </div>
+                  <div class="travel-detail-input-wrap">
+                    <input id="returnDate" type="text" inputmode="numeric" maxlength="10"
+                      data-en-placeholder="MM/DD/YYYY"
+                      data-zh-placeholder="月/日/年"
+                      placeholder="MM/DD/YYYY" />
+                  </div>
+                </div>
+              </div>
+
+              <div id="oneWayField" class="hidden">
+                <div class="travel-detail-row">
+                  <div class="travel-label-pill">
+                    <span class="en">Departure</span>
+                    <span class="zh">出发</span>
+                  </div>
+                  <div class="travel-detail-input-wrap">
+                    <input id="oneWayDate" type="text" inputmode="numeric" maxlength="10"
+                      data-en-placeholder="MM/DD/YYYY"
+                      data-zh-placeholder="月/日/年"
+                      placeholder="MM/DD/YYYY" />
+                  </div>
+                </div>
+              </div>
+
+              <div id="flexibleField" class="travel-freeform-wrap hidden">
+                <textarea id="flexibleTravelWindow"
+                  data-en-placeholder="e.g. Early December / Around Aug 5–10 / Still flexible"
+                  data-zh-placeholder="例如：12月上旬 / 8月5日至10日前后 / 目前还比较灵活"
+                  placeholder="e.g. Early December / Around Aug 5–10 / Still flexible"></textarea>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1154,6 +1209,8 @@
       updateFullName();
       resetContactValidationState();
       updateContactInfo();
+      resetTravelValidationState();
+      updateTravelInfo();
     });
 
     function toggleTheme() {
@@ -1169,6 +1226,7 @@
       applyPlaceholders();
       applySelectTranslations();
       updateContactInfo();
+      updateTravelInfo();
     }
 
     const selectTranslations = {
@@ -1302,6 +1360,169 @@
       }
     }
 
+    function formatDateInputValue(value) {
+      const digits = value.replace(/\D/g, '').slice(0, 8);
+      const parts = [];
+      if (digits.length > 0) parts.push(digits.slice(0, 2));
+      if (digits.length > 2) parts.push(digits.slice(2, 4));
+      if (digits.length > 4) parts.push(digits.slice(4, 8));
+      return parts.join('/');
+    }
+
+    function attachDateMask(id) {
+      const input = document.getElementById(id);
+      if (!input) return;
+
+      input.addEventListener('input', e => {
+        const formatted = formatDateInputValue(e.target.value);
+        e.target.value = formatted;
+        updateTravelInfo();
+      });
+
+      input.addEventListener('change', () => updateTravelInfo());
+    }
+
+    function isCompleteDate(value) {
+      return /^\d{2}\/\d{2}\/\d{4}$/.test((value || '').trim());
+    }
+
+    function updateTravelInfo() {
+      const tripType = document.getElementById('tripType')?.value || '';
+      const hiddenTravel = document.getElementById('travelWindow');
+      const panel = document.getElementById('travelDetailPanel');
+      const roundTripFields = document.getElementById('roundTripFields');
+      const oneWayField = document.getElementById('oneWayField');
+      const flexibleField = document.getElementById('flexibleField');
+
+      const departureDate = document.getElementById('departureDate');
+      const returnDate = document.getElementById('returnDate');
+      const oneWayDate = document.getElementById('oneWayDate');
+      const flexibleTravelWindow = document.getElementById('flexibleTravelWindow');
+
+      if (!hiddenTravel || !panel || !roundTripFields || !oneWayField || !flexibleField) return;
+
+      if (!tripType) {
+        panel.classList.remove('active');
+        roundTripFields.classList.add('hidden');
+        oneWayField.classList.add('hidden');
+        flexibleField.classList.add('hidden');
+        hiddenTravel.value = '';
+        return;
+      }
+
+      panel.classList.add('active');
+      roundTripFields.classList.add('hidden');
+      oneWayField.classList.add('hidden');
+      flexibleField.classList.add('hidden');
+
+      if (tripType === 'Round-trip') {
+        roundTripFields.classList.remove('hidden');
+
+        const dep = departureDate?.value.trim() || '';
+        const ret = returnDate?.value.trim() || '';
+        hiddenTravel.value = [dep ? `Departure: ${dep}` : '', ret ? `Return: ${ret}` : ''].filter(Boolean).join(' | ');
+      } else if (tripType === 'One-way') {
+        oneWayField.classList.remove('hidden');
+
+        const dep = oneWayDate?.value.trim() || '';
+        hiddenTravel.value = dep ? `Departure: ${dep}` : '';
+      } else {
+        flexibleField.classList.remove('hidden');
+
+        const flex = flexibleTravelWindow?.value.trim() || '';
+        hiddenTravel.value = flex;
+      }
+    }
+
+    function resetTravelValidationState() {
+      const tripType = document.getElementById('tripType')?.value || '';
+      const departureDate = document.getElementById('departureDate');
+      const returnDate = document.getElementById('returnDate');
+      const oneWayDate = document.getElementById('oneWayDate');
+      const flexibleTravelWindow = document.getElementById('flexibleTravelWindow');
+
+      if (departureDate) departureDate.required = false;
+      if (returnDate) returnDate.required = false;
+      if (oneWayDate) oneWayDate.required = false;
+      if (flexibleTravelWindow) flexibleTravelWindow.required = false;
+
+      if (tripType === 'Round-trip') {
+        if (departureDate) departureDate.required = true;
+        if (returnDate) returnDate.required = true;
+      } else if (tripType === 'One-way') {
+        if (oneWayDate) oneWayDate.required = true;
+      } else if (tripType === 'Flexible / not fully decided') {
+        if (flexibleTravelWindow) flexibleTravelWindow.required = true;
+      }
+    }
+
+    function validateTravelStep() {
+      const tripType = document.getElementById('tripType')?.value || '';
+
+      if (tripType === 'Round-trip') {
+        const dep = document.getElementById('departureDate');
+        const ret = document.getElementById('returnDate');
+
+        if (!dep.value.trim()) {
+          dep.reportValidity();
+          dep.focus();
+          return false;
+        }
+        if (!isCompleteDate(dep.value)) {
+          dep.setCustomValidity(isZh() ? '请输入完整日期，例如 08/15/2026' : 'Please enter a complete date, e.g. 08/15/2026');
+          dep.reportValidity();
+          dep.focus();
+          dep.setCustomValidity('');
+          return false;
+        }
+
+        if (!ret.value.trim()) {
+          ret.reportValidity();
+          ret.focus();
+          return false;
+        }
+        if (!isCompleteDate(ret.value)) {
+          ret.setCustomValidity(isZh() ? '请输入完整日期，例如 08/25/2026' : 'Please enter a complete date, e.g. 08/25/2026');
+          ret.reportValidity();
+          ret.focus();
+          ret.setCustomValidity('');
+          return false;
+        }
+
+        return true;
+      }
+
+      if (tripType === 'One-way') {
+        const dep = document.getElementById('oneWayDate');
+
+        if (!dep.value.trim()) {
+          dep.reportValidity();
+          dep.focus();
+          return false;
+        }
+        if (!isCompleteDate(dep.value)) {
+          dep.setCustomValidity(isZh() ? '请输入完整日期，例如 08/15/2026' : 'Please enter a complete date, e.g. 08/15/2026');
+          dep.reportValidity();
+          dep.focus();
+          dep.setCustomValidity('');
+          return false;
+        }
+
+        return true;
+      }
+
+      if (tripType === 'Flexible / not fully decided') {
+        const flex = document.getElementById('flexibleTravelWindow');
+        if (!flex.value.trim()) {
+          flex.reportValidity();
+          flex.focus();
+          return false;
+        }
+      }
+
+      return true;
+    }
+
     ['honorific', 'lastName', 'firstName'].forEach(id => {
       const el = document.getElementById(id);
       if (el) {
@@ -1320,6 +1541,21 @@
         });
       }
     });
+
+    ['tripType', 'flexibleTravelWindow'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', updateTravelInfo);
+        el.addEventListener('change', () => {
+          resetTravelValidationState();
+          updateTravelInfo();
+        });
+      }
+    });
+
+    attachDateMask('departureDate');
+    attachDateMask('returnDate');
+    attachDateMask('oneWayDate');
 
     const totalSteps = 10;
     let currentStep = 1;
@@ -1349,6 +1585,10 @@
     }
 
     function validateStep(step) {
+      if (step === 6) {
+        return validateTravelStep();
+      }
+
       const fields = getVisibleRequiredFieldsForStep(step);
       for (const field of fields) {
         if (!field.checkValidity()) {
@@ -1375,7 +1615,6 @@
         submitBtn.style.display = 'inline-block';
       } else {
         nextBtn.style.display = 'inline-block';
-        submitBtn.style.display = 'inline-block';
         submitBtn.style.display = 'none';
       }
 
@@ -1383,12 +1622,19 @@
         resetContactValidationState();
         updateContactInfo();
       }
+
+      if (step === 6) {
+        resetTravelValidationState();
+        updateTravelInfo();
+      }
     }
 
     nextBtn.addEventListener('click', () => {
       updateFullName();
       resetContactValidationState();
       updateContactInfo();
+      resetTravelValidationState();
+      updateTravelInfo();
 
       if (!validateStep(currentStep)) {
         return;
@@ -1411,6 +1657,8 @@
       updateFullName();
       resetContactValidationState();
       updateContactInfo();
+      resetTravelValidationState();
+      updateTravelInfo();
 
       if (!validateStep(currentStep)) {
         e.preventDefault();
