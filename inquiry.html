@@ -84,9 +84,7 @@
       transition: filter 0.8s ease, opacity 0.8s ease;
     }
 
-    body.light-mode .bg-contour {
-      animation: none;
-    }
+    body.light-mode .bg-contour { animation: none; }
 
     @keyframes breatheContour {
       0% { opacity: 0.15; filter: brightness(0.8) contrast(1.1); transform: scale(1); }
@@ -107,6 +105,7 @@
 
     .zh { display: none !important; }
     .en { display: inline-block; }
+    p.en, h1.en, h2.en, h3.en, h4.en, div.en, a.en, button.en, span.en { display: inline-block; }
     p.en, h1.en, h2.en, h3.en, h4.en, div.en, a.en { display: block; }
 
     body.lang-zh-active .en { display: none !important; }
@@ -243,7 +242,8 @@
     }
 
     .journey-title.en,
-    .question-title-block h2.en {
+    .question-title-block h2.en,
+    .review-title.en {
       font-family: "Didot", "Bodoni MT", "Bodoni Moda", "Playfair Display", serif;
       letter-spacing: 0.03em !important;
     }
@@ -265,9 +265,7 @@
       font-size: clamp(2.6rem, 6vw, 4.5rem);
     }
 
-    body.light-mode .journey-title {
-      color: #4a321d !important;
-    }
+    body.light-mode .journey-title { color: #4a321d !important; }
 
     .journey-subtitle {
       max-width: 700px;
@@ -354,17 +352,30 @@
 
     .progress-fill {
       height: 100%;
-      width: 10%;
+      width: 9.09%;
       background: linear-gradient(to right, rgba(197, 179, 148, 0.35), rgba(197, 179, 148, 0.95));
       transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
     }
     body.light-mode .progress-fill { background: linear-gradient(to right, rgba(138, 115, 86, 0.35), rgba(138, 115, 86, 0.95)); }
 
-    .question-shell {
-      width: min(760px, 100%);
-      min-height: 620px;
+    .question-shell,
+    .review-shell {
+      width: min(860px, 100%);
       margin: 0 auto;
       position: relative;
+    }
+
+    .question-shell { min-height: 700px; }
+    .review-shell {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .review-shell.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .question-slide {
@@ -396,12 +407,14 @@
       margin-bottom: 1.2rem;
     }
 
-    .question-title-block {
+    .question-title-block,
+    .review-header-block {
       max-width: 760px;
       margin: 0 auto 1rem;
     }
 
-    .question-title-block h2 {
+    .question-title-block h2,
+    .review-title {
       font-size: clamp(2.2rem, 4.8vw, 3.4rem);
       color: var(--text-offwhite);
       font-weight: 400;
@@ -409,29 +422,33 @@
       margin-bottom: 0.75rem;
     }
 
-    .question-title-block h2.zh {
+    .question-title-block h2.zh,
+    .review-title.zh {
       font-family: var(--font-zh);
       font-weight: 500;
       letter-spacing: 0.03em;
       transform: none;
       line-height: 1.5;
       font-size: clamp(1.52rem, 3vw, 2.1rem);
-      max-width: 700px;
+      max-width: 760px;
       margin-left: auto;
       margin-right: auto;
       margin-bottom: 0.75rem;
     }
 
-    .question-title-block p {
+    .question-title-block p,
+    .review-subtitle {
       color: rgba(232, 228, 219, 0.62);
       font-size: 0.84rem;
       line-height: 1.9;
-      max-width: 620px;
+      max-width: 700px;
       margin: 0 auto;
     }
-    body.light-mode .question-title-block p { color: rgba(58, 53, 48, 0.7); }
+    body.light-mode .question-title-block p,
+    body.light-mode .review-subtitle { color: rgba(58, 53, 48, 0.7); }
 
-    .question-title-block p.zh {
+    .question-title-block p.zh,
+    .review-subtitle.zh {
       transform: none;
       letter-spacing: 0.1em;
     }
@@ -485,9 +502,7 @@
       width: 100%;
     }
 
-    .contact-method-block {
-      width: 100%;
-    }
+    .contact-method-block { width: 100%; }
 
     .contact-detail-panel,
     .travel-detail-panel {
@@ -569,17 +584,10 @@
       width: 100%;
     }
 
-    .phone-composite.active {
-      display: flex;
-    }
+    .phone-composite.active { display: flex; }
 
-    .phone-code-wrap {
-      flex: 0 0 150px;
-    }
-
-    .phone-number-wrap {
-      flex: 1;
-    }
+    .phone-code-wrap { flex: 0 0 150px; }
+    .phone-number-wrap { flex: 1; }
 
     .contact-detail-input-wrap input,
     .contact-detail-input-wrap select,
@@ -717,12 +725,101 @@
       line-height: 1.9;
     }
 
-    body.lang-zh-active textarea {
+    body.lang-zh-active textarea { text-align: left; }
+
+    .review-list {
+      width: min(860px, 100%);
+      margin: 2.6rem auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+    }
+
+    .review-item {
+      width: 100%;
+      background: rgba(0,0,0,0.14);
+      border: 1px solid rgba(197, 179, 148, 0.18);
+      border-radius: 24px;
+      padding: 1.3rem 1.5rem;
       text-align: left;
+      backdrop-filter: blur(8px);
+      transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+      cursor: pointer;
+    }
+
+    .review-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(197, 179, 148, 0.4);
+      background: rgba(0,0,0,0.2);
+    }
+
+    body.light-mode .review-item {
+      background: rgba(255,255,255,0.5);
+      border-color: rgba(138, 115, 86, 0.22);
+    }
+
+    body.light-mode .review-item:hover {
+      background: rgba(255,255,255,0.75);
+      border-color: rgba(138, 115, 86, 0.45);
+    }
+
+    .review-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .review-q {
+      font-size: 0.72rem;
+      color: var(--gold-dark);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .review-edit {
+      font-size: 0.7rem;
+      color: var(--gold-muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .review-label {
+      font-size: 0.9rem;
+      color: var(--text-offwhite);
+      margin-bottom: 0.25rem;
+    }
+
+    .review-label.zh {
+      transform: none;
+      letter-spacing: 0.08em;
+    }
+
+    .review-value {
+      color: rgba(232, 228, 219, 0.72);
+      line-height: 1.85;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    body.light-mode .review-value {
+      color: rgba(58, 53, 48, 0.72);
+    }
+
+    .review-value.empty {
+      color: rgba(232, 228, 219, 0.4);
+      font-style: italic;
+    }
+
+    body.light-mode .review-value.empty {
+      color: rgba(58, 53, 48, 0.42);
     }
 
     .controls {
-      width: min(760px, 100%);
+      width: min(860px, 100%);
       margin: 2.6rem auto 0;
       display: flex;
       justify-content: space-between;
@@ -812,18 +909,11 @@
       transform: none;
     }
 
-    iframe[name="hidden_iframe"] {
-      display: none;
-    }
+    iframe[name="hidden_iframe"] { display: none; }
 
     @media (max-width: 768px) {
-      .journey-page {
-        padding-top: 7rem;
-      }
-
-      .question-shell {
-        min-height: 860px;
-      }
+      .journey-page { padding-top: 7rem; }
+      .question-shell { min-height: 980px; }
 
       .controls {
         flex-direction: column;
@@ -834,27 +924,21 @@
         width: 100%;
       }
 
-      .journey-title {
-        font-size: 3rem;
-      }
+      .journey-title { font-size: 3rem; }
+      .journey-title.zh { font-size: 2.5rem; }
 
-      .journey-title.zh {
-        font-size: 2.5rem;
-      }
+      .question-title-block h2,
+      .review-title { font-size: 2rem; }
 
-      .question-title-block h2 {
-        font-size: 2rem;
-      }
-
-      .question-title-block h2.zh {
-        font-size: 1.45rem;
-      }
+      .question-title-block h2.zh,
+      .review-title.zh { font-size: 1.45rem; }
 
       .name-row,
       .budget-row,
       .contact-detail-row,
       .travel-detail-row,
-      .phone-composite {
+      .phone-composite,
+      .review-item-top {
         flex-direction: column;
         gap: 1rem;
         align-items: stretch;
@@ -913,9 +997,9 @@
     </div>
 
     <div class="progress-meta">
-      <span id="progressCount">01 / 10</span>
-      <span class="en">Private Sequence</span>
-      <span class="zh">礼宾流程</span>
+      <span id="progressCount">01 / 11</span>
+      <span class="en" id="progressLabelEn">Private Sequence</span>
+      <span class="zh" id="progressLabelZh">礼宾流程</span>
     </div>
 
     <div class="progress-bar">
@@ -928,7 +1012,7 @@
       <input type="hidden" name="contactInfo" id="contactInfo">
       <input type="hidden" name="travelWindow" id="travelWindow">
 
-      <div class="question-shell">
+      <div class="question-shell" id="questionShell">
 
         <section class="question-slide active" data-step="1">
           <div class="question-number">01</div>
@@ -1233,6 +1317,38 @@
           </div>
         </section>
 
+        <section class="question-slide" data-step="11">
+          <div class="question-number">11</div>
+          <div class="question-title-block">
+            <h2 class="en">Is there anything further we should keep in mind?</h2>
+            <h2 class="zh">还有什么偏好或顾虑需要我们提前纳入考虑</h2>
+            <p class="en">Frequent flyer programs, baggage needs, airline preferences, timing sensitivities, or any detail that would make the journey more soothing.</p>
+            <p class="zh">例如常旅客计划、航司偏好、行李情况、时间敏感点，或任何能让整段旅程更舒心的信息。</p>
+          </div>
+          <div class="input-area">
+            <textarea id="additionalNotes" name="additionalNotes"
+              data-en-placeholder="Share anything that would help us shape a smoother journey."
+              data-zh-placeholder="请输入任何有助于我们更好安排旅程的信息"
+              placeholder="Share anything that would help us shape a smoother journey."></textarea>
+          </div>
+        </section>
+
+      </div>
+
+      <div class="review-shell" id="reviewShell">
+        <div class="review-header-block">
+          <h2 class="review-title en">Review Your Journey Brief</h2>
+          <h2 class="review-title zh">请确认您的旅程信息</h2>
+
+          <p class="review-subtitle en">
+            Please look through each detail below. You may tap any row to refine it before we receive your brief.
+          </p>
+          <p class="review-subtitle zh">
+            请在提交前再次检查以下信息。点击任意一项，即可回到对应问题进行修改。
+          </p>
+        </div>
+
+        <div class="review-list" id="reviewList"></div>
       </div>
 
       <div class="controls">
@@ -1241,9 +1357,19 @@
           <span class="zh">上一步</span>
         </button>
 
+        <button type="button" class="ghost-btn" id="returnReviewBtn" style="display:none;">
+          <span class="en">Return to Review</span>
+          <span class="zh">返回检查页</span>
+        </button>
+
         <button type="button" class="cta-btn" id="nextBtn">
           <span class="en">Continue</span>
           <span class="zh">继续</span>
+        </button>
+
+        <button type="button" class="cta-btn" id="reviewBtn" style="display:none;">
+          <span class="en">Review Details</span>
+          <span class="zh">检查信息</span>
         </button>
 
         <button type="submit" class="cta-btn" id="submitBtn" style="display:none;">
@@ -1293,6 +1419,7 @@
       updateContactInfo();
       resetTravelValidationState();
       updateTravelInfo();
+      showStep(currentStep);
     });
 
     function toggleTheme() {
@@ -1309,6 +1436,7 @@
       applySelectTranslations();
       updateContactInfo();
       updateTravelInfo();
+      if (isReviewMode) renderReview();
     }
 
     const selectTranslations = {
@@ -1335,10 +1463,6 @@
       maxConnections: {
         en: ["Please select", "0 (Direct)", "1", "2", "2+"],
         zh: ["请选择", "0（直飞）", "1", "2", "2+"]
-      },
-      topPriority: {
-        en: ["Please select", "Minimum hassle", "Maximum comfort", "Balanced value", "Flexible changes", "A calmer experience overall"],
-        zh: ["请选择", "尽量少折腾", "尽量舒适", "舒适与成本平衡", "退改更灵活", "整体更安心从容"]
       },
       primaryConcern: {
         en: ["Please select", "Tight layovers", "Delays or cancellations", "Overnight arrival", "Baggage handling", "First-time solo travel anxiety", "General uncertainty"],
@@ -1408,7 +1532,6 @@
       if (method === 'Phone') {
         textInput.classList.add('hidden');
         textInput.required = false;
-
         phoneComposite.classList.remove('hidden');
         phoneComposite.classList.add('active');
         phoneNumber.required = true;
@@ -1419,7 +1542,6 @@
       } else {
         textInput.classList.remove('hidden');
         textInput.required = true;
-
         phoneComposite.classList.remove('active');
         phoneComposite.classList.add('hidden');
         phoneNumber.required = false;
@@ -1650,15 +1772,22 @@
     attachDateMask('returnDate');
     attachDateMask('oneWayDate');
 
-    const totalSteps = 10;
+    const totalSteps = 11;
     let currentStep = 1;
+    let isReviewMode = false;
+    let returnToReview = false;
 
     const slides = document.querySelectorAll('.question-slide');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
+    const reviewBtn = document.getElementById('reviewBtn');
     const submitBtn = document.getElementById('submitBtn');
+    const returnReviewBtn = document.getElementById('returnReviewBtn');
     const progressFill = document.getElementById('progressFill');
     const progressCount = document.getElementById('progressCount');
+    const questionShell = document.getElementById('questionShell');
+    const reviewShell = document.getElementById('reviewShell');
+    const reviewList = document.getElementById('reviewList');
     const form = document.getElementById('journeyForm');
 
     function getSlideForStep(step) {
@@ -1678,9 +1807,7 @@
     }
 
     function validateStep(step) {
-      if (step === 6) {
-        return validateTravelStep();
-      }
+      if (step === 6) return validateTravelStep();
 
       const fields = getVisibleRequiredFieldsForStep(step);
       for (const field of fields) {
@@ -1693,7 +1820,164 @@
       return true;
     }
 
+    function formatReviewValue(value) {
+      if (!value || !String(value).trim()) {
+        return isZh() ? '未填写' : 'Not provided';
+      }
+      return String(value).trim();
+    }
+
+    function getCurrentAnswers() {
+      updateFullName();
+      updateContactInfo();
+      updateTravelInfo();
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const contactInfo = document.getElementById('contactInfo').value.trim();
+      const departureCity = document.getElementById('departureCity').value.trim();
+      const destinationCity = document.getElementById('destinationCity').value.trim();
+      const tripType = document.getElementById('tripType').value.trim();
+      const travelWindow = document.getElementById('travelWindow').value.trim();
+      const travelContext = document.getElementById('travelContext').value.trim();
+      const budgetCurrency = document.getElementById('budgetCurrency').value.trim();
+      const budgetAmount = document.getElementById('budgetAmount').value.trim();
+      const maxConnections = document.getElementById('maxConnections').value.trim();
+      const primaryConcern = document.getElementById('primaryConcern').value.trim();
+      const additionalNotes = document.getElementById('additionalNotes').value.trim();
+
+      return [
+        {
+          step: 1,
+          qNo: '01',
+          labelEn: 'How may we address you?',
+          labelZh: '请问如何称呼您',
+          value: fullName
+        },
+        {
+          step: 2,
+          qNo: '02',
+          labelEn: 'How should we reach you?',
+          labelZh: '我们该如何与您联系',
+          value: contactInfo
+        },
+        {
+          step: 3,
+          qNo: '03',
+          labelEn: 'Where will your journey begin?',
+          labelZh: '您的出发地是哪里',
+          value: departureCity
+        },
+        {
+          step: 4,
+          qNo: '04',
+          labelEn: 'And where are you headed?',
+          labelZh: '您的目的地是哪里',
+          value: destinationCity
+        },
+        {
+          step: 5,
+          qNo: '05',
+          labelEn: 'What form of itinerary are you considering?',
+          labelZh: '您目前考虑的是哪种行程形式',
+          value: tripType
+        },
+        {
+          step: 6,
+          qNo: '06',
+          labelEn: 'When would you ideally prefer to travel?',
+          labelZh: '您理想中的出行时间是',
+          value: travelWindow
+        },
+        {
+          step: 7,
+          qNo: '07',
+          labelEn: 'Which best reflects this journey?',
+          labelZh: '以下哪项最符合这次出行情况',
+          value: travelContext
+        },
+        {
+          step: 8,
+          qNo: '08',
+          labelEn: 'What range would feel appropriate for this journey?',
+          labelZh: '这次旅程中，您希望我们参考的预算范围是',
+          value: [budgetCurrency, budgetAmount].filter(Boolean).join(' ')
+        },
+        {
+          step: 9,
+          qNo: '09',
+          labelEn: 'How many connections would feel acceptable?',
+          labelZh: '您最多可以接受几次转机',
+          value: maxConnections
+        },
+        {
+          step: 10,
+          qNo: '10',
+          labelEn: 'What would you most like us to soften?',
+          labelZh: '您最希望我们替您降低哪方面的不确定性',
+          value: primaryConcern
+        },
+        {
+          step: 11,
+          qNo: '11',
+          labelEn: 'Is there anything further we should keep in mind?',
+          labelZh: '还有什么偏好或顾虑需要我们提前纳入考虑',
+          value: additionalNotes
+        }
+      ];
+    }
+
+    function renderReview() {
+      const answers = getCurrentAnswers();
+      reviewList.innerHTML = '';
+
+      answers.forEach(item => {
+        const row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'review-item';
+
+        const formattedValue = formatReviewValue(item.value);
+        const isEmpty = !item.value || !String(item.value).trim();
+
+        row.innerHTML = `
+          <div class="review-item-top">
+            <div class="review-q">${item.qNo}</div>
+            <div class="review-edit">${isZh() ? '点击修改' : 'Tap to edit'}</div>
+          </div>
+          <div class="review-label ${isZh() ? 'zh' : 'en'}">${isZh() ? item.labelZh : item.labelEn}</div>
+          <div class="review-value ${isEmpty ? 'empty' : ''}">${formattedValue}</div>
+        `;
+
+        row.addEventListener('click', () => {
+          isReviewMode = false;
+          returnToReview = true;
+          currentStep = item.step;
+          showStep(currentStep);
+        });
+
+        reviewList.appendChild(row);
+      });
+    }
+
+    function showReview() {
+      renderReview();
+      isReviewMode = true;
+      questionShell.style.display = 'none';
+      reviewShell.classList.add('active');
+      progressCount.textContent = isZh() ? 'CHECK' : 'REVIEW';
+      progressFill.style.width = '100%';
+
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+      reviewBtn.style.display = 'none';
+      returnReviewBtn.style.display = 'none';
+      submitBtn.style.display = 'inline-block';
+    }
+
     function showStep(step) {
+      isReviewMode = false;
+      reviewShell.classList.remove('active');
+      questionShell.style.display = 'block';
+
       slides.forEach(slide => slide.classList.remove('active'));
       const active = getSlideForStep(step);
       if (active) active.classList.add('active');
@@ -1702,13 +1986,22 @@
       progressFill.style.width = `${(step / totalSteps) * 100}%`;
 
       prevBtn.disabled = step === 1;
+      prevBtn.style.display = returnToReview ? 'none' : 'inline-block';
+
+      if (returnToReview) {
+        returnReviewBtn.style.display = 'inline-block';
+      } else {
+        returnReviewBtn.style.display = 'none';
+      }
+
+      submitBtn.style.display = 'none';
 
       if (step === totalSteps) {
         nextBtn.style.display = 'none';
-        submitBtn.style.display = 'inline-block';
+        reviewBtn.style.display = 'inline-block';
       } else {
         nextBtn.style.display = 'inline-block';
-        submitBtn.style.display = 'none';
+        reviewBtn.style.display = 'none';
       }
 
       if (step === 2) {
@@ -1729,14 +2022,33 @@
       resetTravelValidationState();
       updateTravelInfo();
 
-      if (!validateStep(currentStep)) {
-        return;
-      }
+      if (!validateStep(currentStep)) return;
 
       if (currentStep < totalSteps) {
         currentStep += 1;
         showStep(currentStep);
       }
+    });
+
+    reviewBtn.addEventListener('click', () => {
+      updateFullName();
+      resetContactValidationState();
+      updateContactInfo();
+      resetTravelValidationState();
+      updateTravelInfo();
+
+      if (!validateStep(currentStep)) return;
+      showReview();
+    });
+
+    returnReviewBtn.addEventListener('click', () => {
+      updateFullName();
+      resetContactValidationState();
+      updateContactInfo();
+      resetTravelValidationState();
+      updateTravelInfo();
+      returnToReview = false;
+      showReview();
     });
 
     prevBtn.addEventListener('click', () => {
@@ -1753,7 +2065,7 @@
       resetTravelValidationState();
       updateTravelInfo();
 
-      if (!validateStep(currentStep)) {
+      if (!isReviewMode) {
         e.preventDefault();
         return;
       }
@@ -1761,7 +2073,8 @@
       setTimeout(() => {
         document.querySelector('.progress-meta').style.display = 'none';
         document.querySelector('.progress-bar').style.display = 'none';
-        document.querySelector('.question-shell').style.display = 'none';
+        document.getElementById('questionShell').style.display = 'none';
+        document.getElementById('reviewShell').style.display = 'none';
         document.querySelector('.controls').style.display = 'none';
         document.querySelectorAll('.submit-note').forEach(el => el.style.display = 'none');
 
@@ -1787,10 +2100,6 @@
     }, observerOptions);
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    applyPlaceholders();
-    applySelectTranslations();
-    showStep(currentStep);
   </script>
 </body>
 </html>
