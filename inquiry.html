@@ -30,11 +30,11 @@
     }
 
     body.light-mode {
-      --bg-charcoal: #F5F4F0; 
-      --bg-panel: rgba(255, 255, 255, 0.65); 
-      --text-offwhite: #3A3530; 
-      --gold-muted: #8A7356; 
-      --gold-dark: #6B5742; 
+      --bg-charcoal: #F5F4F0;
+      --bg-panel: rgba(255, 255, 255, 0.65);
+      --text-offwhite: #3A3530;
+      --gold-muted: #8A7356;
+      --gold-dark: #6B5742;
       --nav-rgb: 245, 244, 240;
 
       --bg-blend: darken;
@@ -52,7 +52,7 @@
       line-height: 1.8;
       overflow-x: hidden;
       position: relative;
-      transition: background-color 0.8s ease, color 0.8s ease; 
+      transition: background-color 0.8s ease, color 0.8s ease;
       animation: pageFadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
 
@@ -63,8 +63,8 @@
 
     .bg-contour {
       position: fixed;
-      top: -2%; left: -2%; 
-      width: 104%; height: 104%; 
+      top: -2%; left: -2%;
+      width: 104%; height: 104%;
       z-index: -2;
       pointer-events: none;
       mix-blend-mode: var(--bg-blend);
@@ -184,21 +184,21 @@
       border-color: var(--gold-muted);
       transform: scale(1.05);
     }
-    
+
     .lang-btn:active {
       transform: scale(0.95);
       transition: transform 0.1s ease;
     }
-    
+
     body.light-mode .lang-btn { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.4); color: var(--text-offwhite); }
     body.light-mode .lang-btn:hover { background: var(--gold-dark); color: #fff; border-color: var(--gold-dark); }
 
     .theme-btn {
-      width: 36px; height: 36px; 
-      border-radius: 50%; 
+      width: 36px; height: 36px;
+      border-radius: 50%;
       display: flex; justify-content: center; align-items: center;
       padding: 0;
-      background: rgba(0,0,0,0.2); border: 1px solid rgba(197, 179, 148, 0.4); 
+      background: rgba(0,0,0,0.2); border: 1px solid rgba(197, 179, 148, 0.4);
       color: var(--gold-muted); cursor: pointer; transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1); backdrop-filter: blur(5px);
     }
     body.light-mode .theme-btn { background: rgba(255,255,255,0.4); border-color: rgba(138, 115, 86, 0.4); color: var(--text-offwhite); }
@@ -234,7 +234,7 @@
       margin-bottom: 1rem;
     }
 
-    .journey-title.en, 
+    .journey-title.en,
     .question-title-block h2.en {
       font-family: "Didot", "Bodoni MT", "Bodoni Moda", "Playfair Display", serif;
       letter-spacing: 0.03em !important;
@@ -258,7 +258,7 @@
     }
 
     body.light-mode .journey-title {
-      color: #4a321d !important; 
+      color: #4a321d !important;
     }
 
     .journey-subtitle {
@@ -354,7 +354,7 @@
 
     .question-shell {
       width: min(760px, 100%);
-      min-height: 360px;
+      min-height: 470px;
       margin: 0 auto;
       position: relative;
     }
@@ -433,7 +433,8 @@
       margin: 1.8rem auto 0;
     }
 
-    .name-area {
+    .name-area,
+    .contact-area {
       width: min(620px, 100%);
       margin: 1.8rem auto 0;
     }
@@ -467,6 +468,99 @@
     .name-area input,
     .name-area select {
       width: 100%;
+    }
+
+    .contact-method-block {
+      width: 100%;
+    }
+
+    .contact-detail-panel {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transform: translateY(18px);
+      transition:
+        max-height 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+        margin-top 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      margin-top: 0;
+    }
+
+    .contact-detail-panel.active {
+      max-height: 220px;
+      opacity: 1;
+      transform: translateY(0);
+      margin-top: 1.6rem;
+    }
+
+    .contact-detail-row {
+      display: flex;
+      gap: 1.4rem;
+      align-items: flex-end;
+      width: 100%;
+    }
+
+    .contact-method-pill {
+      flex: 0 0 180px;
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba(197, 179, 148, 0.22);
+      color: var(--gold-dark);
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      background: transparent;
+      transition: border-color 0.35s ease, color 0.35s ease, opacity 0.35s ease;
+      text-align: center;
+      padding: 0 0.6rem;
+    }
+
+    body.light-mode .contact-method-pill {
+      border-bottom-color: rgba(138, 115, 86, 0.3);
+    }
+
+    .contact-method-pill .zh {
+      letter-spacing: 0.1em;
+      text-transform: none;
+      transform: none;
+      font-size: 0.82rem;
+    }
+
+    .contact-detail-input-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .phone-composite {
+      display: none;
+      gap: 1.2rem;
+      align-items: flex-end;
+      width: 100%;
+    }
+
+    .phone-composite.active {
+      display: flex;
+    }
+
+    .phone-code-wrap {
+      flex: 0 0 150px;
+    }
+
+    .phone-number-wrap {
+      flex: 1;
+    }
+
+    .contact-detail-input-wrap input,
+    .contact-detail-input-wrap select {
+      width: 100%;
+    }
+
+    #contactDetailText.hidden,
+    #phoneComposite.hidden {
+      display: none !important;
     }
 
     input,
@@ -612,22 +706,6 @@
       transform: none;
     }
 
-    .success-message {
-      display: none;
-      margin-top: 2.2rem;
-      color: var(--gold-muted);
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      line-height: 1.9;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-    }
-
-    .success-message.zh {
-      letter-spacing: 0.1em;
-      transform: none;
-    }
-
     footer {
       text-align: center;
       padding: 1rem 1rem 3.5rem;
@@ -653,7 +731,7 @@
       }
 
       .question-shell {
-        min-height: 470px;
+        min-height: 560px;
       }
 
       .controls {
@@ -693,6 +771,27 @@
       .name-row + .name-row {
         margin-top: 1rem;
       }
+
+      .contact-detail-row {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+      }
+
+      .contact-method-pill {
+        flex: 1 1 auto;
+        min-height: 52px;
+      }
+
+      .phone-composite {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .phone-code-wrap,
+      .phone-number-wrap {
+        flex: 1 1 auto;
+      }
     }
   </style>
 </head>
@@ -704,8 +803,8 @@
     <a href="./index.html" class="nav-logo">Altier</a>
     <div class="nav-controls">
       <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle Day/Night Theme">
-          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
       <button class="lang-btn" onclick="toggleLang()">EN / 中文</button>
     </div>
@@ -745,6 +844,7 @@
     <form id="journeyForm" action="https://script.google.com/macros/s/AKfycbzL4dWRPVUUL3Xoa-xEaNyDo4yYqppc44jknkQIRJrd0h0HjL3mIHT5-3czL1Qn1l_1/exec" method="POST" target="hidden_iframe">
       <input type="hidden" name="pageLanguage" id="pageLanguage" value="EN">
       <input type="hidden" name="fullName" id="fullName">
+      <input type="hidden" name="contactInfo" id="contactInfo">
 
       <div class="question-shell">
 
@@ -804,14 +904,65 @@
           <div class="question-title-block">
             <h2 class="en">How should we reach you?</h2>
             <h2 class="zh">我们该如何与您联系</h2>
-            <p class="en">Email, WeChat, or your preferred point of contact.</p>
-            <p class="zh">请填写 Email、微信或您最常用的联系方式</p>
+            <p class="en">Choose your preferred point of contact, then share the detail below.</p>
+            <p class="zh">请选择您偏好的联系方式，然后填写对应信息</p>
           </div>
-          <div class="input-area">
-            <input id="contactInfo" name="contactInfo" type="text" required
-              data-en-placeholder="Email / WeChat / preferred contact"
-              data-zh-placeholder="Email / 微信 / 常用联系方式"
-              placeholder="Email / WeChat / preferred contact" />
+
+          <div class="input-area contact-area">
+            <div class="contact-method-block">
+              <select id="contactMethod" name="contactMethod" required data-translate-select>
+                <option value="">Contact method</option>
+                <option value="Email">Email</option>
+                <option value="WeChat">WeChat</option>
+                <option value="Phone">Phone</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Telegram">Telegram</option>
+              </select>
+            </div>
+
+            <div id="contactDetailPanel" class="contact-detail-panel">
+              <div class="contact-detail-row">
+                <div class="contact-method-pill" id="contactMethodPill">
+                  <span class="en">Selected</span>
+                  <span class="zh">已选择</span>
+                </div>
+
+                <div class="contact-detail-input-wrap" id="contactDetailInputWrap">
+                  <input
+                    id="contactDetailText"
+                    type="text"
+                    data-en-placeholder="Enter your contact detail"
+                    data-zh-placeholder="请输入对应联系方式"
+                    placeholder="Enter your contact detail"
+                  />
+
+                  <div id="phoneComposite" class="phone-composite hidden">
+                    <div class="phone-code-wrap">
+                      <select id="phoneCode">
+                        <option value="+1">+1</option>
+                        <option value="+86">+86</option>
+                        <option value="+44">+44</option>
+                        <option value="+61">+61</option>
+                        <option value="+65">+65</option>
+                        <option value="+81">+81</option>
+                        <option value="+82">+82</option>
+                      </select>
+                    </div>
+
+                    <div class="phone-number-wrap">
+                      <input
+                        id="phoneNumber"
+                        type="tel"
+                        inputmode="tel"
+                        data-en-placeholder="Phone number"
+                        data-zh-placeholder="电话号码"
+                        placeholder="Phone number"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -985,7 +1136,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('altier_theme');
       const savedLang = localStorage.getItem('altier_lang');
-      
+
       if (savedTheme) {
         if (savedTheme === 'light') document.body.classList.add('light-mode');
       } else {
@@ -994,13 +1145,15 @@
           document.body.classList.add('light-mode');
         }
       }
-      
+
       if (savedLang === 'zh') document.body.classList.add('lang-zh-active');
-      
+
       document.getElementById('pageLanguage').value = document.body.classList.contains('lang-zh-active') ? '中文' : 'EN';
       applyPlaceholders();
       applySelectTranslations();
       updateFullName();
+      resetContactValidationState();
+      updateContactInfo();
     });
 
     function toggleTheme() {
@@ -1010,17 +1163,22 @@
 
     function toggleLang() {
       document.body.classList.toggle('lang-zh-active');
-      const isZh = document.body.classList.contains('lang-zh-active');
-      document.getElementById('pageLanguage').value = isZh ? '中文' : 'EN';
-      localStorage.setItem('altier_lang', isZh ? 'zh' : 'en');
+      const isChinese = document.body.classList.contains('lang-zh-active');
+      document.getElementById('pageLanguage').value = isChinese ? '中文' : 'EN';
+      localStorage.setItem('altier_lang', isChinese ? 'zh' : 'en');
       applyPlaceholders();
       applySelectTranslations();
+      updateContactInfo();
     }
 
     const selectTranslations = {
       honorific: {
         en: ["Title", "Mr", "Ms", "Mrs", "Miss", "Dr"],
         zh: ["称呼", "先生", "女士", "太太", "小姐", "博士"]
+      },
+      contactMethod: {
+        en: ["Contact method", "Email", "WeChat", "Phone", "WhatsApp", "Telegram"],
+        zh: ["联系方式", "邮箱", "微信", "电话", "WhatsApp", "Telegram"]
       },
       tripType: {
         en: ["Please select", "Round-trip", "One-way", "Flexible / not fully decided"],
@@ -1065,10 +1223,82 @@
       const honorific = document.getElementById('honorific')?.value || '';
       const lastName = document.getElementById('lastName')?.value.trim() || '';
       const firstName = document.getElementById('firstName')?.value.trim() || '';
-
       const fullNameField = document.getElementById('fullName');
+
       if (fullNameField) {
         fullNameField.value = [honorific, lastName, firstName].filter(Boolean).join(' ');
+      }
+    }
+
+    function updateContactInfo() {
+      const method = document.getElementById('contactMethod')?.value || '';
+      const hiddenContact = document.getElementById('contactInfo');
+      const textInput = document.getElementById('contactDetailText');
+      const phoneCode = document.getElementById('phoneCode');
+      const phoneNumber = document.getElementById('phoneNumber');
+      const panel = document.getElementById('contactDetailPanel');
+      const pill = document.getElementById('contactMethodPill');
+      const phoneComposite = document.getElementById('phoneComposite');
+
+      if (!hiddenContact || !textInput || !phoneCode || !phoneNumber || !panel || !pill || !phoneComposite) return;
+
+      if (!method) {
+        panel.classList.remove('active');
+        textInput.classList.remove('hidden');
+        phoneComposite.classList.remove('active');
+        phoneComposite.classList.add('hidden');
+        textInput.required = false;
+        phoneNumber.required = false;
+        hiddenContact.value = '';
+        pill.innerHTML = isZh() ? '已选择' : 'Selected';
+        return;
+      }
+
+      panel.classList.add('active');
+      pill.textContent = method;
+
+      if (method === 'Phone') {
+        textInput.classList.add('hidden');
+        textInput.required = false;
+
+        phoneComposite.classList.remove('hidden');
+        phoneComposite.classList.add('active');
+        phoneNumber.required = true;
+
+        const code = phoneCode.value || '';
+        const number = phoneNumber.value.trim() || '';
+        hiddenContact.value = [method, code, number].filter(Boolean).join(' ');
+      } else {
+        textInput.classList.remove('hidden');
+        textInput.required = true;
+
+        phoneComposite.classList.remove('active');
+        phoneComposite.classList.add('hidden');
+        phoneNumber.required = false;
+
+        const detail = textInput.value.trim() || '';
+        hiddenContact.value = detail ? `${method}: ${detail}` : method;
+      }
+    }
+
+    function resetContactValidationState() {
+      const method = document.getElementById('contactMethod');
+      const textInput = document.getElementById('contactDetailText');
+      const phoneNumber = document.getElementById('phoneNumber');
+
+      if (!method || !textInput || !phoneNumber) return;
+
+      const currentMethod = method.value;
+
+      if (currentMethod === 'Phone') {
+        textInput.required = false;
+        phoneNumber.required = true;
+      } else if (currentMethod) {
+        textInput.required = true;
+        phoneNumber.required = false;
+      } else {
+        textInput.required = false;
+        phoneNumber.required = false;
       }
     }
 
@@ -1077,6 +1307,17 @@
       if (el) {
         el.addEventListener('input', updateFullName);
         el.addEventListener('change', updateFullName);
+      }
+    });
+
+    ['contactMethod', 'contactDetailText', 'phoneCode', 'phoneNumber'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', updateContactInfo);
+        el.addEventListener('change', () => {
+          resetContactValidationState();
+          updateContactInfo();
+        });
       }
     });
 
@@ -1098,9 +1339,13 @@
     function getVisibleRequiredFieldsForStep(step) {
       const slide = getSlideForStep(step);
       if (!slide) return [];
-      return [...slide.querySelectorAll('input[required], select[required], textarea[required]')].filter(
-        el => el.type !== 'hidden'
-      );
+
+      const allRequired = [...slide.querySelectorAll('input[required], select[required], textarea[required]')];
+      return allRequired.filter(el => {
+        if (el.type === 'hidden') return false;
+        if (el.offsetParent === null) return false;
+        return true;
+      });
     }
 
     function validateStep(step) {
@@ -1130,12 +1375,20 @@
         submitBtn.style.display = 'inline-block';
       } else {
         nextBtn.style.display = 'inline-block';
+        submitBtn.style.display = 'inline-block';
         submitBtn.style.display = 'none';
+      }
+
+      if (step === 2) {
+        resetContactValidationState();
+        updateContactInfo();
       }
     }
 
     nextBtn.addEventListener('click', () => {
       updateFullName();
+      resetContactValidationState();
+      updateContactInfo();
 
       if (!validateStep(currentStep)) {
         return;
@@ -1156,6 +1409,8 @@
 
     form.addEventListener('submit', function(e) {
       updateFullName();
+      resetContactValidationState();
+      updateContactInfo();
 
       if (!validateStep(currentStep)) {
         e.preventDefault();
