@@ -9,7 +9,6 @@
 
   <style>
     :root {
-      /* === 同步主页的基础变量 === */
       --bg-charcoal: #161514;
       --bg-panel: rgba(26, 25, 24, 0.6);
       --text-offwhite: #e8e4db;
@@ -17,7 +16,6 @@
       --gold-dark: #8c7a5c;
       --nav-rgb: 22, 21, 20;
 
-      /* 核心：同步主页的滤镜变量，让背景图一模一样 */
       --bg-blend: lighten;
       --bg-op-base: 0.15;
       --bg-fil-base: brightness(0.8) contrast(1.1);
@@ -31,7 +29,6 @@
       --radius-btn: 50px;
     }
 
-    /* === 补回：日间模式 (纯净羊绒白金) 覆盖参数，同步主页最新数据 === */
     body.light-mode {
       --bg-charcoal: #F5F4F0; 
       --bg-panel: rgba(255, 255, 255, 0.65); 
@@ -40,7 +37,6 @@
       --gold-dark: #6B5742; 
       --nav-rgb: 245, 244, 240;
 
-      /* 同步主页白天金线高对比度参数 */
       --bg-blend: darken;
       --bg-op-base: 0.22;
       --bg-fil-base: invert(1) sepia(1) hue-rotate(-20deg) saturate(1.5) brightness(0.9) contrast(1.4);
@@ -57,7 +53,6 @@
       overflow-x: hidden;
       position: relative;
       transition: background-color 0.8s ease, color 0.8s ease; 
-      /* 新增：跨页面跳转时的丝滑全局入场动画 */
       animation: pageFadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
 
@@ -66,7 +61,6 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* === 让背景图代码与 index.html 完全对齐 === */
     .bg-contour {
       position: fixed;
       top: -2%; left: -2%; 
@@ -74,7 +68,6 @@
       z-index: -2;
       pointer-events: none;
       mix-blend-mode: var(--bg-blend);
-      /* inquiry 保留了原本的 breathing 动画，这里可以不套用波浪，保持原设计 */
       animation: breatheContour 2.5s infinite alternate ease-in-out;
       transition: filter 0.8s ease, opacity 0.8s ease, mix-blend-mode 0.8s ease;
     }
@@ -91,9 +84,8 @@
       transition: filter 0.8s ease, opacity 0.8s ease;
     }
 
-    /* 白天模式关闭呼吸动画，仅显示底层金线 */
     body.light-mode .bg-contour {
-        animation: none;
+      animation: none;
     }
 
     @keyframes breatheContour {
@@ -193,7 +185,6 @@
       transform: scale(1.05);
     }
     
-    /* 新增：点击按下时的丝滑回弹动画 */
     .lang-btn:active {
       transform: scale(0.95);
       transition: transform 0.1s ease;
@@ -230,10 +221,9 @@
       padding: 7.8rem 5% 4rem;
     }
 
-    /* 拉大头部与进度条之间的间距 */
     .journey-header {
       width: min(900px, 100%);
-      margin: 0 auto 3.5rem; /* 原为 2.2rem，现扩大为 ~1.6倍 */
+      margin: 0 auto 3.5rem;
     }
 
     .journey-kicker {
@@ -244,13 +234,10 @@
       margin-bottom: 1rem;
     }
 
-    /* ==================================================== */
-    /* 精准替换英文标题的字体，保留原大小和颜色 */
-    /* ==================================================== */
     .journey-title.en, 
     .question-title-block h2.en {
       font-family: "Didot", "Bodoni MT", "Bodoni Moda", "Playfair Display", serif;
-      letter-spacing: 0.03em !important; /* 统一套用主页 The Art of Smart Luxury 的紧凑感 */
+      letter-spacing: 0.03em !important;
     }
 
     .journey-title {
@@ -270,7 +257,6 @@
       font-size: clamp(2.6rem, 6vw, 4.5rem);
     }
 
-    /* === 新增：为白天模式下的中英大标题单独设定深松露褐色，提升对比度且拒绝纯黑 === */
     body.light-mode .journey-title {
       color: #4a321d !important; 
     }
@@ -348,12 +334,11 @@
       letter-spacing: 0.12em;
     }
 
-    /* 拉大进度条与问卷区域之间的间距 */
     .progress-bar {
       width: min(760px, 100%);
       height: 1px;
       background: rgba(197, 179, 148, 0.15);
-      margin: 0 auto 3.8rem; /* 原为 2.2rem，现扩大为 ~1.7倍 */
+      margin: 0 auto 3.8rem;
       position: relative;
       overflow: hidden;
     }
@@ -408,7 +393,6 @@
       margin: 0 auto 1rem;
     }
 
-    /* 保留原始字号，仅替换 font-family (已在前面统一设置) */
     .question-title-block h2 {
       font-size: clamp(2.2rem, 4.8vw, 3.4rem);
       color: var(--text-offwhite);
@@ -447,6 +431,42 @@
     .input-area {
       width: min(620px, 100%);
       margin: 1.8rem auto 0;
+    }
+
+    .name-area {
+      width: min(620px, 100%);
+      margin: 1.8rem auto 0;
+    }
+
+    .name-row {
+      display: flex;
+      gap: 1.4rem;
+      width: 100%;
+    }
+
+    .name-row + .name-row {
+      margin-top: 1.4rem;
+    }
+
+    .name-field {
+      flex: 1;
+    }
+
+    .title-field {
+      flex: 0 0 180px;
+    }
+
+    .surname-field {
+      flex: 1;
+    }
+
+    .full-width {
+      width: 100%;
+    }
+
+    .name-area input,
+    .name-area select {
+      width: 100%;
     }
 
     input,
@@ -633,7 +653,7 @@
       }
 
       .question-shell {
-        min-height: 430px;
+        min-height: 470px;
       }
 
       .controls {
@@ -659,6 +679,19 @@
 
       .question-title-block h2.zh {
         font-size: 1.45rem;
+      }
+
+      .name-row {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .title-field {
+        flex: 1 1 auto;
+      }
+
+      .name-row + .name-row {
+        margin-top: 1rem;
       }
     }
   </style>
@@ -711,6 +744,7 @@
 
     <form id="journeyForm" action="https://script.google.com/macros/s/AKfycbzL4dWRPVUUL3Xoa-xEaNyDo4yYqppc44jknkQIRJrd0h0HjL3mIHT5-3czL1Qn1l_1/exec" method="POST" target="hidden_iframe">
       <input type="hidden" name="pageLanguage" id="pageLanguage" value="EN">
+      <input type="hidden" name="fullName" id="fullName">
 
       <div class="question-shell">
 
@@ -722,11 +756,46 @@
             <p class="en">A graceful beginning.</p>
             <p class="zh">我们先从最基本的信息开始</p>
           </div>
-          <div class="input-area">
-            <input id="fullName" name="fullName" type="text" required
-              data-en-placeholder="Your full name"
-              data-zh-placeholder="请输入您的姓名"
-              placeholder="Your full name" />
+
+          <div class="input-area name-area">
+            <div class="name-row name-row-top">
+              <div class="name-field title-field">
+                <select id="honorific" name="honorific" required data-translate-select>
+                  <option value="">Title</option>
+                  <option value="Mr">Mr</option>
+                  <option value="Ms">Ms</option>
+                  <option value="Mrs">Mrs</option>
+                  <option value="Miss">Miss</option>
+                  <option value="Dr">Dr</option>
+                </select>
+              </div>
+
+              <div class="name-field surname-field">
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="text"
+                  required
+                  data-en-placeholder="Last name / Surname"
+                  data-zh-placeholder="姓"
+                  placeholder="Last name / Surname"
+                />
+              </div>
+            </div>
+
+            <div class="name-row">
+              <div class="name-field full-width">
+                <input
+                  id="firstName"
+                  name="firstName"
+                  type="text"
+                  required
+                  data-en-placeholder="First name / Given name"
+                  data-zh-placeholder="名"
+                  placeholder="First name / Given name"
+                />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -913,39 +982,32 @@
   </footer>
 
   <script>
-    // === 智能记忆系统：优先用户选择，其次时间感应 ===
     document.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('altier_theme');
       const savedLang = localStorage.getItem('altier_lang');
       
-      // 1. 主题判断逻辑
       if (savedTheme) {
-          // 手动干预过，优先缓存
-          if (savedTheme === 'light') document.body.classList.add('light-mode');
+        if (savedTheme === 'light') document.body.classList.add('light-mode');
       } else {
-          // 未干预过，自动感应时间 (早6点-晚6点为白天)
-          const currentHour = new Date().getHours();
-          if (currentHour >= 6 && currentHour < 18) {
-              document.body.classList.add('light-mode');
-          }
+        const currentHour = new Date().getHours();
+        if (currentHour >= 6 && currentHour < 18) {
+          document.body.classList.add('light-mode');
+        }
       }
       
-      // 2. 语言判断逻辑
       if (savedLang === 'zh') document.body.classList.add('lang-zh-active');
       
-      // 3. 初始化问卷表单内部语言数据
       document.getElementById('pageLanguage').value = document.body.classList.contains('lang-zh-active') ? '中文' : 'EN';
       applyPlaceholders();
       applySelectTranslations();
+      updateFullName();
     });
 
-    // 强化：切换主题时保存状态
     function toggleTheme() {
       document.body.classList.toggle('light-mode');
       localStorage.setItem('altier_theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
     }
 
-    // 强化：切换语言时保存状态
     function toggleLang() {
       document.body.classList.toggle('lang-zh-active');
       const isZh = document.body.classList.contains('lang-zh-active');
@@ -956,6 +1018,10 @@
     }
 
     const selectTranslations = {
+      honorific: {
+        en: ["Title", "Mr", "Ms", "Mrs", "Miss", "Dr"],
+        zh: ["称呼", "先生", "女士", "太太", "小姐", "博士"]
+      },
       tripType: {
         en: ["Please select", "Round-trip", "One-way", "Flexible / not fully decided"],
         zh: ["请选择", "往返", "单程", "时间尚未完全确定"]
@@ -995,6 +1061,25 @@
       });
     }
 
+    function updateFullName() {
+      const honorific = document.getElementById('honorific')?.value || '';
+      const lastName = document.getElementById('lastName')?.value.trim() || '';
+      const firstName = document.getElementById('firstName')?.value.trim() || '';
+
+      const fullNameField = document.getElementById('fullName');
+      if (fullNameField) {
+        fullNameField.value = [honorific, lastName, firstName].filter(Boolean).join(' ');
+      }
+    }
+
+    ['honorific', 'lastName', 'firstName'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', updateFullName);
+        el.addEventListener('change', updateFullName);
+      }
+    });
+
     const totalSteps = 10;
     let currentStep = 1;
 
@@ -1006,14 +1091,33 @@
     const progressCount = document.getElementById('progressCount');
     const form = document.getElementById('journeyForm');
 
-    function getFieldForStep(step) {
-      const slide = document.querySelector(`.question-slide[data-step="${step}"]`);
-      return slide ? slide.querySelector('input, select, textarea') : null;
+    function getSlideForStep(step) {
+      return document.querySelector(`.question-slide[data-step="${step}"]`);
+    }
+
+    function getVisibleRequiredFieldsForStep(step) {
+      const slide = getSlideForStep(step);
+      if (!slide) return [];
+      return [...slide.querySelectorAll('input[required], select[required], textarea[required]')].filter(
+        el => el.type !== 'hidden'
+      );
+    }
+
+    function validateStep(step) {
+      const fields = getVisibleRequiredFieldsForStep(step);
+      for (const field of fields) {
+        if (!field.checkValidity()) {
+          field.reportValidity();
+          field.focus();
+          return false;
+        }
+      }
+      return true;
     }
 
     function showStep(step) {
       slides.forEach(slide => slide.classList.remove('active'));
-      const active = document.querySelector(`.question-slide[data-step="${step}"]`);
+      const active = getSlideForStep(step);
       if (active) active.classList.add('active');
 
       progressCount.textContent = `${String(step).padStart(2, '0')} / ${String(totalSteps).padStart(2, '0')}`;
@@ -1031,9 +1135,9 @@
     }
 
     nextBtn.addEventListener('click', () => {
-      const field = getFieldForStep(currentStep);
-      if (field && !field.checkValidity()) {
-        field.reportValidity();
+      updateFullName();
+
+      if (!validateStep(currentStep)) {
         return;
       }
 
@@ -1051,22 +1155,20 @@
     });
 
     form.addEventListener('submit', function(e) {
-      const field = getFieldForStep(currentStep);
-      if (field && !field.checkValidity()) {
+      updateFullName();
+
+      if (!validateStep(currentStep)) {
         e.preventDefault();
-        field.reportValidity();
         return;
       }
 
       setTimeout(() => {
-        // 1. 隐藏多余的表单UI组件，保持顶部 header 不变
         document.querySelector('.progress-meta').style.display = 'none';
         document.querySelector('.progress-bar').style.display = 'none';
         document.querySelector('.question-shell').style.display = 'none';
         document.querySelector('.controls').style.display = 'none';
         document.querySelectorAll('.submit-note').forEach(el => el.style.display = 'none');
 
-        // 2. 丝滑淡入新版的超大成功提示界面
         const successScreen = document.getElementById('successScreen');
         successScreen.style.display = 'block';
         setTimeout(() => { successScreen.style.opacity = '1'; }, 30);
