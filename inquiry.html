@@ -362,7 +362,7 @@
 
     .question-shell {
       width: min(760px, 100%);
-      min-height: 600px;
+      min-height: 620px;
       margin: 0 auto;
       position: relative;
     }
@@ -479,8 +479,7 @@
       width: 100%;
     }
 
-    .contact-method-block,
-    .travel-method-block {
+    .contact-method-block {
       width: 100%;
     }
 
@@ -506,7 +505,7 @@
     }
 
     .contact-detail-panel.active { max-height: 240px; }
-    .travel-detail-panel.active { max-height: 340px; }
+    .travel-detail-panel.active { max-height: 360px; }
 
     .contact-detail-row,
     .travel-detail-row {
@@ -585,9 +584,60 @@
 
     .travel-freeform-wrap {
       display: none;
+      width: 100%;
     }
+
     .travel-freeform-wrap.active {
       display: block;
+      width: 100%;
+    }
+
+    .travel-freeform-wrap textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: none;
+      text-align: left;
+      line-height: 1.9;
+      background: transparent;
+      color: var(--text-offwhite);
+      border: none;
+      border-bottom: 1px solid rgba(197, 179, 148, 0.22);
+      padding: 0.95rem 0;
+      font-family: var(--font-body-en);
+      font-size: 1rem;
+      font-weight: 300;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: border-color 0.35s ease, opacity 0.35s ease;
+      letter-spacing: 0.04em;
+    }
+
+    body.light-mode .travel-freeform-wrap textarea {
+      color: var(--text-offwhite);
+      border-bottom-color: rgba(138, 115, 86, 0.3);
+    }
+
+    body.lang-zh-active .travel-freeform-wrap textarea {
+      font-family: var(--font-zh);
+      letter-spacing: 0.08em;
+      font-weight: 400;
+    }
+
+    .travel-freeform-wrap textarea:focus {
+      border-bottom-color: rgba(197, 179, 148, 0.6);
+    }
+
+    body.light-mode .travel-freeform-wrap textarea:focus {
+      border-bottom-color: rgba(138, 115, 86, 0.8);
+    }
+
+    .travel-freeform-wrap textarea::placeholder {
+      color: rgba(232, 228, 219, 0.34);
+    }
+
+    body.light-mode .travel-freeform-wrap textarea::placeholder {
+      color: rgba(58, 53, 48, 0.4);
     }
 
     #contactDetailText.hidden,
@@ -766,7 +816,7 @@
       }
 
       .question-shell {
-        min-height: 760px;
+        min-height: 820px;
       }
 
       .controls {
@@ -1072,10 +1122,18 @@
               </div>
 
               <div id="flexibleField" class="travel-freeform-wrap hidden">
-                <textarea id="flexibleTravelWindow"
-                  data-en-placeholder="e.g. Early December / Around Aug 5–10 / Still flexible"
-                  data-zh-placeholder="例如：12月上旬 / 8月5日至10日前后 / 目前还比较灵活"
-                  placeholder="e.g. Early December / Around Aug 5–10 / Still flexible"></textarea>
+                <div class="travel-detail-row">
+                  <div class="travel-label-pill">
+                    <span class="en">Window</span>
+                    <span class="zh">时间</span>
+                  </div>
+                  <div class="travel-detail-input-wrap">
+                    <textarea id="flexibleTravelWindow"
+                      data-en-placeholder="e.g. Early December / Around Aug 5–10 / Still flexible"
+                      data-zh-placeholder="例如：12月上旬 / 8月5日至10日前后 / 目前还比较灵活"
+                      placeholder="e.g. Early December / Around Aug 5–10 / Still flexible"></textarea>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1406,6 +1464,7 @@
         roundTripFields.classList.add('hidden');
         oneWayField.classList.add('hidden');
         flexibleField.classList.add('hidden');
+        flexibleField.classList.remove('active');
         hiddenTravel.value = '';
         return;
       }
@@ -1414,6 +1473,7 @@
       roundTripFields.classList.add('hidden');
       oneWayField.classList.add('hidden');
       flexibleField.classList.add('hidden');
+      flexibleField.classList.remove('active');
 
       if (tripType === 'Round-trip') {
         roundTripFields.classList.remove('hidden');
@@ -1428,6 +1488,7 @@
         hiddenTravel.value = dep ? `Departure: ${dep}` : '';
       } else {
         flexibleField.classList.remove('hidden');
+        flexibleField.classList.add('active');
 
         const flex = flexibleTravelWindow?.value.trim() || '';
         hiddenTravel.value = flex;
